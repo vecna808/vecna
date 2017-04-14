@@ -1,0 +1,34 @@
+// BHEYE Triggers.
+
+    // Chain Contingency.
+    IF
+        Global("xyxChainContingency","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxChainContingency","LOCALS",1)
+            DisplayString(Myself,26328) // Chain Contingency
+            // Improved Mantle displays its own string.
+            ApplySpell(Myself,WIZARD_IMPROVED_MANTLE)
+            // Protection from Energy displays its own string.
+            ApplySpell(Myself,WIZARD_PROTECTION_FROM_ENERGY)
+            // Spell Deflection (no visual) displays its own string.
+            ApplySpell(Myself,SPELL_DEFLECTION_NO_VISUAL)
+            Continue()
+    END
+
+    // Contingency.
+    IF
+        Global("xyxContingency","LOCALS",0)
+        CheckStat(Myself,0,STONESKINS)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxContingency","LOCALS",1)
+            DisplayString(Myself,25942) // Contingency
+            DisplayString(Myself,8300) // Stoneskin
+            ApplySpell(Myself,WIZARD_STONE_SKIN)
+            Continue()
+    END
+
+//==============================================================================
+
+

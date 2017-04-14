@@ -1,0 +1,23 @@
+IF
+	Clicked([ANYONE])
+	Global("SUPERLICH","AAR038",0)
+THEN
+	RESPONSE #100
+		ClearActions(LastTrigger)
+		CreateVisualEffect("AASUMM2",[650.1527])
+		CreateVisualEffect("AATPORT4",[544.1669])
+		CreateVisualEffect("AATPORT4",[532.1597])
+		CreateVisualEffect("AATPORT4",[774.1518])
+		CreateVisualEffect("AATPORT4",[850.1611])
+		Wait(2)
+		CreateCreature("AACRE014",[650.1527],14)
+		CreateCreature("AACRE064",[544.1669],6)
+		CreateCreature("AACRE064",[532.1597],6)
+		CreateCreature("AACRE064",[774.1518],6)
+		CreateCreature("AACRE064",[850.1611],6)
+		MoveViewObject("MAGEC35",INSTANT)
+		Wait(1)
+		ActionOverride("MAGEC35",StartDialogueNoSet(Player1))
+		SetGlobal("SUPERLICH","AAR038",1)
+END
+

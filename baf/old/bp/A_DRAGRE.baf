@@ -1,0 +1,214 @@
+IF
+  Global("FirkraagScoff","LOCALS",0)
+  Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,45920)  // ~Your lackeys will not save you!~
+    SetGlobal("FirkraagScoff","LOCALS",1)
+    Continue()
+END
+
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  !GlobalTimerNotExpired("FirkraagStone","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,DRAGON_STONE_SKIN)
+    SetGlobalTimer("FirkraagStone","LOCALS",TWO_HOURS)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("REDDRAGONBREATH","LOCALS")
+  See(StrongestOf)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("REDDRAGONBREATH","LOCALS",THREE_ROUNDS)
+    ReallyForceSpell(LastSeenBy(Myself),RED_DRAGON_BREATH)
+    ReallyForceSpell(LastSeenBy(Myself),RED_DRAGON_HIT)
+    SetGlobal("FirkraagTaunt","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("FirkraagTaunt","LOCALS",1)
+THEN
+  RESPONSE #20
+    DisplayString(Myself,60511)  // ~ Time to perish, manling!~ [FIRKRA03]
+    SetGlobal("FirkraagTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,19063)  // ~  Your life shall be mine!~ [PC5FE3]
+    SetGlobal("FirkraagTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,19054)  // ~  Your life ends here.~ [PC3MA3]
+    SetGlobal("FirkraagTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,60715)  // ~ Your life ends with this!~ [SAHPR104]
+    SetGlobal("FirkraagTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,21728)  // ~Run down the road on fire, for all I care.~
+    SetGlobal("FirkraagTaunt","LOCALS",0)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Range(NearestEnemyOf(Myself),25)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+    Continue()
+END
+
+IF
+  Detect(Player1)
+  Global("FirkraagRemove","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Player1,WIZARD_REMOVE_MAGIC)
+    SetGlobal("FirkraagRemove","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect(StrongestOf)
+  Global("FirkraagGreater","LOCALS",0)
+  GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+    SetGlobal("FirkraagGreater","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect(Player1)
+  Global("FirkraagLower","LOCALS",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Player1,DRAGON_FEAR)
+    ReallyForceSpell(Player1,DRAGON_LOWER_FIRE)
+    SetGlobal("FirkraagLower","LOCALS",1)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("FirkraagSilence","LOCALS",0)
+  Detect(WeakestOf)
+  GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,CLERIC)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(WeakestOf,CLERIC_SILENCE_15_FOOT)
+    SetGlobal("FirkraagSilence","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("FirkraagHaste","LOCALS",0)
+  GlobalTimerExpired("Cast","LOCALS")
+  !StateCheck(Myself,STATE_HASTED)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Myself,WIZARD_HASTE)
+    SetGlobal("FirkraagHaste","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect([PC])
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect([PC])
+  !GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    AttackOneRound(Player1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !Detect(NearestEnemyOf(Myself))
+  CombatCounter(0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,26703)  // ~Damn, where are they?~
+    ForceSpell(Myself,CLERIC_HEAL)
+    SetGlobal("FirkraagLower","LOCALS",0)
+    SetGlobal("FirkraagGreater","LOCALS",0)
+    SetGlobal("FirkraagHaste","LOCALS",0)
+    SetGlobal("FirkraagSilence","LOCALS",0)
+    SetGlobal("FirkraagRemove","LOCALS",0)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,44109)  // ~...<CHARNAME>? <CHARNAME>? ~
+    AttackOneRound(Player1)
+    AttackOneRound(Player1)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+  OR(5)
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    SpellCast([GOODCUTOFF],0)
+    SpellCastPriest([GOODCUTOFF],0)
+    SpellCastInnate([GOODCUTOFF],0)
+    Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,21726)  // ~Are you trying to threaten me?~
+    Enemy()
+END
+
+IF
+  Global("FirkraagInit","LOCALS",0)
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,DRAGON_STONE_SKIN)
+    SetGlobalTimer("FirkraagStone","LOCALS",TWO_HOURS)
+    SetGlobalTimer("REDDRAGONBREATH","LOCALS",THREE_ROUNDS)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    EquipMostDamagingMelee()
+    SetGlobal("FirkraagInit","LOCALS",1)
+END
+
+IF
+  NumberOfTimesTalkedTo(1)
+  Global("FirkraagWarn","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,4369)  // ~Don't you try anything stupid.  I'm watching you.~
+    SetGlobal("FirkraagWarn","LOCALS",1)
+    RandomWalkContinuous()
+END
+

@@ -1,0 +1,12 @@
+IF
+	Global("AAChest1Open","AAR042",1)
+	Global("AAChest2Open","AAR042",1)
+	Global("AAChest3Open","AAR042",1)
+	Global("AAChest4Open","AAR042",1)
+	Global("AADoor1Open","AAR042",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AADoor1Open","AAR042",1)
+		Wait(1)
+		DisplayString(Myself,@0) 
+END

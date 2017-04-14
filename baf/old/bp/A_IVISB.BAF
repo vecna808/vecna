@@ -1,0 +1,67 @@
+IF
+  OR(3)
+    !Exists(LastSummonerOf(Myself))
+    HPLT(LastSummonerOf(Myself),1)
+    GlobalGT("INVISB","LOCALS",24)
+THEN
+  RESPONSE #100
+    DestroySelf()
+END
+
+IF
+  !GlobalTimerNotExpired("targ","LOCALS")
+  Specifics(LastSummonerOf(Myself),CALLED_FOR_BOULDER)
+  See(LastSeenBy(LastSummonerOf(Myself)))
+THEN
+  RESPONSE #100
+    SetGlobalTimer("targ","LOCALS",3)
+    ChangeSpecifics(LastSummonerOf(Myself),0)
+    IncrementGlobal("INVISB","LOCALS",1)
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  Range(LastSummonerOf(Myself),3)
+THEN
+  RESPONSE #100
+    RunAwayFrom(LastSummonerOf(Myself),3)
+END
+
+IF
+  !Range(LastSummonerOf(Myself),20)
+THEN
+  RESPONSE #100
+    MoveToObject(LastSummonerOf(Myself))
+    Continue()
+END
+
+IF
+  !See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    MoveToObject(LastSummonerOf(Myself))
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("rand","LOCALS")
+  See(LastSeenBy(LastSummonerOf(Myself)))
+THEN
+  RESPONSE #30
+    SetGlobalTimer("rand","LOCALS",ONE_ROUND)
+    IncrementGlobal("INVISB","LOCALS",1)
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #60
+    SetGlobalTimer("rand","LOCALS",3)
+END
+
+IF
+  ActionListEmpty()
+THEN
+  RESPONSE #100
+    RandomWalk()
+    Continue()
+END
+

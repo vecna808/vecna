@@ -1,0 +1,22 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,7)
+	PartyHasItem("AAITM007") // These magical stones are often used as keys to transportation portals
+	Global("ENDTRANS","AAR006",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR006C1")
+		SetGlobal("ENDTRANS","AAR006",1)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,7)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702) // You are too far away to use that.
+END
+
+

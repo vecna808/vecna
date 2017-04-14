@@ -1,0 +1,39 @@
+    // Maze.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        // Not immune to Maze.
+        !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc Berserk
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE3) // Barbarian Rage
+        !Kit(LastSeenBy(Myself),BERSERKER)
+        // Not bouncing.
+        OR(3)
+            !HasBounceEffects(LastSeenBy())
+            HasItemEquiped("WA2SHIEL",LastSeenBy())
+        !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+        // Legal target.
+        !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(LastSeenBy(),0,SANCTUARY)
+        // Only use on worthwhile targets.
+        CheckStatGT(LastSeenBy(),7,LEVEL)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+        // Relatively safe to cast.
+        OR(2)
+            CheckStatGT(Myself,2,STONESKINS)
+            GlobalTimerNotExpired("xyxImprovedMantle","LOCALS")
+        // Avoid Mazing the last party member sometimes.
+        OR(2)
+            // There are still others...
+            NumInPartyAliveGT(1)
+            // or I'm feeling nasty.
+            RandomNum(4,1)
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            SpellNoDec(LastSeenBy(),WIZARD_MAZE)
+        RESPONSE #100
+            Continue()
+    END
+
+

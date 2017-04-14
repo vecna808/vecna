@@ -1,0 +1,174 @@
+IF
+  !GlobalTimerNotExpired("NiziStone","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,CLERIC)
+    ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+    SetGlobalTimer("NiziStone","LOCALS",TWO_TURNS)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("NiziHaste","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    SetGlobal("NiziHaste","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("BLACKDRAGONBREATH","LOCALS")
+  See([PC])
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BLACKDRAGONBREATH","LOCALS",THREE_ROUNDS)
+    ReallyForceSpell(LastSeenBy(Myself),BLACK_DRAGON_BREATH)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Range(NearestEnemyOf(Myself),25)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+END
+
+IF
+  Detect(Player1)
+  Global("NiziRemove","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Player1,WIZARD_DISPEL_MAGIC)
+    SetGlobal("NiziRemove","LOCALS",1)
+END
+
+IF
+  See([PC])
+  Global("NiziInsect","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    ReallyForceSpell(LastSeenBy(Myself),BLACK_DRAGON_INSECT)
+    ReallyForceSpell(LastSeenBy(Myself),DRAGON_FEAR)
+    ReallyForceSpell(Myself,BLACK_DRAGON_PLANT)
+    SetGlobal("NiziInsect","LOCALS",1)
+END
+
+IF
+  GlobalTimerExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See([PC])
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec([PC],WIZARD_CHARM_PERSON)
+END
+
+IF
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See(SecondNearest([PC]))
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(SecondNearest([PC]),WIZARD_CHARM_PERSON)
+END
+
+IF
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See(ThirdNearest([PC]))
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_CHARM_PERSON)
+END
+
+IF
+  Detect([PC])
+  !GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    EquipMostDamagingMelee()
+    AttackReevaluate([PC],15)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !Detect(NearestEnemyOf(Myself))
+  CombatCounter(0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,26703)  // ~Damn, where are they?~
+    ForceSpell(Myself,CLERIC_HEAL)
+    SetGlobal("NiziHaste","LOCALS",0)
+    SetGlobal("NiziRemove","LOCALS",0)
+    SetGlobal("NiziInsect","LOCALS",0)
+    EquipMostDamagingMelee()
+    Attack(Player1)
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+  OR(5)
+    AttackedBy([ANYTHING],DEFAULT)
+    SpellCast([GOODCUTOFF],0)
+    SpellCastPriest([GOODCUTOFF],0)
+    SpellCastInnate([GOODCUTOFF],0)
+    Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,21726)  // ~Are you trying to threaten me?~
+    DisplayString(Myself,60511)  // ~ Time to perish, manling!~ [FIRKRA03]
+    Enemy()
+END
+

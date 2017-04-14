@@ -1,0 +1,645 @@
+IF
+  !Specifics(Myself,207)
+  See(NearestEnemyOf(Myself))
+  Global("Prep","LOCALS",0)
+THEN
+  RESPONSE #100
+    ApplySpell(Myself,WIZARD_STONE_SKIN)
+    ApplySpell(Myself,WIZARD_MIRROR_IMAGE)
+    ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+    ApplySpell(Myself,WIZARD_SPELL_TRAP)
+    SetGlobal("Prep","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(NearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(SecondNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(ThirdNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(FourthNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(FifthNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(SixthNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(TenthNearestEnemyOf(Myself))
+  Global("SpellTrigger","LOCALS",0)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    DisplayString(Myself,363)  // ~Spell Trigger - Chain Lightning~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAIN_LIGHTNING)
+    DisplayString(Myself,34622)  // ~Abi Dalzim's Horrid Wilting~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+    SetGlobal("SpellTrigger","LOCALS",1)
+END
+
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  !HaveSpell(WIZARD_STONE_SKIN)
+  HaveSpell(WIZARD_IMPROVED_INVISIBILITY)
+  OR(2)
+    !StateCheck(Myself,STATE_INVISIBLE)
+    !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+END
+
+IF
+  HasItem("SCRL9S",Myself)  // ~Imprisonment~
+  See([GOODCUTOFF])
+  !Kit(LastSeenBy(Myself),BERSERKER)
+  !Kit(LastSeenBy(Myself),BARBARIAN)
+  !Name("Korgan",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    UseItem("SCRL9S",LastSeenBy(Myself))  // ~Imprisonment~
+END
+
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  HaveSpell(WIZARD_STONE_SKIN)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_STONE_SKIN)
+END
+
+IF
+  HPPercentLT(Myself,50)
+  HaveSpell(WIZARD_TENSERS_TRANSFORMATION)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_TENSERS_TRANSFORMATION)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  StateCheck(Myself,STATE_SILENCED)
+  HaveSpell(WIZARD_VOCALIZE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_VOCALIZE)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect([PC])
+  !See(LastSeenBy(Myself))
+  HaveSpell(WIZARD_TRUE_SIGHT)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_TRUE_SIGHT)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect([PC])
+  !See(LastSeenBy(Myself))
+  !HaveSpell(WIZARD_TRUE_SIGHT)
+  Delay(10)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Myself,WIZARD_TRUE_SIGHT)
+END
+
+IF
+  HasItem("SCRL9H",Myself)  // ~Maze~
+  See([GOODCUTOFF])
+THEN
+  RESPONSE #100
+    UseItem("SCRL9H",LastSeenBy(Myself))  // ~Maze~
+END
+
+IF
+  !HasBounceEffects(Myself)
+  !HasImmunityEffects(Myself)
+  HaveSpell(WIZARD_SPELL_TURNING)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPELL_TURNING)
+END
+
+IF
+  !StateCheck(Myself,STATE_MIRRORIMAGE)
+  HaveSpell(WIZARD_MIRROR_IMAGE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_MIRROR_IMAGE)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,1,STONESKINS)
+  TookDamage()
+  Global("Prep2","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,3302)  // ~Chain Contingency - Spell Turning~
+    ApplySpell(Myself,WIZARD_SPELL_TURNING)
+    DisplayString(Myself,40240)  // ~Chain Contingency - Mislead~
+    ApplySpell(Myself,127)
+    SetGlobal("Prep2","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,207)
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,1,STONESKINS)
+  TookDamage()
+  Global("Prep2","LOCALS",1)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,40252)  // ~Contingency - Protection from Magical Weapons~
+    ApplySpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+    SetGlobal("Prep2","LOCALS",2)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  HaveSpell(WIZARD_TIME_STOP)
+  !GlobalTimerNotExpired("KR_TIME_STOP_COUNTER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_TIME_STOP_COUNTER","LOCALS",19)
+    Spell(Myself,WIZARD_TIME_STOP)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ENERGY_DRAIN)
+  !CheckStatGT(LastSeenBy(Myself),0,SCRIPTINGSTATE3)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+  !HasItemEquipedReal("amul21",LastSeenBy(Myself))
+  !HasItemEquipedReal("Blun25",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ENERGY_DRAIN)
+END
+
+IF
+  See(SecondNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ENERGY_DRAIN)
+  !CheckStatGT(LastSeenBy(Myself),0,SCRIPTINGSTATE3)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+  !HasItemEquipedReal("amul21",LastSeenBy(Myself))
+  !HasItemEquipedReal("Blun25",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ENERGY_DRAIN)
+END
+
+IF
+  See(ThirdNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ENERGY_DRAIN)
+  !CheckStatGT(LastSeenBy(Myself),0,SCRIPTINGSTATE3)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+  !HasItemEquipedReal("amul21",LastSeenBy(Myself))
+  !HasItemEquipedReal("Blun25",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ENERGY_DRAIN)
+END
+
+IF
+  See(FourthNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ENERGY_DRAIN)
+  !CheckStatGT(LastSeenBy(Myself),0,SCRIPTINGSTATE3)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+  !HasItemEquipedReal("amul21",LastSeenBy(Myself))
+  !HasItemEquipedReal("Blun25",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ENERGY_DRAIN)
+END
+
+IF
+  See(TenthNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ENERGY_DRAIN)
+  !CheckStatGT(LastSeenBy(Myself),0,SCRIPTINGSTATE3)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+  !HasItemEquipedReal("amul21",LastSeenBy(Myself))
+  !HasItemEquipedReal("Blun25",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ENERGY_DRAIN)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+END
+
+IF
+  See(SecondNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+END
+
+IF
+  See(ThirdNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+END
+
+IF
+  See(FourthNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+END
+
+IF
+  See(TenthNearestEnemyOf(Myself))
+  HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !Specifics(Myself,207)
+  HaveSpell(WIZARD_SIMULACRUM)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SIMULACRUM)
+    SetGlobal("ProdigalSon","LOCALS",1)
+END
+
+IF
+  OR(2)
+    See([GOODCUTOFF.0.0.LONG_BOW])
+    See([GOODCUTOFF.0.0.BARD_ALL])
+  HaveSpell(WIZARD_SUMMON_HAKEASHAR)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_SUMMON_HAKEASHAR)
+END
+
+IF
+  See([GOODCUTOFF])
+  !GlobalTimerNotExpired("KR_LICH_ABJURATION_TIMES","LOCALS")
+  HaveSpell(WIZARD_SPELL_IMMUNITY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_LICH_ABJURATION_TIMES","LOCALS",72)
+    DisplayString(Myself,5019)  // ~Spell Immunity~
+    Spell(Myself,WIZARD_SPELL_IMMUNITY_ABJURATION)
+END
+
+IF
+  See([GOODCUTOFF.0.0.LONG_BOW])
+  HaveSpell(WIZARD_PIERCE_SHIELD)
+  OR(3)
+    HasBounceEffects(LastSeenBy(Myself))
+    HasImmunityEffects(LastSeenBy(Myself))
+    CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_PIERCE_SHIELD)
+END
+
+IF
+  See([GOODCUTOFF.UNDEAD])
+  HaveSpell(WIZARD_CONTROL_UNDEAD)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_CONTROL_UNDEAD)
+END
+
+IF
+  See([GOODCUTOFF.0.0.0.0.SUMMONED])
+  HaveSpell(WIZARD_CLOUDKILL)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_CLOUDKILL)
+END
+
+IF
+  See([GOODCUTOFF])
+  HaveSpell(WIZARD_MORDENKAINENS_SWORD)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_MORDENKAINENS_SWORD)
+END
+
+IF
+  See([GOODCUTOFF.0.0.LONG_BOW])
+  !GlobalTimerNotExpired("KR_LICH_DIVINATION_TIMES","LOCALS")
+  HaveSpell(WIZARD_SPELL_IMMUNITY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_LICH_DIVINATION_TIMES","LOCALS",72)
+    DisplayString(Myself,5019)  // ~Spell Immunity~
+    Spell(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+END
+
+IF
+  See([GOODCUTOFF.0.0.LONG_BOW])
+  HaveSpell(WIZARD_SUMMON_NISHRUU)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_SUMMON_NISHRUU)
+END
+
+IF
+  HaveSpell(WIZARD_GREASE)
+  See([GOODCUTOFF])
+  !HasItem("Ring09",LastSeenBy(Myself))  // ~Ring of Free Action~
+  !Kit(LastSeenBy(Myself),16)
+  Range(LastSeenBy(Myself),15)
+  !Allegiance(LastSeenBy(Myself),EVILCUTOFF)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_GREASE)
+END
+
+IF
+  HaveSpell(WIZARD_WEB)
+  See([GOODCUTOFF])
+  !HasItem("Ring09",LastSeenBy(Myself))  // ~Ring of Free Action~
+  !Kit(LastSeenBy(Myself),16)
+  Range(LastSeenBy(Myself),15)
+  !Allegiance(LastSeenBy(Myself),EVILCUTOFF)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_WEB)
+END
+
+IF
+  HaveSpell(WIZARD_CLOUDKILL)
+  See([GOODCUTOFF])
+  Range(LastSeenBy(Myself),15)
+  !Allegiance(LastSeenBy(Myself),EVILCUTOFF)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_CLOUDKILL)
+END
+
+IF
+  HaveSpell(WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+  See([GOODCUTOFF])
+  Range(LastSeenBy(Myself),15)
+  !GlobalTimerNotExpired("KR_PROTING_FROM_WEAPONS","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_PROTING_FROM_WEAPONS","LOCALS",24)
+    Spell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+END
+
+IF
+  See([GOODCUTOFF])
+  HaveSpell(WIZARD_SPELL_SHIELD)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPELL_SHIELD)
+END
+
+IF
+  See([GOODCUTOFF])
+  HaveSpell(WIZARD_SUMMON_NISHRUU)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SUMMON_NISHRUU)
+END
+
+IF
+  OR(4)
+    See([GOODCUTOFF.0.0.FIGHTER_ALL])
+    See([GOODCUTOFF.0.0.RANGER_ALL])
+    See([GOODCUTOFF.0.0.PALADIN_ALL])
+    See([GOODCUTOFF.0.0.THIEF_ALL])
+  HasItem("SCRL5J",Myself)  // ~Oliluke's Resilient Sphere~
+  !GlobalTimerNotExpired("KR_OTILUKES_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    UseItem("SCRL5J",LastSeenBy(Myself))  // ~Oliluke's Resilient Sphere~
+    SetGlobalTimer("KR_OTILUKES_TIMER","LOCALS",60)
+END
+
+IF
+  See([GOODCUTOFF])
+  HaveSpell(WIZARD_SHAPECHANGE)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_OK_TO_CHANGE","LOCALS",1)
+    Spell(Myself,WIZARD_SHAPECHANGE)
+    Continue()
+END
+
+IF
+  See([GOODCUTOFF])
+  Global("KR_OK_TO_CHANGE","LOCALS",1)
+  Global("KR_Have_Not_CHANGE","LOCALS",0)
+  RandomNumLT(4,2)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_Have_Not_CHANGE","LOCALS",1)
+    SetGlobal("KR_OK_TO_CHANGE","LOCALS",2)
+    ForceSpellRES("SPIN153",Myself)
+    Continue()
+END
+
+IF
+  See([GOODCUTOFF])
+  Global("KR_OK_TO_CHANGE","LOCALS",1)
+  Global("KR_Have_Not_CHANGE","LOCALS",0)
+  RandomNumGT(4,2)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_Have_Not_CHANGE","LOCALS",1)
+    SetGlobal("KR_OK_TO_CHANGE","LOCALS",2)
+    ForceSpellRES("SPIN155",Myself)
+    Continue()
+END
+
+IF
+  See([GOODCUTOFF])
+  Global("KR_OK_TO_CHANGE","LOCALS",2)
+  Global("KR_Have_Not_CHANGE","LOCALS",1)
+THEN
+  RESPONSE #100
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  Global("KR_SWITCHED_TO_DARTS","LOCALS",0)
+THEN
+  RESPONSE #100
+    SelectWeaponAbility(SLOT_WEAPON2,0)
+    SetGlobalTimer("KR_TIME_TO_CHANGE_WEAPONS","LOCALS",60)
+    SetGlobal("KR_SWITCHED_TO_DARTS","LOCALS",1)
+    SetGlobalTimer("KR_ATTACK_TIMER","LOCALS",7)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  GlobalTimerNotExpired("KR_TIME_TO_CHANGE_WEAPONS","LOCALS")
+  GlobalTimerNotExpired("KR_ATTACK_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  GlobalTimerExpired("KR_TIME_TO_CHANGE_WEAPONS","LOCALS")
+  Global("KR_CHANGED_TO_ATTACK3","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_CHANGED_TO_ATTACK3","LOCALS",1)
+    SelectWeaponAbility(SLOT_WEAPON3,0)
+    SetGlobalTimer("KR_TIME_TO_CHANGE_WEAPONS","LOCALS",60)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  GlobalTimerExpired("KR_TIME_TO_CHANGE_WEAPONS","LOCALS")
+  Global("KR_CHANGED_TO_ATTACK3","LOCALS",1)
+THEN
+  RESPONSE #100
+    SelectWeaponAbility(SLOT_WEAPON1,0)
+    SetGlobal("KR_CHANGED_TO_ATTACK3","LOCALS",2)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  Global("KR_CHANGED_TO_ATTACK3","LOCALS",1)
+  Range(LastSeenBy(Myself),4)
+  HPPercentGT(Myself,60)
+THEN
+  RESPONSE #100
+    AttackReevaluate(NearestEnemyOf(Myself),15)
+END
+
+IF
+  HPPercentLT(Myself,60)
+  Range(NearestEnemyOf(Myself),4)
+THEN
+  RESPONSE #100
+    RunAwayFrom(NearestEnemyOf(Myself),120)
+END
+

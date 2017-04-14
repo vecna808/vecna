@@ -1,0 +1,52 @@
+// Hive Mother
+
+// Triggers:
+// CLERIC_CURE_CRITICAL_WOUNDS (every 30 seconds)
+// WIZARD_DEATH_SPELL
+// WIZARD_IMPROVED_MANTLE (every 500 seconds)
+// WIZARD_STONE_SKIN (every 500 seconds)
+
+// Spells (all with SpellNoDec)
+// WIZARD_CHAIN_LIGHTNING
+// WIZARD_DISPEL_MAGIC
+// WIZARD_LIGHTNING_BOLT
+// WIZARD_MAGIC_MISSILE
+// WIZARD_MAZE
+// WIZARD_PRISMATIC_SPRAY
+// WIZARD_STONE_SKIN
+
+// Powers (No HP minimum, no wait)
+// BEHOLDER_DEATH_RAY
+// BEHOLDER_DOMINATION
+// BEHOLDER_FEAR
+// BEHOLDER_HOLD_PERSON
+// BEHOLDER_SLOW
+// HIVE_MOTHER_ANTIMAGIC_RAY (slow casting)
+// HIVE_MOTHER_CAUSE_SERIOUS_WOUNDS
+// HIVE_MOTHER_DISINTEGRATE
+// WIZARD_FINGER_OF_DEATH (slow casting)
+
+// Int 20, Wis 14.
+// Spots bouncing on sight.
+// Spots immunities after 6 seconds.
+
+//------------------------------------------------------------------------------
+
+// Special case:
+
+// See below.
+
+//==============================================================================
+
+// Special effects upon death.
+IF
+    Die()
+THEN
+    RESPONSE #100
+        ReallyForceSpellDead(Myself,ILLUSION_DEATH)
+        Wait(1)
+        DestroySelf()
+END
+
+//==============================================================================
+

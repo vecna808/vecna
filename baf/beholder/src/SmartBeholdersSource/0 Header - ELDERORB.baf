@@ -1,0 +1,54 @@
+// Elder Orb (in Planar Sphere)
+
+// Powers                           HPGT    Wait
+// BEHOLDER_ANTIMAGIC_RAY           0       2
+// BEHOLDER_CHARM_PERSON            65      1
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS    5       1
+// BEHOLDER_DEATH_RAY               0       0
+// BEHOLDER_DISINTEGRATE            45      1
+// BEHOLDER_DOMINATION              15      1
+// BEHOLDER_FEAR                    55      1
+// BEHOLDER_FLESH_TO_STONE          25      1
+// BEHOLDER_SLOW                    35      1
+
+// Spots bouncing after 6 seconds.
+// Spots immunities after 12 seconds.
+
+//------------------------------------------------------------------------------
+
+// Special case:
+
+// Attacks Guardian Golem ("obsgol01").
+// Wait for player.
+
+//==============================================================================
+
+    // Start fighting when the player arrives.
+    IF
+        Exists([GOODCUTOFF])
+        Global("xyxWaitOver","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxWaitOver","LOCALS",1)
+    END
+
+    // Fight the Guardian Golem.
+    IF
+        Global("xyxWaitOver","LOCALS",1)
+        See("obsgol01")
+    THEN
+        RESPONSE #100
+            //  Rays are pointless against Golems.
+            Attack("obsgol01")
+    END
+
+    // Cut-off.
+    IF
+        !Exists([GOODCUTOFF])
+        Global("xyxWaitOver","LOCALS",0)
+    THEN
+        RESPONSE #100
+            NoAction()
+    END
+
+

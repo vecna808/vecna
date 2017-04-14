@@ -1,0 +1,29 @@
+    // Move around when something suspicious happens (such as off-screen Cloudkilling).
+    IF
+        // No-one to be SEEN.
+        !See(Player1)
+        !See(Player2)
+        !See(Player3)
+        !See(Player4)
+        !See(Player5)
+        !See(Player6)
+        !See(NearestEnemyOf())
+        OR(4)
+            // They were here...
+            Global("xyxInitialized","LOCALS",1)
+            // or someone called for reinforcements...
+            // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+            // (GENSHT.BCS moves the Beholder up to another Beholder, not necessarily up to the party.)
+            Heard([ANYONE],89)
+            // (This Shout is used in WTASIGHT.BCS and WTARSGT.BCS.)
+            Heard([ANYONE],111)
+            // or I am taking damage from an unseen source (such as off-screen Cloudkilling).
+            HitBy([ANYTHING],DEFAULT)
+        !StateCheck(Myself,STATE_CHARMED)
+    THEN
+        RESPONSE #100
+            // Move around.
+            RandomWalkContinuous()
+    END
+
+

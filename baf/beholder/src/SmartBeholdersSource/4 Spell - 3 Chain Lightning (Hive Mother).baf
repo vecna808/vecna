@@ -1,0 +1,19 @@
+    // Chain Lightning.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        // Several potential victims in range.
+        NumCreatureGT([GOODCUTOFF],2)
+        Range(ThirdNearestEnemyOf(),14)
+        // Relatively safe to cast.
+        OR(2)
+            CheckStatGT(Myself,4,STONESKINS)
+            GlobalTimerNotExpired("xyxImprovedMantle","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            SpellNoDec(Myself,WIZARD_CHAIN_LIGHTNING)
+        RESPONSE #100
+            Continue()
+    END
+
+

@@ -1,0 +1,25 @@
+IF
+	See(NearestEnemyOf(Myself))
+	!GlobalTimerNotExpired("Effect","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Effect","LOCALS",8)
+		ReallyForceSpell(Myself,CLERIC_CONJURE_EARTH_ELEMENTAL)
+END
+
+IF
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		AttackReevaluate(NearestEnemyOf(Myself),5)
+END
+
+IF
+	!See([GOODCUTOFF])
+	Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		MoveToObject(Player1)
+END
+
+

@@ -1,0 +1,82 @@
+IF
+	Delay(18)
+THEN
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_RED)
+		Polymorph(TANARRI)
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_YELLOW)
+		Polymorph(ELEMENTAL_AIR)
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_WHITE)
+		Polymorph(ICE_GOLEM)
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_GREEN)
+		Polymorph(SHAMBLING_MOUND)
+END
+
+IF
+	Delay(18)
+	Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_RED)
+		Polymorph(TANARRI)
+		DisplayStringHead(Myself,126413) // No such index
+		ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_SUN_FIRE)
+		CreateVisualEffect("spportal",[2195.1530])
+		CreateVisualEffect("spportal",[1955.1670])
+		CreateCreature("b#chrfir",[2195.1530],3) // No such index
+		CreateCreature("b#chrfir",[1955.1670],11) // No such index
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_YELLOW)
+		Polymorph(ELEMENTAL_AIR)
+		DisplayStringHead(Myself,126414) // No such index
+		ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_CHAIN_LIGHTNING)
+		CreateVisualEffect("spportal",[2195.1530])
+		CreateVisualEffect("spportal",[1955.1670])
+		CreateCreature("b#chrair",[2195.1530],3) // No such index
+		CreateCreature("b#chrair",[1955.1670],11) // No such index
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_WHITE)
+		Polymorph(ICE_GOLEM)
+		DisplayStringHead(Myself,126415) // No such index
+		ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_CONE_OF_COLD)
+		CreateVisualEffect("spportal",[2195.1670])
+		CreateVisualEffect("spportal",[1955.1530])
+		CreateCreature("b#chrice",[2195.1670],5) // No such index
+		CreateCreature("b#chrice",[1955.1530],13) // No such index
+	RESPONSE #25
+		ReallyForceSpell(Myself,CHROMATIC_DEMON_GREEN)
+		Polymorph(SHAMBLING_MOUND)
+		DisplayStringHead(Myself,126416) // No such index
+		ReallyForceSpell(NearestEnemyOf(Myself),WIZARD_FLESH_TO_STONE)
+		CreateVisualEffect("spportal",[2195.1670])
+		CreateVisualEffect("spportal",[1955.1530])
+		CreateCreature("b#chrear",[2195.1670],5) // No such index
+		CreateCreature("b#chrear",[1955.1530],13) // No such index
+END
+
+IF
+	AttackedBy([GOODCUTOFF],DEFAULT)
+	!Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		Enemy()
+END
+
+IF
+	AttackedBy([ANYONE],DEFAULT)
+THEN
+	RESPONSE #100
+		Attack(LastAttackerOf(Myself))
+END
+
+IF
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		AttackReevaluate(NearestEnemyOf(Myself),30)
+END
+
+

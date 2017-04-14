@@ -1,0 +1,35 @@
+IF
+  Detect(Player1) 
+  Global("Ambush","LOCALS",0) 
+THEN
+  RESPONSE #100
+    SetGlobal("Ambush","LOCALS",1)
+    SetGlobalTimer("BP_Ambush2101","LOCALS",18)
+END
+
+IF
+  Global("Ambush","LOCALS",1)
+  GlobalTimerExpired("BP_Ambush2101","LOCALS")
+  XPGT(Player1,1800000)
+THEN
+  RESPONSE #100
+    SetGlobal("Ambush","LOCALS",2)
+    CreateCreature("BEHOLD01",[2386.1823],4)
+    CreateCreature("BEHDIR01",[2449.1773],4)
+    CreateCreature("BEHUND01",[2323.1725],4)
+END    
+
+IF
+  OR(2)
+    Global("Ambush","LOCALS",1)
+    Global("Ambush","LOCALS",2)
+  GlobalTimerExpired("BP_Ambush2101","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobal("Ambush","LOCALS",3)
+    DestroyItem("MINHP1")
+    CreateCreature("BEHOLD01",[2895.1998],4)
+    CreateCreature("BEHSPE01",[2687.2029],4)
+    CreateCreature("BEHGAU01",[2785.2001],4)
+    CreateCreature("BEHGAU01",[2567.1997],4)
+END

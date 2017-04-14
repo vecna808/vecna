@@ -1,0 +1,21 @@
+    // Start fighting when the player shows up.
+    IF
+        Exists([GOODCUTOFF])
+        Global("xyxWaitOver","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxWaitOver","LOCALS",1)
+    END
+
+    // Don't fight if the player can't see.
+    IF
+        // Still waiting.
+        Global("xyxWaitOver","LOCALS",0)
+    THEN
+        RESPONSE #100
+            NoAction()
+    END
+
+//==============================================================================
+
+

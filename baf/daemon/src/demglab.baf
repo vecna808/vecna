@@ -1,0 +1,42 @@
+IF
+  See([ANYONE])
+  Global("hostile","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("hostile","LOCALS",1)
+    Enemy()
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_POWER_WORD_STUN)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_DISPEL_MAGIC)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_CONFUSION)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+END
+
+
+IF
+  See([ANYONE])
+  StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Attack(LastSeenBy(Myself))
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    Attack(LastSeenBy(Myself))
+END

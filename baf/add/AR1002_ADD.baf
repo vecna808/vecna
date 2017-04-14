@@ -1,0 +1,7 @@
+IF
+    Global("ZintroAdded","AR1002",0)
+THEN
+    RESPONSE #100
+        SetGlobal("ZintroAdded","AR1002",1)
+        CreateCreature("AACRE120",[1304.817],3)
+END

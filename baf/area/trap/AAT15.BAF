@@ -1,0 +1,12 @@
+IF
+	OR(3)
+		Entered([ANYONE])
+		Opened([ANYONE])
+		IsOverMe([ANYONE])
+THEN
+	RESPONSE #100
+		DisplayString(LastTrigger,14381) // Trap Sprung
+		ForceSpell(LastTrigger,WIZARD_PIERCE_SHIELD) // SPWI805.SPL (Pierce Shield)
+END
+
+

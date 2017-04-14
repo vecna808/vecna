@@ -1,0 +1,81 @@
+IF
+	Global("FireShieldUp","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobal("FireShieldUp","LOCALS",1)
+		ApplySpellRES("ZyBRSHLD",Myself) // [PC] Look at Mazzy! Facing dismissal, and still putting on airs.
+		ApplySpellRES("ZyTRUSEE",Myself) // True Sight
+		ApplySpell(Myself,BALOR_FIRE_SHIELD)
+		DestroyItem("ZyTAXEN1") // Throwing Axe
+END
+
+IF
+	See(ThirdNearestEnemyOf(Myself))
+	!Range(LastSeenBy(Myself),10)
+	!GlobalTimerNotExpired("ZyFWhipT","LOCALS")
+THEN
+	RESPONSE #40
+		SetGlobalTimer("ZyFWhipT","LOCALS",EIGHTEEN_MINUTES)
+		SpellNoDecRES("ZYBRWHIP",LastSeenBy(Myself)) // [PC] It's really for the best, Mazzy. I hope you understand.
+		Continue()
+	RESPONSE #60
+		SetGlobalTimer("ZyFWhipT","LOCALS",THREE_ROUNDS)
+		Continue()
+END
+
+IF
+	See(SecondNearestEnemyOf(Myself))
+	!GlobalTimerNotExpired("ZyFireballT","LOCALS")
+THEN
+	RESPONSE #10
+		SetGlobalTimer("ZyFireballT","LOCALS",TWELVE_MINUTES)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_FIREBALL)
+		Continue()
+	RESPONSE #50
+		SetGlobalTimer("ZyFireballT","LOCALS",TWO_ROUNDS)
+		Continue()
+END
+
+IF
+	Range(ThirdNearestEnemyOf(Myself),5)
+	!GlobalTimerNotExpired("ZyFearT","LOCALS")
+THEN
+	RESPONSE #25
+		SetGlobalTimer("ZyFearT","LOCALS",TWO_TURNS)
+		SpellNoDec(NearestEnemyOf(Myself),DEMON_FEAR)
+		Continue()
+	RESPONSE #75
+		SetGlobalTimer("ZyFearT","LOCALS",FOUR_ROUNDS)
+		Continue()
+END
+
+IF
+	LevelGT(Myself,15)
+	Range(ThirdNearestEnemyOf(Myself),8)
+	!GlobalTimerNotExpired("ZySunfireT","LOCALS")
+THEN
+	RESPONSE #25
+		SetGlobalTimer("ZySunfireT","LOCALS",EIGHTEEN_MINUTES)
+		SpellNoDec(Myself,WIZARD_SUN_FIRE)
+		Continue()
+	RESPONSE #75
+		SetGlobalTimer("ZySunfireT","LOCALS",THREE_ROUNDS)
+		Continue()
+END
+
+IF
+	LevelGT(Myself,13)
+	See(NearestEnemyOf(Myself))
+	!StateCheck(LastSeenBy,STATE_HELPLESS)
+	GlobalTimerNotExpired("ZyParalyzeT","LOCALS")
+THEN
+	RESPONSE #40
+		SetGlobalTimer("ZyParalyzeT","LOCALS",EIGHTEEN_MINUTES)
+		SpellNoDec(LastSeenBy,TANARI_PARALYZE)
+		Continue()
+	RESPONSE #60
+		SetGlobalTimer("ZyParalyzeT","LOCALS",9)
+		Continue()
+END
+
+

@@ -1,0 +1,30 @@
+    // Abi-Dalzim's Horrid Wilting.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+        OR(3)
+            // The damage will not be bounced back...
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            // the Beholder hasn't seen the cloak yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or there are at least three potential victims...
+            NumCreatureGT([GOODCUTOFF],2)
+        OR(3)
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // in the area (in which case it's worth it).
+            Range(ThirdNearestEnemyOf(),15)
+        OR(3)
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // Bouncing the damage will (probably) not kill me.
+            HPGT(Myself,40)
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_ABI_DALZIMS_HORRID_WILTING)
+        RESPONSE #100
+            Continue()
+    END
+
+

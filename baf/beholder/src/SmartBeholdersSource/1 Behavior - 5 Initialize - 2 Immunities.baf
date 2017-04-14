@@ -1,0 +1,8 @@
+            // Notice immunity after a couple of rounds.
+            SetGlobalTimer("xyxDoesNotSeeImmunity","LOCALS",18)
+            SetGlobal("xyxInitialized","LOCALS",1)
+            Continue()
+    END
+
+//==============================================================================
+

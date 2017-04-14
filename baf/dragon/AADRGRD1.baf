@@ -1,0 +1,457 @@
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//                Improved Smarter Firkraag Script
+/////////////////////////////////////////////////////////////////////
+// Wes Weimer <weimer@cs.berkeley.edu>
+/////////////////////////////////////////////////////////////////////
+//
+// Goals:
+//	(1) Make Firkraag smarter (and thus harder to kill) ... without
+//	adding any new powers or changing any stats. 
+//	(2) Eliminate possible player cheese:
+//		(a) no obvious trap-setting
+//		(b) no sitting in cloudkills forever
+//		(c) no sitting and watching the PCs summon monsters
+//		(d) no hacking at Mordy forever
+//	(3) "Time to perish, manling!" 
+//
+/////////////////////////////////////////////////////////////////////
+// Version History:
+//	v1   	Sat Nov 10 12:19:13  2001
+//		Project started.
+//	v2   	Sat Nov 10 21:04:43  2001
+//		Spit-polish before a beta test on a.g.b-g. 
+//	v3   	Mon Nov 12 10:37:13  2001
+//		Better summoned monster detection. 
+//      v4      Fri Nov 30 23:24:39  2001
+//              Use `SpellNoDec' instead of `ForceSpell' when possible.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Discussion
+// 
+// So, I sat down to play BGII, that famous game based on TSR's
+// Dungeons and Demiliches game system. You know, the one where the
+// the most powerful monsters, the most mythic beasts, the creatures
+// everyone fears encountering, the stuff that dreams are made of ...
+// are the Demiliches. What's wrong with this picture? Perhaps I was really
+// playing Dungeons and Fire Giants, or Dungeons and Mind Flayers. Dragons
+// clearly got the short end of the stick somewhere. They're just not
+// awe-inspiring in BGII. In fact, they're pretty much pushovers,
+// especially with half-decent tactics on your part. They'll sit around
+// while you surround them and plan their downfall. TOB improves on this
+// somewhat (e.g., you cannot set a ring of traps near Saladrex) but it
+// didn't back-port those features to the SoA dragons. This patch is an
+// attempt to do all of that (and more) for original epitome of draconic
+// glory: Firkraag. 
+//
+// If you're searching for a return to times of yore when dragons flew
+// across Faerun, kicking tail and taking names, this is the patch for you. 
+// If you'd also like an extra bit of challenge in BGII that *isn't* the
+// result of just giving all enemies five chain contingencies and some
+// greater whirlwinds, this is also the patch for you.
+//
+// Firkraag actually has a number of interesting powers. His .CRE
+// file has some interesting spells memorized: magic missile, scorcher,
+// remove magic, fireball and fire shield. I ignore all such spells
+// (and his original script does at well) -- looks like two different
+// designers were at work here. His original script gives him a number
+// of innate powers, however:
+//	stoneskin (once), dispel magic (once/rest), heal (once/rest),
+//	dragon fear (once/rest), lower fire res (once/rest), 
+//	wing buffet (at will), breath weapon (once/18 time units),
+//	greater malison (once), haste (once/rest), silence 15' (once),
+//	charm person (once), acid arrow (at will). 
+// All of these powers except Charm Person (which is IC for PnP dragons
+// but unlikely to work in BGII) are retained. "Once" timing is unified
+// by keeping the same definition of "rest" as the original script.
+// Stoneskin is re-cast every 8 hours to discourage players from
+// hit-run-sleep-hit tactics.
+// 
+// One of the big problems with the original script was conceptual 
+// timing. Firkraag waits until the fight has begun to cast stoneskin.
+// Even Cowled Wizards aren't that dumb. His powerful wing buffet
+// is sorely underused. Dragons are *BIG* and the buffet is one of the 
+// few things that reminds us of it. It keeps away those warriors with Fury
+// and Ages. In addition, the nifty spell abilities almost never see use
+// (despite a "lot" of effort in the original script to include them).
+// Raise your hand if you'd ever seen him cast Charm Person? Didn't think
+// so. Acid Arrow? Silence 15'? Nada.  He's got 17 INT (and 3 WIS, what's
+// up with that?) -- let's use it! He's the big magic-user that covered a
+// troupe of good-saving-throw Paladins with illusionary forms. Let's see
+// that kind of thinking and magery. 
+//
+// A second big problem was some sort of glitch in the game that caused
+// him to cast all of his spells as a level 1 caster. Maybe he did cast
+// silence 15' but you never noticed because it wore off in two rounds.
+// What's up with that? Changing his class in the CRE file fails to fix
+// this problem, but I have hacked around it in the script. It looks like a
+// number of special spells (e.g., DRAGON_SILENCE vs. CLERIC_SILENCE) were
+// created just for this purpose (DRAGON_SILENCE's lowest-level effect is
+// equal to CLERIC_SILENCE at level 20) but on my machine they don't work
+// (DRAGON_SILENCE is a no-op). He always casts remove magic at the first
+// enemy he sees in the original script ... too bad his level 1 cast of it
+// will never remove any enchantments. (To kill two bugs with one stone,
+// he's probably the only caster in the game who can successfully
+// charm/uncharm Glaicas in Nalia's keep. Why is this game so buggy?) We
+// fix all that (well, not the Glaicas part) and solve the phase ordering
+// problem (e.g., remove magic before silence, that sort of thing).
+// Wouldn't want to undo our own spells! And we would want to build on the
+// benefit of greater malison. 
+// 
+// His third big problem was targeting. He always picked the nearest
+// enemy, leading everyone to swarm him with Mordies (or even goblins). He
+// has stated in the game that his goal is to torment Gorion by attacking
+// his ward (<CHARNAME>). Let's not get side-tracked by summoned monsters.
+// Half-orc PCs are smart enough to avoid the summons of Mellisan and
+// Demogorgon and go for the real target. Firkraag has been around the
+// block a few times and should be similarly savvy. Finally, Firkraag is at
+// least 40' tall ... but he gets the same visual range as the PCs, even
+// though some of his spells (notably his fire breath) were designed to
+// work at longer ranges (i.e., the spell definition includes a range of
+// 320 (!)). I'm sure he can see to the end of his cave, so his "eyesight"
+// is extended in that special case. This also discourages certain "fog of
+// ware" abuses that the game engine allows but a live DM would not. 
+//
+// Finally, I made him a little chattier: he taunts more during the
+// battle. 
+//
+// I fully expect this to be a more difficult battle than it was
+// previously. 10th and 11th level parties will probably have difficulty. 
+// Aren't challenges fun? Maybe your next party will be forced to do
+// the Underdark first :-). 
+//
+// Disclaimer: You may be surprised to notice that a number of spells
+// are ForceCast on top of each other. The original script did this
+// as well, it was just comparatively inept about it. Really, there's
+// no additional power here. Just better management. 
+//
+// Without further ado, the script: 
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Scoff once at summoned monsters.
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("FirkraagScoff","LOCALS",0) 
+ Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+ Allegiance(Myself,ENEMY)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,45920)	// Your lackeys will not save you!
+  SetGlobal("FirkraagScoff","LOCALS",1) 
+  Continue()
+END
+ 
+/////////////////////////////////////////////////////////////////////
+// Re-cast Stoneskin if we have been given some hours of rest
+/////////////////////////////////////////////////////////////////////
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  GlobalTimerExpired("FirkraagStone","GLOBAL")
+THEN
+ RESPONSE #100
+  ForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("FirkraagStone","GLOBAL",600) // can recast
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Meat Of The Fight 
+// Firkraag Wisdom:
+//	(1) "Best way to block punch: no be there." (thanks Mr. Miyagi)
+//	(2) Nuke 'em 'till they glow.
+//	(3) Use those special Dragon tricks on enemies in range. 
+//	(4) Target Player1 (or the party), just at Player1 will target
+//	Mellisan and ignore her summons. The fight ends if you kill 
+//	Gorion's Ward.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Red Dragon Breath
+// Spell Range 320, Speed 3, Once Every 18
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("REDDRAGONBREATH","GLOBAL")
+ Exists(StrongestOf)
+THEN
+ RESPONSE #100
+  SetGlobalTimer("REDDRAGONBREATH","GLOBAL",18)
+  // "ReallyForce" allows us to take advantage of the full range of
+  // this spell (which exceeds conventional line of sight). FK is
+  // at least 40' tall and should have no trouble seeing to the end
+  // of his cavern. 
+  ReallyForceSpell(StrongestOf,RED_DRAGON_BREATH)
+  ReallyForceSpell(StrongestOf,RED_DRAGON_HIT)
+  SetGlobal("FirkraagTaunt","LOCALS",1) 	// gloat!
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Hoots and Catcalls.
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("FirkraagTaunt","LOCALS",1) 
+THEN
+ RESPONSE #20
+  DisplayString(Myself,60511)	// Time to perish, manling!
+  SetGlobal("FirkraagTaunt","LOCALS",0) 
+  Continue()
+ RESPONSE #20
+  DisplayString(Myself,19063)	// Your life shall be mine!
+  SetGlobal("FirkraagTaunt","LOCALS",0) 
+  Continue()
+ RESPONSE #20
+  DisplayString(Myself,19054)	// Your life ends here.
+  SetGlobal("FirkraagTaunt","LOCALS",0) 
+  Continue()
+ RESPONSE #20
+  DisplayString(Myself,60715)	// Your life ends with this!
+  SetGlobal("FirkraagTaunt","LOCALS",0) 
+  Continue()
+ RESPONSE #20
+  DisplayString(Myself,21728)	// Run down the road on fire
+  SetGlobal("FirkraagTaunt","LOCALS",0) 
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Wing Buffet
+// Spell Range 30, Speed 1, Unlimited 
+// This is at the top of the list because we don't ever want to
+// get hit (if at all possible). Keep pushing them back. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Range(NearestEnemyOf(Myself),25)
+ !GlobalTimerNotExpired("Buffet","LOCALS")
+THEN
+ RESPONSE #100
+  SetGlobalTimer("Buffet","LOCALS",2)
+  ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Remove Magic
+// Spell Range 40, Speed 3, Once Per Rest
+// This is very important now that it works (the original script's
+// casting of this did nothing). It subsumes lower fire res to some
+// degree because it will cancel most fire protection potions, etc.
+// F's high level means that it also takes down most spell protections
+// and stoneskins. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Detect(Player1)
+ Global("FirkraagRemove","LOCALS",0)
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Player1,WIZARD_DISPEL_MAGIC)
+  SetGlobal("FirkraagRemove","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Greater Malison
+// Spell Range 50, Speed 4, Once Per Rest
+// Get this in before everything else that includes a saving throw
+// (except the buffet and the breath). 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Detect(StrongestOf)
+ Global("FirkraagGreater","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+  SetGlobal("FirkraagGreater","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Lower Fire Resistance
+// Spell Range 50, Speed 1, Once Per Rest
+//////////////////////////////////// (cast together by the old AI)
+// Dragon Fear
+// Range 320, Speed 1, Once Per Rest
+// Both of these involve saves, so we'll put them after Malison. LFR
+// isn't that important now (although it helps against people wearing
+// all of the equipment that grants FR). Fear is nice and should come
+// after Remove Magic. Still, anyone who forgot to bring Mazzy or a
+// Cavalier or somesuch along deserves what they get. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Detect(Player1)
+ Global("FirkraagLower","LOCALS",0)
+THEN
+ RESPONSE #100
+  ReallyForceSpell(Player1,DRAGON_FEAR)
+  ReallyForceSpell(Player1,DRAGON_LOWER_FIRE)
+  SetGlobal("FirkraagLower","LOCALS",1)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Silence 15'
+// Spell Range 80, Speed 5, Once Per Rest
+// This is lower-priority than the others, but that may be an artifact
+// of my mage-poor testing environment. WeakestOf() has a good chance
+// of picking Edwin, Aerie, etc. Plus, the best spellcaster is almost
+// certain to have the Amulet of Power anyway. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("FirkraagSilence","LOCALS",0)
+ Detect(WeakestOf)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,CLERIC)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(WeakestOf,CLERIC_SILENCE_15_FOOT)
+  SetGlobal("FirkraagSilence","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Haste	(on self)
+// This can come last because we still haven't made any physical
+// attacks and Haste doesn't help spell casting. We don't need to
+// see any enemies to know that we should cast this. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("FirkraagHaste","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Myself,WIZARD_HASTE)
+  SetGlobal("FirkraagHaste","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Melf's Acid Arrow
+// Range 60, Speed 2, Unlimited
+// Now that MAA will actually do something (it's weak at level 1), cast
+// it more often. It works well against Mages. Stay out of combat.
+// Eventually, however, we'll go slice up Player1. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Detect(NearestEnemyOfType([PC]))
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+ Detect(NearestEnemyOfType([PC]))
+ !GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    Attack(Player1)	// Kill Gorion's Ward!
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Fight Ends (or we're all resting)
+// The original resting condition was !Detect([PC]), HPLT(Myself,50)
+// CombatCounter(0). Lazy scripting: the HPLT was apparently to guard
+// against repeated healings but it meant that a 75% health dragon
+// never got back his spell-like abilities. I'm happy to heal
+// even when it is useless: it'll make the players edgy. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ !Detect(NearestEnemyOf(Myself))	// (*)
+ CombatCounter(0)			// (*)
+ Delay(9)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,26703)		// "Damn, where are they?"
+  ForceSpell(Myself,CLERIC_HEAL)
+  SetGlobal("FirkraagLower","LOCALS",0)	     // can cast Lower Fire Resistance
+  SetGlobal("FirkraagGreater","LOCALS",0)   // can cast Greater Malison
+  SetGlobal("FirkraagHaste","LOCALS",0)    // can cast Haste
+  SetGlobal("FirkraagSilence","LOCALS",0) // can cast Silence 15'
+  SetGlobal("FirkraagRemove","LOCALS",0) // can cast Remove
+  StartCombatCounter()
+  Continue()			        // Chasey chasey!
+END
+
+/////////////////////////////////////////////////////////////////////
+// If we've gotten this far and combat is still going on, the 
+// players are probably lobbing cloudkills from a distance or somesuch.
+// Walk towards Player1 for a bit and see if that helps open up
+// one of our other favorite options. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,44109)	// <CHARNAME>? <CHARNAME>? 
+  AttackOneRound(Player1)	// Chasey chasey
+  AttackOneRound(Player1)	// Chasey chasey
+END
+
+/////////////////////////////////////////////////////////////////////
+// How To Provoke A Dragon
+// Doing these things will make Firkraag angry. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,NEUTRAL)
+ OR(5)
+   AttackedBy([ANYTHING],DEFAULT)
+   SpellCast([GOODCUTOFF],0)		// triggers on any spell
+   SpellCastPriest([GOODCUTOFF],0)	// triggers on any spell
+   SpellCastInnate([GOODCUTOFF],0)	// triggers on any ability
+   Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+ RESPONSE #100
+  DisplayString(Myself,21726)	// "Are you trying to threaten me?"
+  DisplayString(Myself,60511)	// "Time to perish, manling!"
+  Enemy()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Initialize our Juggernaut
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("FirkraagInit","LOCALS",0)
+THEN
+ RESPONSE #100
+  ForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("FirkraagStone","GLOBAL",600) // can recast
+  SetGlobalTimer("REDDRAGONBREATH","GLOBAL",18)
+  SetGlobalTimer("Cast","LOCALS",6)
+  EquipMostDamagingMelee() // use those claws!
+  SetGlobal("FirkraagInit","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Warn the PC not to try any tricks.
+// Then start a random walk. We cannot actually detect SpellCast()
+// on the other side of the cavern (why not?) ... but if we randomly
+// walk around there's no good place for the party to sit around 
+// buffing. A prescient party could buffy at the top of the stairs
+// the first time they come in, however. :-)
+/////////////////////////////////////////////////////////////////////
+IF
+ NumberOfTimesTalkedTo(1)
+ Global("FirkraagWarn","LOCALS",0)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,4369)	// "don't try anything stupid"
+  SetGlobal("FirkraagWarn","LOCALS",1)
+  RandomWalkContinuous()	// Why make it easy for them? 
+END
+

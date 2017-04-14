@@ -1,0 +1,14 @@
+///////////////////////////
+// Liches are cool enough to cavort with pit fiends
+// instead of earth elementals. 
+///////////////////////////
+IF
+  HasItem("LICH",Myself)
+  Global("Prep","LOCALS",0)
+  Global("Guard","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    CreateCreatureObjectDoor("dempitsu",Myself,1,1,1)
+    SetGlobal("Guard","LOCALS",1)
+END

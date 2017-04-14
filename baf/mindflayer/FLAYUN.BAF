@@ -1,0 +1,16 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    ReallyForceSpellDead(Myself,VAMPIRE_GAS_FORM_CHANGE)
+END
+
+IF
+  Detect([PC])
+  !GlobalTimerNotExpired("GBBlast","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBBlast","LOCALS",30)
+    ReallyForceSpell(LastSeenBy(Myself),BRAIN_PSIONIC_BLAST)
+END
+

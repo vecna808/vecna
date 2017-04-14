@@ -1,0 +1,26 @@
+    // Prismatic Spray.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        // Not highly magic resistant.
+        CheckStatLT(LastSeenBy(),75,RESISTMAGIC)
+        // Legal target.
+        !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(LastSeenBy(),0,SANCTUARY)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+        // Don't waste this on low-level opponents.
+        CheckStatGT(LastSeenBy(),7,LEVEL)
+        // Relatively safe to cast.
+        OR(2)
+            CheckStatGT(Myself,6,STONESKINS)
+            GlobalTimerNotExpired("xyxImprovedMantle","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            SpellNoDec(NearestEnemyOf(),WIZARD_PRISMATIC_SPRAY)
+        RESPONSE #100
+            Continue()
+    END
+
+

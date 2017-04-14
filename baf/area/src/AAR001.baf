@@ -1,0 +1,31 @@
+IF
+	Global("A01SET","AAR001",0)
+THEN
+	RESPONSE #100
+		AmbientActivate("AMB_Stream1",TRUE)
+		SoundActivate("Bridge3",TRUE)
+		AmbientActivate("AMB_Stream2",TRUE)
+		SoundActivate("Bridge1",TRUE)
+		SoundActivate("Bridge2",TRUE)
+		AmbientActivate("AMB_Stream3",TRUE)
+		TriggerActivation("AA01END",FALSE)
+		SetGlobal("A01SET","AAR001",1)
+END
+
+IF
+	Global("ENDSET","AAR001",0)
+	Dead("ASCRE01")
+	Dead("ASCRE02")
+	Dead("ASCRE04")
+	Dead("ASCRE05")
+	Dead("ASCRE14")
+	Dead("ASCRE15")
+THEN
+	RESPONSE #100
+		Unlock("AA01CN00")
+		Unlock("AA01CN01")
+		TriggerActivation("AA01END",TRUE)
+		SetGlobal("ENDSET","AAR001",1)
+END
+
+

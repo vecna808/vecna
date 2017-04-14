@@ -1,0 +1,203 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    CreateVisualEffectObject("SPUNHOLY",Myself)
+    DestroySelf()
+END
+
+IF
+  Global("BPCHARM","LOCALS",1)
+  !StateCheck(Myself,STATE_CHARMED)
+THEN
+  RESPONSE #100
+    SetGlobal("BPCHARM","LOCALS",0)
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  ActionListEmpty()
+  HPPercentLT(Myself,25)
+  Global("DevaHeal","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    ForceSpell(Myself,CLERIC_HEAL)
+    SetGlobal("DevaHeal","LOCALS",1)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_LESSER_RESTORATION)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(2)
+    See([EVILCUTOFF])
+    See(LastSummonerOf(Myself))
+  CheckStatGT(LastSeenBy(Myself),0,LEVELDRAIN)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_LESSER_RESTORATION)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_NEUTRALIZE_POISON)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(2)
+    See([EVILCUTOFF])
+    See(LastSummonerOf(Myself))
+  StateCheck(LastSeenBy(Myself),STATE_POISONED)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_NEUTRALIZE_POISON)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_REMOVE_FEAR)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(2)
+    See([EVILCUTOFF])
+    See(LastSummonerOf(Myself))
+  StateCheck(LastSeenBy(Myself),STATE_PANIC)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_REMOVE_FEAR)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_HEAL)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(2)
+    See([EVILCUTOFF])
+    See(LastSummonerOf(Myself))
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  HPPercentLT(LastSeenBy(Myself),25)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_HEAL)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_GLOBE_OF_BLADES)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  CheckStat(Myself,0,CLERIC_BLADE_BARRIER)
+  Global("BP_FakeGlobe","LOCALS",0)
+  RandomNumLT(80,41)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    ForceSpell(Myself,NPC_BLADE_BARRIER)
+    DisplayStringHead(Myself,63801)  // ~Globe of Blades~
+    SetGlobal("BP_FakeGlobe","LOCALS",1)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WIZARD_CHAOS)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  See([GOODCUTOFF])
+  !HasBounceEffects(LastSeenBy(Myself))
+  !StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+  !Range(LastSeenBy(Myself),10)
+  RandomNumLT(32,17)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),WIZARD_CHAOS)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_DISPEL_MAGIC)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(9)
+    StateCheck(LastSummonerOf(Myself),STATE_CHARMED)
+    StateCheck(LastSummonerOf(Myself),STATE_CONFUSED)
+    StateCheck(LastSummonerOf(Myself),STATE_SILENCED)
+    StateCheck(LastSummonerOf(Myself),STATE_HELPLESS)
+    StateCheck(LastSummonerOf(Myself),STATE_BLIND)
+    StateCheck(LastSummonerOf(Myself),STATE_STUNNED)
+    StateCheck(LastSummonerOf(Myself),STATE_SLOWED)
+    StateCheck(LastSummonerOf(Myself),STATE_SLEEPING)
+    StateCheck(LastSummonerOf(Myself),STATE_FEEBLEMINDED)
+  OR(2)
+    !HasImmunityEffects(Myself)
+    !Range(LastSummonerOf(Myself),15)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSummonerOf(Myself),CLERIC_DISPEL_MAGIC)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_DISPEL_MAGIC)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  OR(2)
+    StateCheck(Myself,STATE_BLIND)
+    StateCheck(Myself,STATE_SLOWED)
+  OR(2)
+    !HasImmunityEffects(LastSummonerOf(Myself))
+    !Range(LastSummonerOf(Myself),15)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(Myself,CLERIC_DISPEL_MAGIC)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_DISPEL_MAGIC)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  See([EVILCUTOFF])
+  OR(9)
+    StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+    StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+    StateCheck(LastSeenBy(Myself),STATE_SILENCED)
+    StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+    StateCheck(LastSeenBy(Myself),STATE_BLIND)
+    StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+    StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+    StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+    StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+  OR(2)
+    !HasImmunityEffects(Myself)
+    !Range(LastSeenBy(Myself),15)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_DISPEL_MAGIC)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_DISPEL_MAGIC)
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  See(SecondNearest([EVILCUTOFF]))
+  OR(9)
+    StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+    StateCheck(LastSeenBy(Myself),STATE_CONFUSED)
+    StateCheck(LastSeenBy(Myself),STATE_SILENCED)
+    StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+    StateCheck(LastSeenBy(Myself),STATE_BLIND)
+    StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+    StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+    StateCheck(LastSeenBy(Myself),STATE_SLEEPING)
+    StateCheck(LastSeenBy(Myself),STATE_FEEBLEMINDED)
+  OR(2)
+    !HasImmunityEffects(Myself)
+    !Range(LastSeenBy(Myself),15)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),CLERIC_DISPEL_MAGIC)
+END
+

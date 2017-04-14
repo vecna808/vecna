@@ -1,0 +1,34 @@
+    // Disintegrate Ray.
+    IF
+        !GlobalTimerNotExpired("xyxUsedDisintegrateRay","LOCALS")
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),-3,SAVEVSSPELL)
+        // Not immune to Disintegrate.
+        // (No immunities detectable)
+        // Not bouncing.
+        // This ray is potentially deadly if it bounces, so be hesitant to use it while bouncing is not yet detected.
+        OR(2)
+            GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+            RandomNum(3,1)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",LastSeenBy()) // Cloak of Mirroring
+        // Not totally magic resistant.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedDisintegrateRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),HIVE_MOTHER_DISINTEGRATE)
+        RESPONSE #100
+            Continue()
+    END
+
+

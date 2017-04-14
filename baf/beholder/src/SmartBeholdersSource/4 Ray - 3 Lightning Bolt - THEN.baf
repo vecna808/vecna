@@ -1,0 +1,10 @@
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedLightningBoltRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),BEHOLDER_LIGHTNING_BOLT)
+            // Wait(XXX)
+        RESPONSE #20
+            Continue()
+    END
+
+

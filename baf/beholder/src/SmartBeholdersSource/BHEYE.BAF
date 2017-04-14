@@ -1,0 +1,1225 @@
+// **********************************************************************
+// *               BAF Name: BHEYE.BAF
+// *                Created: 10/01/2001 11:31:59 PM
+// *       BAF Assembled by: AIScriptFactory Text
+// **********************************************************************
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 00 0 Header - BHEYE.baf
+// Unseeing Eye
+// Triggers:
+//  Improved Mantle
+//  Protection from Energy
+//  Spell Deflection (no visual)
+//  Stoneskin
+// Spells memorized:
+//  Power Word Kill x 2
+//  Horrid Wilting x 3
+//  Power Word Stun x 4
+//  Death Spell x 1
+// Powers                           HPGT    Wait
+// BEHOLDER_FEAR                    0       Delay 12 & Wait 1
+// Int 22, Wis 21.
+// Spots bouncing on sight.
+// Spots immunities on sight.
+//------------------------------------------------------------------------------
+// Special case:
+// Moving around is OK due to total awareness.
+// See below.
+//==============================================================================
+// Instant, total awareness.
+IF
+    Global("xyxInitialized","LOCALS",0)
+THEN
+    RESPONSE #100
+        // Call for reinforcements  (Don't wait until attacked...).
+        // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+        Shout(89)
+        // Notice bouncing immediately.
+        SetGlobalTimer("xyxDoesNotSeeBounce","LOCALS",0)
+        // Notice immunity immediately.
+        SetGlobalTimer("xyxDoesNotSeeImmunity","LOCALS",0)
+        SetGlobal("xyxInitialized","LOCALS",1)
+        Continue()
+END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 01 1 Behavior - 2 Track the Party.baf
+    // Seek out the party if they're out of sight but have given themselves away.
+    IF
+        // No-one AROUND.
+        // (Don't move if invisible players are around - it would look suspicious.)
+        !Detect(Player1)
+        !Detect(Player2)
+        !Detect(Player3)
+        !Detect(Player4)
+        !Detect(Player5)
+        !Detect(Player6)
+        !See(NearestEnemyOf())
+        // Don't move move to invisible people, unless I can see the invisible.
+        OR(2)
+            CheckStat(Myself,1,SEEINVISIBLE)
+            !StateCheck(Player1,STATE_INVISIBLE)
+        OR(2)
+            CheckStat(Myself,1,SEEINVISIBLE)
+            CheckStat(Player1,0,SANCTUARY)
+        OR(4)
+            // They were here...
+            Global("xyxInitialized","LOCALS",1)
+            // or someone called for reinforcements...
+            // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+            // (GENSHT.BCS moves the Beholder up to another Beholder, not necessarily up to the party.)
+            Heard([ANYONE],89)
+            // (This Shout is used in WTASIGHT.BCS and WTARSGT.BCS.)
+            Heard([ANYONE],111)
+            // or I am taking damage from an unseen source (such as off-screen Cloudkilling).
+            HitBy([ANYTHING],DEFAULT)
+        // I can see where the damage or Shout came from.
+        !StateCheck(Myself,STATE_BLIND)
+        // Not charmed.
+        !StateCheck(Myself,STATE_CHARMED)
+    THEN
+        RESPONSE #100
+            // (The lack of ActionListEmpty checks means the Beholder won't go any closer than needed.)
+            MoveToObject(Player1)
+    END
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 02 1 Behavior - 3 Investigate.baf
+    // Move around when something suspicious happens (such as off-screen Cloudkilling).
+    IF
+        // No-one to be SEEN.
+        !See(Player1)
+        !See(Player2)
+        !See(Player3)
+        !See(Player4)
+        !See(Player5)
+        !See(Player6)
+        !See(NearestEnemyOf())
+        OR(4)
+            // They were here...
+            Global("xyxInitialized","LOCALS",1)
+            // or someone called for reinforcements...
+            // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+            // (GENSHT.BCS moves the Beholder up to another Beholder, not necessarily up to the party.)
+            Heard([ANYONE],89)
+            // (This Shout is used in WTASIGHT.BCS and WTARSGT.BCS.)
+            Heard([ANYONE],111)
+            // or I am taking damage from an unseen source (such as off-screen Cloudkilling).
+            HitBy([ANYTHING],DEFAULT)
+        !StateCheck(Myself,STATE_CHARMED)
+    THEN
+        RESPONSE #100
+            // Move around.
+            RandomWalkContinuous()
+    END
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 03 2 Contingencies - BHEYE.baf
+// BHEYE Triggers.
+    // Chain Contingency.
+    IF
+        Global("xyxChainContingency","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxChainContingency","LOCALS",1)
+            DisplayString(Myself,26328) // Chain Contingency
+            // Improved Mantle displays its own string.
+            ApplySpell(Myself,WIZARD_IMPROVED_MANTLE)
+            // Protection from Energy displays its own string.
+            ApplySpell(Myself,WIZARD_PROTECTION_FROM_ENERGY)
+            // Spell Deflection (no visual) displays its own string.
+            ApplySpell(Myself,SPELL_DEFLECTION_NO_VISUAL)
+            Continue()
+    END
+    // Contingency.
+    IF
+        Global("xyxContingency","LOCALS",0)
+        CheckStat(Myself,0,STONESKINS)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxContingency","LOCALS",1)
+            DisplayString(Myself,25942) // Contingency
+            DisplayString(Myself,8300) // Stoneskin
+            ApplySpell(Myself,WIZARD_STONE_SKIN)
+            Continue()
+    END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 04 3 Targeting - Rays - Disabling.baf
+// Find a target without Spell Turning, Magic Resistance or the Shield of Balduran.
+// (The cut-off resets the LastSeenBy.)
+// (Improved Invisibility is no problem for ForceSpell.)
+    // Sixth Nearest.
+    IF
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Cloak of Mirroring.
+            HasItemEquiped("CLCK26",SixthNearestEnemyOf())
+        OR(2)
+            // This Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target doesn't have the Shield of Balduran.
+            !HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not in Sanctuary.
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Not immortal.
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fifth Nearest.
+    IF
+        !RandomNum(6,5)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("CLCK26",FifthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fourth Nearest.
+    IF
+        !RandomNum(6,4)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("CLCK26",FourthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Third Nearest.
+    IF
+        !RandomNum(6,3)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("CLCK26",ThirdNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Second Nearest.
+    IF
+        !RandomNum(6,2)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("CLCK26",SecondNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Nearest.
+    IF
+        !RandomNum(6,1)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("CLCK26",NearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 05 4 Ray - 2 Fear (Unseeing Eye).baf
+    // Fear Ray.
+    IF
+        !GlobalTimerNotExpired("xyxUsedFearRay","LOCALS")
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),1,SAVEVSSPELL)
+        // Not immune to Panic.
+        // (No good way to detect Remove Fear.)
+        !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc Berserk
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE3) // Barbarian Rage
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !Kit(LastSeenBy(),CAVALIER)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("CLCK30",LastSeenBy()) // Cloak of Bravery
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("MISCBC",LastSeenBy()) // Blackrazor
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("SW1H32",LastSeenBy()) // Dragonslayer
+        // Not bouncing.
+        // This ray is potentially disabling if it bounces, so be hesitant to use it while bouncing is not yet detected.
+        OR(2)
+            GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+            RandomNum(2,1)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        // Don't use too much on downed foes.
+        OR(2)
+            !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+            RandomNum(4,1)
+        // Not totally magic resistant.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedFearRay","LOCALS",12)
+            ForceSpell(LastSeenBy(),BEHOLDER_FEAR)
+            Wait(1)
+        RESPONSE #100
+            Continue()
+    END
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 06 4 Spell - 1 Power Word Kill.baf
+//==============================================================================
+// Find a target without Spell Turning, Magic Resistance or the Cloak of Mirroring,
+//  that has 60 or less Hit Points.
+// (The cut-off resets the LastSeenBy.)
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        // Randomize a bit.
+        !RandomNum(6,6)
+        HPLT(SixthNearestEnemyOf(),61)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Shield of Balduran.
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        OR(2)
+            // This Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target doesn't have the Cloak of Mirroring (which bounces Power Word Kill...).
+            !HasItemEquiped("CLCK26",SixthNearestEnemyOf())
+        // Not immune to Death.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(SixthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),ANTISOLAR)
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not Improved Invisible or in Sanctuary.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Only use on worthwile targets.
+        CheckStatGT(SixthNearest(),7,LEVEL)
+        // Not immortal
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,5)
+        HPLT(FifthNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",FifthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(FifthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        CheckStatGT(FifthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fourth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,4)
+        HPLT(FourthNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",FourthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(FourthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        CheckStatGT(FourthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Third Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,3)
+        HPLT(ThirdNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",ThirdNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(ThirdNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        CheckStatGT(ThirdNearest(),7,LEVEL)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Second Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,2)
+        HPLT(SecondNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",SecondNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(SecondNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        CheckStatGT(SecondNearest(),7,LEVEL)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,1)
+        HPLT(NearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",NearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(NearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),ANTISOLAR)
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        CheckStatGT(Nearest(),7,LEVEL)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+// Power Word Kill.
+IF
+    !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+    HaveSpell(WIZARD_POWER_WORD_KILL)
+    HPLT(LastSeenBy(),61)
+    // Not immune to Death.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE2) // Death Ward
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),PLANATAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),DARKPLANATAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),SOLAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),ANTISOLAR)
+    // Yes, the cloak bounces Power Word Kill...
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !HasItemEquiped("CLCK26",LastSeenBy()) // Cloak of Mirroring
+    // Not totally magic resistant.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+    // Not bouncing.
+    // This ray is potentially deadly if it bounces, so be hesitant to use it while bouncing is not yet detected.
+    OR(3)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        RandomNum(3,1)
+        // I will not be affected (if I don't take damage in the next second...).
+        HPGT(Myself,60)
+    OR(3)
+        !HasBounceEffects(LastSeenBy())
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        HasItemEquiped("WA2SHIEL",LastSeenBy())
+    !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+    CheckStat(LastSeenBy(),0,SANCTUARY)
+    CheckStatGT(LastSeenBy(),7,LEVEL)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxSpellCast","LOCALS",6)
+        Spell(LastSeenBy(),WIZARD_POWER_WORD_KILL)
+    // Caution is advised...
+    RESPONSE #100
+        Continue()
+END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 07 4 Spell - 1 Power Word Stun.baf
+//==============================================================================
+// Find a target without Spell Turning or Magic Resistance,
+//  that has 89 or less Hit Points.
+// (The cut-off resets the LastSeenBy.)
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        // Randomize a bit.
+        !RandomNum(6,6)
+        HPLT(SixthNearestEnemyOf(),90)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Shield of Balduran.
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        // Not immune to Stun.
+        // Rage is pretty obvious.
+        !StateCheck(SixthNearestEnemyOf(),STATE_BERSERK) // Minsc Berserk
+        !StateCheck(SixthNearestEnemyOf(),SCRIPTINGSTATE3) // Barbarian Rage
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",SixthNearestEnemyOf(Myself)) // Sword of Avoreen
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not Improved Invisible or in Sanctuary.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Only use on worthwile targets.
+        CheckStatGT(SixthNearest(),7,LEVEL)
+        // Not immortal.
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,5)
+        HPLT(FifthNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        !StateCheck(FifthNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(FifthNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",FifthNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        CheckStatGT(FifthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fourth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,4)
+        HPLT(FourthNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        !StateCheck(FourthNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(FourthNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",FourthNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        CheckStatGT(FourthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Third Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,3)
+        HPLT(ThirdNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        !StateCheck(ThirdNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(ThirdNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",ThirdNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        CheckStatGT(ThirdNearest(),7,LEVEL)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Second Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,2)
+        HPLT(SecondNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        !StateCheck(SecondNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(SecondNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",SecondNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        CheckStatGT(SecondNearest(),7,LEVEL)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,1)
+        HPLT(NearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        !StateCheck(NearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(NearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",NearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        CheckStatGT(Nearest(),7,LEVEL)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+// Power Word Stun.
+IF
+    !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+    HaveSpell(WIZARD_POWER_WORD_STUN)
+    HPLT(LastSeenBy(),90)
+    // Not immune to Stun.
+    // Rage is pretty obvious.
+    !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc Berserk
+    !StateCheck(LastSeenBy(),SCRIPTINGSTATE3) // Barbarian Rage
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("FREERING",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("ROSSRING",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("RING09",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("NPSW01",LastSeenBy(Myself)) // Sword of Avoreen
+    // Don't use on downed foes.
+    !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+    // Not totally magic resistant.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+    // Not bouncing.
+    // This spell is potentially disabling if it bounces, so be hesitant to use it while bouncing is not yet detected.
+    OR(3)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        RandomNum(2,1)
+        // I have enough Hit Points not to be affected (if I don't take damage the next second...).
+        HPGT(Myself,89)
+    OR(3)
+        !HasBounceEffects(LastSeenBy())
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        HasItemEquiped("WA2SHIEL",LastSeenBy())
+    !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+    CheckStat(LastSeenBy(),0,SANCTUARY)
+    CheckStatGT(LastSeenBy(),7,LEVEL)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxSpellCast","LOCALS",6)
+        Spell(LastSeenBy(),WIZARD_POWER_WORD_STUN)
+    RESPONSE #100
+        Continue()
+END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 08 4 Spell - 3 Abi-Dalzim's Horrid Wilting.baf
+    // Abi-Dalzim's Horrid Wilting.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_ABI_DALZIMS_HORRID_WILTING)
+        OR(3)
+            // The damage will not be bounced back...
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            // the Beholder hasn't seen the cloak yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or there are at least three potential victims...
+            NumCreatureGT([GOODCUTOFF],2)
+        OR(3)
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // in the area (in which case it's worth it).
+            Range(ThirdNearestEnemyOf(),15)
+        OR(3)
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // Bouncing the damage will (probably) not kill me.
+            HPGT(Myself,40)
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_ABI_DALZIMS_HORRID_WILTING)
+        RESPONSE #100
+            Continue()
+    END
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 09 4 Spell - 4 Death Spell.baf
+    // Death Spell
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_DEATH_SPELL)
+        NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],0)
+        Range([GOODCUTOFF.0.0.0.0.SUMMONED],16)
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one that's been there for some time.
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+        OR(2)
+            Range(SecondNearest([GOODCUTOFF.0.0.0.0.SUMMONED]),16)
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_DEATH_SPELL)
+        RESPONSE #100
+            Continue()
+    END
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 10 5 Attack - 1 Melee - 1 Enemies.baf
+// Target a vulnerable foe.
+    // Sixth nearest.
+    IF
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // Beholder teeth do Piercing damage.
+        CheckStatLT(SixthNearestEnemyOf(),100,RESISTPIERCING)
+        // Don't go after immortals (such as pre-ToB Wizard Eyes).
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fifth nearest.
+    IF
+        !RandomNum(6,5)
+        CheckStatLT(FifthNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fourth nearest.
+    IF
+        !RandomNum(6,4)
+        CheckStatLT(FourthNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Third nearest.
+    IF
+        !RandomNum(6,3)
+        CheckStatLT(ThirdNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Second nearest.
+    IF
+        !RandomNum(6,2)
+        StateCheck(SecondNearestEnemyOf(),STATE_CHARMED)
+        CheckStatLT(SecondNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Nearest.
+    IF
+        !RandomNum(6,1)
+        CheckStatLT(NearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+// Attack.
+IF
+    OR(2)
+        Allegiance(LastSeenBy(),GOODCUTOFF)
+        StateCheck(Myself,STATE_CHARMED)
+    CheckStatLT(LastSeenBy(),100,RESISTPIERCING)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        Attack(LastSeenBy())
+END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 11 5 Attack - 1 Melee - 2 Charmed Creatures.baf
+// Find a charmed creature (be they enemy or ally...).
+    // Sixth nearest.
+    IF
+        // Search for charmed creatures.
+        StateCheck(SixthNearest(),STATE_CHARMED)
+        // Beholder teeth do Piercing damage.
+        CheckStatLT(SixthNearest(),100,RESISTPIERCING)
+        // Don't go after immortals (such as pre-ToB Wizard Eyes).
+        !HasItem("MINHP1",SixthNearest())
+        !HasItem("IMOENHP1",SixthNearest())
+        See(SixthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fifth nearest.
+    IF
+        StateCheck(FifthNearest(),STATE_CHARMED)
+        CheckStatLT(FifthNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FifthNearest())
+        !HasItem("IMOENHP1",FifthNearest())
+        See(FifthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Fourth nearest.
+    IF
+        StateCheck(FourthNearest(),STATE_CHARMED)
+        CheckStatLT(FourthNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FourthNearest())
+        !HasItem("IMOENHP1",FourthNearest())
+        See(FourthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Third nearest.
+    IF
+        StateCheck(ThirdNearest(),STATE_CHARMED)
+        CheckStatLT(ThirdNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",ThirdNearest())
+        !HasItem("IMOENHP1",ThirdNearest())
+        See(ThirdNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Second nearest.
+    IF
+        StateCheck(SecondNearest(),STATE_CHARMED)
+        CheckStatLT(SecondNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",SecondNearest())
+        !HasItem("IMOENHP1",SecondNearest())
+        See(SecondNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+    // Nearest.
+    IF
+        StateCheck(Nearest(),STATE_CHARMED)
+        CheckStatLT(Nearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",Nearest())
+        !HasItem("IMOENHP1",Nearest())
+        See(Nearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+// Attack.
+IF
+    !StateCheck(Myself,STATE_CHARMED)
+    StateCheck(LastSeenBy(),STATE_CHARMED)
+THEN
+    RESPONSE #100
+        Attack(LastSeenBy())
+END
+//==============================================================================
+// *               BAF Name: BHEYE.BAF
+// *           Segment Name: 12 6 Background Script Block - Stand Ground.baf
+// Prevent background scripts from doing something stupid...
+IF
+    True()
+THEN
+    RESPONSE #100
+        NoAction()
+END
+//==============================================================================

@@ -1,0 +1,21 @@
+    // Vocalize.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_VOCALIZE)
+        StateCheck(Myself,STATE_SILENCED)
+        // At least one other spell left to cast.
+        OR(5)
+            HaveSpell(WIZARD_TRUE_SIGHT)
+            HaveSpell(WIZARD_SPELL_TURNING)
+            HaveSpell(WIZARD_MAZE)
+            HaveSpell(WIZARD_IMPRISONMENT)
+            HaveSpell(WIZARD_POWER_WORD_KILL)
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_VOCALIZE)
+        RESPONSE #100
+            Continue()
+    END
+
+

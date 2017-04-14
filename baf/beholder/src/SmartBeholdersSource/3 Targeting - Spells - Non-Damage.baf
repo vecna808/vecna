@@ -1,0 +1,156 @@
+// Find a target without Spell Turning or Magic Resistance.
+// (The cut-off resets the LastSeenBy.)
+
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Shield of Balduran.
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not Improved Invisible or in Sanctuary.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Not immortal.
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        !RandomNum(6,5)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        !RandomNum(6,4)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        !RandomNum(6,3)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        !RandomNum(6,2)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        !RandomNum(6,1)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+//==============================================================================
+

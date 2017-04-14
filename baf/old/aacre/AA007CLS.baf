@@ -1,0 +1,62 @@
+IF
+	NumTimesTalkedTo(0)
+	Detect([PC])
+THEN
+	RESPONSE #100
+		StartDialogueNoSet(LastSeenBy(Myself))
+END
+
+IF
+	OnCreation()
+THEN
+	RESPONSE #100
+		StartTimer(77,6)
+		Continue()
+END
+
+IF
+	TimerExpired(77)
+THEN
+	RESPONSE #100
+		StartTimer(77,6)
+		Continue()
+END
+
+IF
+	HPLT(Myself,10)
+	Global("ASLolthIsBeingDestroyed","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetInterrupt(FALSE)
+		MoveViewObject(Myself,INSTANT)
+		StartTimer(77,6)
+		ClearAllActions()
+		SetGlobal("ASLolthIsBeingDestroyed","LOCALS",1)
+		StartCutSceneMode()
+		Wait(4)
+		CreateVisualEffectObject("SPFIREPI",Myself)
+		Wait(1)
+		CreateVisualEffectObject("SPFIRSD2",Myself)
+		Wait(2)
+		CreateVisualEffectObject("SPFLSRIN",Myself)
+		Wait(1)
+		CreateVisualEffectObject("SPTRAPBB",Myself)
+		Wait(2)
+		CreateVisualEffectObject("SPUNHOLY",Myself)
+		Wait(1)
+		CreateVisualEffectObject("SPPLANAR",Myself)
+		Wait(2)
+		EndCutSceneMode()
+		ActionOverride(LastAttackerOf("AACRE007"),Attack("AACRE007"))
+END
+
+IF
+	!CombatCounter(0)
+	See(NearestEnemyOf(Myself))
+	ActionListEmpty()
+THEN
+	RESPONSE #100
+		AttackReevaluate(LastSeenBy(Myself),0)
+END
+
+

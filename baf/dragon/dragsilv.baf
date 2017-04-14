@@ -1,0 +1,635 @@
+/////////////////////////////////////////////////////////////////////
+//            Improved Smarter Adalon Script
+/////////////////////////////////////////////////////////////////////
+// Wes Weimer <weimer@cs.berkeley.edu>
+/////////////////////////////////////////////////////////////////////
+//
+// Goals:
+//	(1) Make Adalon smarter (and thus harder to kill) ... without
+//	adding any new powers or changing any stats. 
+//	(2) Eliminate possible player cheese:
+//		(a) no sitting in cloudkills forever
+//		(b) no hacking at Mordy forever
+//	(3) "Time to perish, manling!" 
+//
+/////////////////////////////////////////////////////////////////////
+// Version History:
+//	v1   	Sun Nov 11 11:14:17  2001
+//		Project started.
+//      v2      Fri Nov 30 23:24:39  2001
+//              Use `SpellNoDec' instead of `ForceSpell' when possible.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Discussion
+// 
+// See the Improved Smarter Firkraag patch. Adalon is weaker than the
+// big F, however. Original Adalon powers:
+//      dispel magic (once/rest)
+//      cure medium wounds (3x)
+//      silence
+//      hold person
+//      invis
+//      haste (once/rest)
+//      greater malison
+//      stoneskin
+//      ice storm
+//      cleric death ward       (lasts basically forever)
+//      beholder spell turning  (lasts 90 seconds, levels 1-4)
+//      dimension door
+//      finger of death (inf - drow)
+//      lower res x3 (inf - drow)
+//      flame arrow (inf - drow)
+// Adalon has INT 22, WIS 22. Let's use 'em!
+// 
+// Problems with the original:
+// (1) poor target selection (e.g., Mordy jail)
+// (2) poor casting order (chaos *then* greater malison?) 
+// (4) subject to hit-sleep-run attacks, since spells never come back
+// (5) sits in one place, inviting traps
+//
+// Original script behaves inconsistently w/r/t the Wardstone
+// and summoned monsters: it "sees" the first summon and toasts it
+// but does not go after other ones. We'll assume that nothing
+// can be "seen" until we are angered.
+//
+// Unlike F, Thax has no particular reason to favor Player1. She
+// can still favor the Party over the summons, however. 
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Re-cast Stoneskin and Death Ward if we have been given some hours of
+// rest
+/////////////////////////////////////////////////////////////////////
+IF
+  GlobalTimerExpired("AdalonStone","GLOBAL")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,CLERIC)
+  ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+  ReallyForceSpell(Myself,CLERIC_DEATH_WARD)
+  SetGlobalTimer("AdalonStone","GLOBAL",600) // can recast
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Adalon gets angry ...
+/////////////////////////////////////////////////////////////////////
+IF
+  Die()
+  !AreaCheck("AR2402")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobal("DrowCityHostile","GLOBAL",1)
+    EraseJournalEntry(15797)
+    AddJournalEntry(62079,QUEST_DONE)
+    ActionOverride(Player1,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player2,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player3,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player4,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player5,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player6,ApplySpell(Myself,UNDER_NORM))
+    DisplayStringHead(Myself,62029) // With your attack on the dragon, the drow illusion fades away.
+    SetGlobal("PlayerLooksLikeDrow","GLOBAL",0)
+    SetInterrupt(TRUE)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("DrowCityHostile","GLOBAL",0)
+THEN
+  RESPONSE #100
+    SetGlobal("DrowCityHostile","GLOBAL",1)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("PlayerLooksLikeDrow","GLOBAL",1)
+THEN
+  RESPONSE #100
+    ActionOverride(Player1,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player2,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player3,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player4,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player5,ApplySpell(Myself,UNDER_NORM))
+    ActionOverride(Player6,ApplySpell(Myself,UNDER_NORM))
+    DisplayStringHead(Myself,62029) // With your attack on the dragon, the drow illusion fades away.
+    SetGlobal("PlayerLooksLikeDrow","GLOBAL",0)
+    Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Adalon attacks the drow gate guards ...
+/////////////////////////////////////////////////////////////////////
+IF
+  AreaCheck("AR2402")
+  !Detect([NEUTRAL])
+  !Detect([ENEMY])
+  Detect([PC])
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobal("udDrowPlot","GLOBAL",99)
+    DialogInterrupt(TRUE)
+    StartDialogueNoSet(LastSeenBy(Myself))
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  AreaCheck("AR2402")
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,WIZARD_STONE_SKIN)
+    ForceSpell(Myself,DRYAD_TELEPORT)
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  Detect("uddoor05")
+  !Dead("uddoor05") // Drow Wizard
+THEN
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    Kill("uddoor05")
+END
+
+IF
+  Detect("uddoor06")
+  !Allegiance(Myself,ENEMY)
+  !Dead("uddoor06") // Drow Priestess
+THEN
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_HOLD_PERSON)
+    ForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    Kill("uddoor06")
+END
+
+IF
+  OR(2)
+    See([NEUTRAL])
+    See([ENEMY])
+  !Allegiance(Myself,ENEMY)
+  HPGT(LastSeenBy(Myself),0)
+THEN
+  RESPONSE #60
+    ForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+  RESPONSE #60
+    ForceSpell(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+  RESPONSE #60
+    AttackReevaluate(LastSeenBy(Myself),15)
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Meat Of The Fight 
+// Adalon Wisdom:
+//	(1) "Best way to block punch: no be there." (thanks Mr. Miyagi)
+//	(2) Nuke 'em 'till they glow.
+//	(3) Use those special Dragon tricks on enemies in range. 
+//	(4) Target Player1 (or the party), just at Player1 will target
+//	Mellisan and ignore her summons. The fight ends if you kill 
+//	Gorion's Ward.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Returned from fleeing
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("Returned","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("Returned","LOCALS",0)
+    ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+    DisplayString(Myself,11132)
+    CreateVisualEffectObject("SPDIMNDR",Myself)
+    Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Silver Dragon Prep
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("AdalonTurning","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    // adalon innate ability
+    ReallyForceSpell(Myself,BEHOLDER_SPELL_TURNING)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    SetGlobal("AdalonTurning","LOCALS",1)
+    Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Silver Dragon Breath
+// Cold Damage: 20d10+12 (save vs. breath for half), Stun 12 seconds
+// (save vs. breath to negate)
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("SILVERDRAGONBREATH","GLOBAL")
+ See(NearestEnemyOfType([PC]))
+THEN
+ RESPONSE #100
+  SetGlobalTimer("SILVERDRAGONBREATH","GLOBAL",18)
+  // "ReallyForce" allows us to take advantage of the full range of
+  // this spell (which exceeds conventional line of sight). FK is
+  // at least 40' tall and should have no trouble seeing to the end
+  // of his cavern. 
+  ReallyForceSpell(LastSeenBy(Myself),SILVER_DRAGON_BREATH_PARALIZATION)
+  ReallyForceSpell(LastSeenBy(Myself),SILVER_DRAGON_BREATH_COLD)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// If we're getting killed, Flee! We do have 22 INT/WIS -- we're not
+// stupid. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ HPPercentLT(Myself,40)
+ GlobalLT("AdalonFlee","LOCALS",2)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,4159)
+    CreateVisualEffectObject("SPDIMNDR",Myself)
+    // this item causes us to disappear for 12 seconds, during which
+    // time we heal ourselves, etc. 
+    GiveItemCreate("udsilver",Myself,1,0,0)  
+    SetGlobal("Returned","LOCALS",1)
+    IncrementGlobal("AdalonFlee","LOCALS",1)
+    UseItem("udsilver",Myself)
+END
+  
+
+/////////////////////////////////////////////////////////////////////
+// Teleport to Player1 -- no running away for you!
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ !CombatCounter(0)			
+ !Detect(Player1)
+ InMyArea(Player1)
+ Delay(6)
+THEN
+ RESPONSE #100
+  ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Wing Buffet
+// Spell Range 30, Speed 1, Unlimited 
+// This is at the top of the list because we don't ever want to
+// get hit (if at all possible). Keep pushing them back. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Range(NearestEnemyOf(Myself),25)
+ !GlobalTimerNotExpired("Buffet","LOCALS")
+THEN
+ RESPONSE #100
+  ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+  SetGlobalTimer("Buffet","LOCALS",2)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Remove Magic
+// Spell Range 40, Speed 3, Once Per Rest
+// This is very important now that it works (the original script's
+// casting of this did nothing). It subsumes lower fire res to some
+// degree because it will cancel most fire protection potions, etc.
+// F's high level means that it also takes down most spell protections
+// and stoneskins. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Detect(Player1)
+ Global("AdalonRemove","LOCALS",0)
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Player1,WIZARD_DISPEL_MAGIC)
+  SetGlobal("AdalonRemove","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Greater Malison
+// Spell Range 50, Speed 4, Once Per Rest
+// Get this in before everything else that includes a saving throw
+// (except the buffet and the breath). 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Detect(StrongestOf)
+ Global("AdalonGreater","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+  ReallyForceSpell(StrongestOf,DRAGON_FEAR)
+  SetGlobal("AdalonGreater","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Lower Res x3
+// Spell Range LOS, Speed 5 (=0), Unlimited
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+ See(Player1)
+ CheckStatGT(Player1,0,RESISTMAGIC)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  // yes, it's this bad in the original!
+  ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+  ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+  ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+END
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+ See(NearestEnemyOfType([PC]))
+ CheckStatGT(LastSeenBy(Myself),0,RESISTMAGIC)
+ !CheckStatGT(Player1,0,RESISTMAGIC)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+  ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+  ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Finger of Death
+// unlimited
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ See(NearestEnemyOfType([PC]))
+ GlobalTimerExpired("Cast","LOCALS")
+ HaveSpell(WIZARD_FINGER_OF_DEATH)
+ CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+ CheckStat(LastSeenBy(Myself),0,SCRIPTINGSTATE2) // Death Ward
+ CheckStatLT(LastSeenBy(Myself),10,RESISTMAGIC)
+ !HasItemEquiped("CLCK26",LastSeenBy(Myself)) // Cloak of Mirroring
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",6)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+END
+
+IF
+ Allegiance(Myself,ENEMY)
+ See(SecondNearestEnemyOfType([PC]))
+ GlobalTimerExpired("Cast","LOCALS")
+ HaveSpell(WIZARD_FINGER_OF_DEATH)
+ CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+ CheckStat(LastSeenBy(Myself),0,SCRIPTINGSTATE2) // Death Ward
+ CheckStatLT(LastSeenBy(Myself),10,RESISTMAGIC)
+ !HasItemEquiped("CLCK26",LastSeenBy(Myself)) // Cloak of Mirroring
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",6)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Ice Storm
+// once per rest
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("AdalonIce","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+ See(NearestEnemyOfType([PC]))
+ !HasItem("clck26",NearestEnemyOfType([PC]))
+ CheckStatLT(NearestEnemyOfType([PC]),75,RESISTCOLD)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(LastSeenBy(Myself),WIZARD_ICE_STORM)
+  SetGlobal("AdalonIce","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Hold Person
+// Spell Range LOS, Speed 5, Once Per Rest
+/////////////////////////////////////////////////////////////////////
+IF
+ See(NearestEnemyOfType([PC]))
+   CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+   !Kit(LastSeenBy(Myself),INQUISITOR)
+   !HasItemEquiped("FREERING",LastSeenBy(Myself)) // Ring of Free Action
+   !HasItemEquiped("ROSSRING",LastSeenBy(Myself)) // Ring of Free Action
+   !HasItemEquiped("RING09",LastSeenBy(Myself)) // Ring of Free Action
+   !HasItemEquiped("NPSW01",LastSeenBy(Myself)) // Sword of Avoreen
+ Global("AdalonHold","LOCALS",0)
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,CLERIC)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Player1,CLERIC_HOLD_PERSON)
+  SetGlobal("AdalonHold","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Silence 15'
+// Spell Range 80, Speed 5, Once Per Rest
+// This is lower-priority than the others, but that may be an artifact of
+// my mage-poor testing environment.  Plus, the best spellcaster is almost
+// certain to have the Amulet of Power anyway. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("AdalonSilence","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+ OR(2)
+   See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+   See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,CLERIC)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(LastSeenBy(Myself),CLERIC_SILENCE_15_FOOT)
+  SetGlobal("AdalonSilence","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Flame Arrow 
+// Range LOS, Speed 3, Unlimited
+/////////////////////////////////////////////////////////////////////
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(NearestEnemyOfType([PC]))
+ !HasItem("clck26",NearestEnemyOfType([PC]))
+ CheckStatLT(NearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(NearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(SecondNearestEnemyOfType([PC]))
+ !HasItem("clck26",SecondNearestEnemyOfType([PC]))
+ CheckStatLT(SecondNearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(ThirdNearestEnemyOfType([PC]))
+ !HasItem("clck26",ThirdNearestEnemyOfType([PC]))
+ CheckStatLT(ThirdNearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Chromatic Orb
+// Range 30, Speed 1, Unlimited
+// Now that CO will actually do something (it's weak at level 1), cast
+// it more often ... but only against things that can possibly fail
+// the +6 save. Thax can estimate this: how many times has X been level
+// drained, is X a dwarf, is X a mage, etc. Eventually our breath 
+// weapon should bring everyone in range. 
+/////////////////////////////////////////////////////////////////////
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(NearestEnemyOfType([PC]))
+ CheckStatGT(NearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(NearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(SecondNearestEnemyOfType([PC]))
+ CheckStatGT(SecondNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Detect(ThirdNearestEnemyOfType([PC]))
+ CheckStatGT(ThirdNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+
+IF
+ !GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ See(NearestEnemyOfType([PC]))
+THEN
+  RESPONSE #100
+    Attack(LastSeenBy(Myself))	
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Fight Ends (or we're all resting)
+// The original resting condition was !Detect([PC]), HPLT(Myself,50)
+// CombatCounter(0). Lazy scripting: the HPLT was apparently to guard
+// against repeated healings but it meant that a 75% health dragon
+// never got back his spell-like abilities. I'm happy to heal
+// even when it is useless: it'll make the players edgy. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ !Detect(NearestEnemyOf(Myself))	// (*)
+ CombatCounter(0)			// (*)
+ Delay(9)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,26703)		// "Damn, where are they?"
+  ForceSpell(Myself,CLERIC_HEAL)
+  SetGlobal("AdalonGreater","LOCALS",0)   // can cast Greater Malison
+  SetGlobal("AdalonHaste","LOCALS",0)    // can cast Haste
+  SetGlobal("AdalonSilence","LOCALS",0) // can cast Silence 15'
+  SetGlobal("AdalonRemove","LOCALS",0) // can cast Remove Magic
+  SetGlobal("AdalonHold","LOCALS",0)  // can cast Hold Person
+  SetGlobal("AdalonIce","LOCALS",0)  // can cast Ice Storm
+  SetGlobal("AdalonTurning","LOCALS",0)// can cast Spell Turning
+  StartCombatCounter()
+  ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+END
+
+/////////////////////////////////////////////////////////////////////
+// How To Provoke A Dragon
+// Doing these things will make Adalon angry. 
+/////////////////////////////////////////////////////////////////////
+IF
+ !Allegiance(Myself,ENEMY)
+ OR(8)
+   AttackedBy([GOODCUTOFF],DEFAULT)
+   SpellCastOnMe([GOODCUTOFF],0)
+   SpellCastInnate([GOODCUTOFF],ROGUE_SET_SPIKE_TRAP)
+   SpellCastInnate([GOODCUTOFF],ROGUE_SET_EXPLODING_TRAP)
+   SpellCastInnate([GOODCUTOFF],ROGUE_SET_TIME_TRAP)
+   SpellCastInnate([GOODCUTOFF],SET_SNARE_TRAP)
+   SpellCastInnate([GOODCUTOFF],SET_SPECIAL_SNARE_TRAP)
+   Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+ RESPONSE #100
+  DisplayString(Myself,21726)	// "Are you trying to threaten me?"
+  EraseJournalEntry(15797)
+  AddJournalEntry(62079,QUEST_DONE)
+  Enemy()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Initialize our Juggernaut
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("AdalonInit","LOCALS",0)
+THEN
+ RESPONSE #100
+  SetGlobalTimer("AdalonStone","GLOBAL",0) 
+  SetGlobalTimer("SILVERDRAGONBREATH","GLOBAL",18)
+  SetGlobalTimer("Cast","LOCALS",6)
+  EquipMostDamagingMelee() // use those claws!
+  SetGlobal("AdalonInit","LOCALS",1)
+  ChangeAIScript("",DEFAULT) // lose WtaSight
+END

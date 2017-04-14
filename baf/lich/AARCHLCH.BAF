@@ -1,0 +1,715 @@
+IF
+  !Specifics(Myself,2001)
+  Global("ProdigalSon","LOCALS",1)
+  See([ENEMY.UNDEAD.LICH.CLERIC_MAGE])
+  !Specifics(LastSeenBy(Myself),2001)
+THEN
+  RESPONSE #100
+    DisplayStringHead(LastSeenBy(Myself),26234)  // ~Simulacrum~
+    ActionOverride(LastSeenBy(Myself),ChangeAIScript("ARCHLICH",DEFAULT))
+    ChangeSpecifics(LastSeenBy(Myself),2001)
+    SetGlobal("ProdigalSon","LOCALS",0)
+END
+
+IF
+  OR(2)
+    !CombatCounter(0)
+    Detect(NearestEnemyOf(Myself))
+  Global("Resting","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("Resting","LOCALS",0)
+    SetGlobalTimer("WakeUp","LOCALS",0)
+END
+
+IF
+  CombatCounter(0)
+  !Detect(NearestEnemyOf(Myself))
+  Global("Resting","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobal("Resting","LOCALS",1)
+    SetGlobalTimer("WakeUp","LOCALS",1440)
+END
+
+IF
+  GlobalTimerExpired("WakeUp","LOCALS")
+  Global("Resting","LOCALS",1)
+  !Specifics(Myself,2001)
+THEN
+  RESPONSE #100
+    DestroySelf()
+END
+
+IF
+  GlobalTimerExpired("WakeUp","LOCALS")
+  Global("Resting","LOCALS",1)
+THEN
+  RESPONSE #100
+    DestroySelf()
+    CreateCreatureObject("ARCHLICH",Myself,0,0,0)  // ~Lich~
+    ActionOverride("ARCHLICH",Enemy())
+    ActionOverride("ARCHLICH",SetNumTimesTalkedTo(2))
+    SetGlobal("Resting","LOCALS",0)
+END
+
+IF
+  HPPercentLT(Myself,50)
+  HaveSpell(CLERIC_HEAL)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_HEAL)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("KR_LICH_CLERIC_CONTIG_FIRED","LOCALS",0)
+THEN
+  RESPONSE #100
+    ApplySpell(Myself,WIZARD_STONE_SKIN)
+    ApplySpell(Myself,WIZARD_SPELL_SHIELD)
+    ApplySpell(Myself,CLERIC_SHIELD_OF_THE_ARCHONS)
+    SetGlobal("KR_LICH_CLERIC_CONTIG_FIRED","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("KR_LICH_CLERIC_CONTIG_2_FIRED","LOCALS",0)
+  TookDamage()
+THEN
+  RESPONSE #100
+    ApplySpell(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+    ApplySpell(Myself,127)
+    ApplySpell(Myself,WIZARD_SPELL_IMMUNITY_ABJURATION)
+    SetGlobal("KR_LICH_CLERIC_CONTIG_2_FIRED","LOCALS",1)
+END
+
+IF
+  !Specifics(Myself,2001)
+  See([PC])
+  !HasBounceEffects(LastSeenBy(Myself))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  See([PC])
+  HasBounceEffects(LastSeenBy(Myself))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTFIRE)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    CreateCreatureObject("rat01",LastSeenBy(Myself),0,0,0)  // ~Rat~
+    Wait(2)
+    ReallyForceSpell("rat01",WIZARD_FIREBALL)
+    ReallyForceSpell("rat01",WIZARD_FIREBALL)
+    ReallyForceSpell("rat01",WIZARD_FIREBALL)
+END
+
+IF
+  !Specifics(Myself,2001)
+  See([PC])
+  HasBounceEffects(LastSeenBy(Myself))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTCOLD)
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    CreateCreatureObject("rat01",LastSeenBy(Myself),0,0,0)  // ~Rat~
+    Wait(2)
+    ReallyForceSpell("rat01",WIZARD_CONE_OF_COLD)
+    ReallyForceSpell("rat01",WIZARD_CONE_OF_COLD)
+    ReallyForceSpell("rat01",WIZARD_CONE_OF_COLD)
+END
+
+IF
+  !Specifics(Myself,2001)
+  See([PC])
+  !HasBounceEffects(LastSeenBy(Myself))
+  CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    CreateCreatureObject("rat01",LastSeenBy(Myself),0,0,0)  // ~Rat~
+    Wait(2)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_PIERCE_SHIELD)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_PIERCE_SHIELD)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_PIERCE_SHIELD)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player1)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player2)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player3)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player4)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player5)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  !Specifics(Myself,2001)
+  Global("R_SPELL_TRIGGER_FIRED","LOCALS",0)
+  See(Player6)
+  !HasBounceEffects(LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    DisplayString(Myself,39968)  // ~Spell Trigger - Fired~
+    SetGlobal("R_SPELL_TRIGGER_FIRED","LOCALS",1)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  See([GOODCUTOFF])
+  HPPercentLT(Myself,60)
+  HaveSpell(WIZARD_OTILUKES_RESILIENT_SPHERE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_OTILUKES_RESILIENT_SPHERE)
+END
+
+IF
+  HaveSpell(CLERIC_ANIMATE_DEAD)
+  NumCreatureLT([EVILCUTOFF.0.0.0.0.SUMMONED],9)
+  Global("KR_NEED_A_RAT_OR_SOMETHING","LOCALS",0)
+THEN
+  RESPONSE #100
+    CreateCreatureObject("Rat01",Myself,0,0,0)  // ~Rat~
+    SetGlobal("KR_NEED_A_RAT_OR_SOMETHING","LOCALS",1)
+    Continue()
+END
+
+IF
+  See("rat01")  // ~Rat~
+  HaveSpell(CLERIC_ANIMATE_DEAD)
+  NumCreatureLT([EVILCUTOFF.0.0.0.0.SUMMONED],7)
+  Global("KR_NEED_A_RAT_OR_SOMETHING","LOCALS",1)
+THEN
+  RESPONSE #100
+    Spell("rat01",CLERIC_ANIMATE_DEAD)
+    CreateCreatureObject("SKELWA01","rat01",0,0,0)  // ~Skeleton Warrior~
+END
+
+IF
+  !Exists("Rat01")  // ~Rat~
+  Global("KR_NEED_A_RAT_OR_SOMETHING","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_NEED_A_RAT_OR_SOMETHING","LOCALS",0)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !Specifics(Myself,2001)
+  HaveSpell(WIZARD_SIMULACRUM)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SIMULACRUM)
+    SetGlobal("ProdigalSon","LOCALS",1)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(SecondNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(SecondNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(ThirdNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(ThirdNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(FourthNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(FourthNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(FifthNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(FifthNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(SixthNearest([EVILCUTOFF]),60)
+THEN
+  RESPONSE #100
+    Spell(SixthNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(SeventhNearest([EVILCUTOFF]),60)
+THEN
+  RESPONSE #100
+    Spell(SeventhNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(EighthNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(ThirdNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(NinthNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(NinthNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  HaveSpell(CLERIC_MASS_CURE)
+  HPPercentLT(TenthNearest([EVILCUTOFF]),80)
+THEN
+  RESPONSE #100
+    Spell(TenthNearest([EVILCUTOFF]),CLERIC_MASS_CURE)
+END
+
+IF
+  See([EVILCUTOFF])
+  HaveSpell(WIZARD_IMPROVED_HASTE)
+  !Specifics(LastSeenBy(Myself),0)
+THEN
+  RESPONSE #100
+    ChangeSpecifics(LastSeenBy(Myself),0)
+    Spell(LastSeenBy(Myself),WIZARD_IMPROVED_HASTE)
+END
+
+IF
+  See([EVILCUTOFF])
+  HaveSpell(0)
+  !Specifics(LastSeenBy(Myself),0)
+THEN
+  RESPONSE #100
+    ChangeSpecifics(LastSeenBy(Myself),0)
+    Spell(LastSeenBy(Myself),0)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_SUMMON_HAKEASHAR)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_SUMMON_HAKEASHAR)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_INVISIBLE_STALKER)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_INVISIBLE_STALKER)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_SUMMON_FIEND)
+THEN
+  RESPONSE #100
+    ApplySpell(Myself,CLERIC_PROTECT_FROM_EVIL)
+    Spell(Myself,WIZARD_SUMMON_FIEND)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_SUMMON_EFREET)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SUMMON_EFREET)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_SPELL_IMMUNITY)
+  HaveSpell(WIZARD_SPELL_IMMUNITY)
+  !GlobalTimerNotExpired("KR_DIVINATON_TIMER","LOCALS")
+  !GlobalTimerNotExpired("KR_ABJ_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_DIVINATON_TIMER","LOCALS",96)
+    SetGlobalTimer("KR_ABJ_TIMER","LOCALS",96)
+    DisplayString(Myself,5019)  // ~Spell Immunity~
+    Spell(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+    Spell(Myself,WIZARD_SPELL_IMMUNITY_ABJURATION)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  !HasImmunityEffects(Myself)
+  HaveSpell(WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+  !GlobalTimerNotExpired("KR_PROT_FROM_WEAPONS","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_PROT_FROM_WEAPONS","LOCALS",24)
+    Spell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_SHADOW_DOOR)
+  !StateCheck(Myself,STATE_INVISIBLE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SHADOW_DOOR)
+END
+
+IF
+  !See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_TRUE_SIGHT)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_TRUE_SIGHT)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_FIRE_SHIELD_BLUE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_FIRE_SHIELD_BLUE)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTCOLD)
+  HaveSpell(WIZARD_ICE_STORM)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_ICE_STORM)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTFIRE)
+  HaveSpell(WIZARD_SUN_FIRE)
+THEN
+  RESPONSE #100
+    Spell(Myself,0)
+END
+
+IF
+  See(NearestEnemyOfType)
+  !StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+  HaveSpell(WIZARD_SLOW)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_SLOW)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  !CheckStatGT(LastSeenBy(Myself),35,RESISTMAGIC)
+  HaveSpell(WIZARD_SLOW)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_SLOW)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(CLERIC_UNHOLY_WORD)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),CLERIC_UNHOLY_WORD)
+END
+
+IF
+  See(NearestEnemyOfType([GOODCUTOFF]))
+  HaveSpell(WIZARD_PROTECTION_FROM_THE_ELEMENTS)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_PROTECTION_FROM_THE_ELEMENTS)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  HaveSpell(CLERIC_WONDROUS_RECALL)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_WONDROUS_RECALL)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  See(Nearest([EVILCUTOFF]))
+  StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(SecondNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(SecondNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(ThirdNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(ThirdNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(FourthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(FourthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(FifthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(FifthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(SixthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(SixthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(SeventhNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(SeventhNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(EighthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(EighthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(NinthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(NinthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(CLERIC_FREE_ACTION)
+  StateCheck(TenthNearest([EVILCUTOFF]),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Spell(TenthNearest([EVILCUTOFF]),CLERIC_FREE_ACTION)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  See(Nearest([EVILCUTOFF]))
+  StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(SecondNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(SecondNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(ThirdNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(ThirdNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(FourthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(FourthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(FifthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(FifthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(SixthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(SixthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(SeventhNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(SeventhNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(EighthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(EighthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(NinthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(NinthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  HaveSpell(WIZARD_HASTE)
+  StateCheck(TenthNearest([EVILCUTOFF]),STATE_SLOWED)
+THEN
+  RESPONSE #100
+    Spell(TenthNearest([EVILCUTOFF]),WIZARD_HASTE)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  Range(LastSeenBy(Myself),4)
+  HaveSpell(CLERIC_ARMOR_OF_FAITH)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_ARMOR_OF_FAITH)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  Range(LastSeenBy(Myself),4)
+  HaveSpell(CLERIC_DRAW_UPON_HOLY_MIGHT)
+  !GlobalTimerNotExpired("KR_LOCAL_HOLY_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_LOCAL_HOLY_TIMER","LOCALS",84)
+    Spell(Myself,CLERIC_DRAW_UPON_HOLY_MIGHT)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  Range(LastSeenBy(Myself),4)
+THEN
+  RESPONSE #100
+    EquipMostDamagingMelee()
+    Attack(LastSeenBy(Myself))
+END
+

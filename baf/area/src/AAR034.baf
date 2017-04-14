@@ -1,0 +1,31 @@
+IF
+	Global("AASummonHere","AAR034",0)
+	OR(6)
+		Dead("HAG1")
+		Dead("HAG2")
+		Dead("HAG3")
+		Dead("HAG4")
+		Dead("HAG5")
+		Dead("DEMPRNC1")
+THEN
+	RESPONSE #100
+		AmbientActivate("AAR034A",FALSE)
+		ClearActions(LastTrigger)
+		CreateVisualEffect("AASUMM2",[924.884])
+		CreateVisualEffect("SPRAISED",[786.699])
+		CreateVisualEffect("SPRAISED",[1063.723])
+		CreateVisualEffect("SPRAISED",[627.991])
+		CreateVisualEffect("SPRAISED",[908.1049])
+		Wait(2)
+		CreateCreature("AACRE141",[924.884],14)
+		CreateCreature("AACRE145",[786.699],10)
+		CreateCreature("AACRE145",[1063.723],10)
+		CreateCreature("AACRE145",[627.991],10)
+		CreateCreature("AACRE145",[908.1049],10)
+		MoveViewObject("MARLORD2",INSTANT)
+		Wait(1)
+		SetGlobal("AASummonHere","AAR034",1)
+		ActionOverride("MARLORD2",StartDialogueNoSet(Player1))
+END
+
+

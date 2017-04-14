@@ -1,0 +1,78 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AASUPERGOLEMS","AAR037",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AASUPERGOLEMS","AAR037",1)
+		DisplayStringHead(Myself,@0)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AASUPERGOLEMS","AAR037",1)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@1) 
+		SetGlobal("AASUPERGOLEMS","AAR037",2)
+		CreateVisualEffect("AASUMM2",[634.523])
+		CreateVisualEffect("AASUMM",[1033.469])
+		CreateVisualEffect("AASUMM2",[877.838])
+		Wait(1)
+		CreateCreature("AACRE154",[634.523],10)
+		CreateCreature("AACRE155",[1033.469],10)
+		CreateCreature("AACRE156",[877.838],10)
+
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AASUPERGOLEMS","AAR037",2)
+	!Dead("GOLLAVA")
+	!Dead("GOLCLAYG")
+	!Dead("GOLVODKA")
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@2)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AASUPERGOLEMS","AAR037",2)
+	Dead("GOLLAVA")
+	Dead("GOLCLAYG")
+	Dead("GOLVODKA")
+THEN
+	RESPONSE #100
+		SetGlobal("AASUPERGOLEMS","AAR037",3)
+		DisplayStringHead(Myself,@3)
+		GiveItemCreate("AMUL22",LastTrigger,1,0,0)
+		GiveItemCreate("HELM34",LastTrigger,2,2,2)
+		GiveItemCreate("WAND18",LastTrigger,20,20,20)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AASUPERGOLEMS","AAR037",3)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@4)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,12)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@5)
+END
+
+
+
+
+
+

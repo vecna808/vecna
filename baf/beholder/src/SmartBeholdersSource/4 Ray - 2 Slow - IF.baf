@@ -1,0 +1,44 @@
+    // Slow Ray.
+    IF
+        // HPGT(Myself,XXX)
+        !GlobalTimerNotExpired("xyxUsedSlowRay","LOCALS")
+        !StateCheck(LastSeenBy(),STATE_SLOWED)
+        // Only slow fighting types.
+        OR(6)
+            Class(LastSeenBy(),RANGER_ALL)
+            Class(LastSeenBy(),FIGHTER_ALL)
+            Class(LastSeenBy(),PALADIN)
+            Class(LastSeenBy(),THIEF)
+            Class(LastSeenBy(),BARBARIAN)
+            Gender(LastSeenBy(),SUMMONED)
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),-3,SAVEVSSPELL)
+        // Not immune to Slow.
+        !Class(LastSeenBy(),MONK)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",LastSeenBy()) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",LastSeenBy()) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",LastSeenBy()) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",LastSeenBy()) // Sword of Avoreen
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        // Don't use too much on downed foes.
+        OR(2)
+            !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+            RandomNum(4,1)
+        // Not totally magic resistant.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+

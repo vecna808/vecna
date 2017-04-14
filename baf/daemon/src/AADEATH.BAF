@@ -1,0 +1,201 @@
+IF
+  Allegiance(Myself,NEUTRAL)
+THEN
+  RESPONSE #100
+    Enemy()
+END
+
+IF
+  !Class(Myself,MAGE)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+END
+
+IF
+  !See(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !GlobalTimerNotExpired("GB_DimDoor","LOCALS")
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+    SetGlobalTimer("GB_DimDoor","LOCALS",6)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,1)
+  See(Player1)
+  See(Player2)
+  See(Player3)
+  See(Player4)
+  See(Player5)
+  See(Player6)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,2)
+  See(Player4)
+  See(Player1)
+  See(Player6)
+  See(Player3)
+  See(Player2)
+  See(Player5)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,3)
+  See(Player6)
+  See(Player3)
+  See(Player5)
+  See(Player1)
+  See(Player2)
+  See(Player4)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,4)
+  See(Player4)
+  See(Player2)
+  See(Player6)
+  See(Player1)
+  See(Player5)
+  See(Player3)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,5)
+  See(Player3)
+  See(Player6)
+  See(Player4)
+  See(Player1)
+  See(Player5)
+  See(Player2)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,6)
+  See(Player6)
+  See(Player5)
+  See(Player4)
+  See(Player3)
+  See(Player2)
+  See(Player1)
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,7)
+  See(Player6)
+  See(Player5)
+  See(Player4)
+  See(Player3)
+  See(Player2)
+  See(Player1)
+  See(WeakestOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNum(8,8)
+  See(Player6)
+  See(Player5)
+  See(Player4)
+  See(Player3)
+  See(Player2)
+  See(Player1)
+  See(MostDamagedOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  Global("GB_DeathKnightDispel","LOCALS",0)
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_DISPEL_MAGIC)
+    SetGlobal("GB_DeathKnightDispel","LOCALS",1)
+END
+
+IF
+  HPLT(LastSeenBy(Myself),61)
+  !GlobalTimerNotExpired("GB_Attacking","LOCALS")
+  !GlobalTimerNotExpired("GB_UsedSpell","LOCALS")
+  !CheckStatGT(LastSeenBy(Myself),50,RESISTMAGIC)
+THEN
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),WIZARD_POWER_WORD_STUN)
+    SetGlobalTimer("GB_UsedSpell","LOCALS",6)
+END
+
+IF
+  HPLT(LastSeenBy(Myself),90)
+  !GlobalTimerNotExpired("GB_Attacking","LOCALS")
+  !GlobalTimerNotExpired("GB_UsedSpell","LOCALS")
+  !CheckStatGT(LastSeenBy(Myself),50,RESISTMAGIC)
+THEN
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),WIZARD_POWER_WORD_STUN)
+    SetGlobalTimer("GB_UsedSpell","LOCALS",6)
+END
+
+IF
+  !GlobalTimerNotExpired("GB_Attacking","LOCALS")
+  !GlobalTimerNotExpired("GB_UsedSpell","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),DEATHKNIGHT_FIREBALL)
+    SetGlobalTimer("GB_UsedSpell","LOCALS",6)
+  RESPONSE #100
+    ForceSpell(LastSeenBy(Myself),WIZARD_SYMBOL_FEAR)
+    SetGlobalTimer("GB_UsedSpell","LOCALS",6)
+END
+
+IF
+  Global("GB_DeathKnightDispel","LOCALS",1)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GB_Attacking","LOCALS",6)
+    Attack(NearestEnemyOf(Myself))
+END
+

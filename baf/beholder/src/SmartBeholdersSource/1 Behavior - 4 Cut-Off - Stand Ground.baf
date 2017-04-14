@@ -1,0 +1,16 @@
+    // Performance saver.
+    IF
+        // Target Player1-6 in case any of them is Charmed.
+        !See(Player1)
+        !See(Player2)
+        !See(Player3)
+        !See(Player4)
+        !See(Player5)
+        !See(Player6)
+        !See(NearestEnemyOf())
+    THEN
+        RESPONSE #100
+            // Restart
+    END
+
+

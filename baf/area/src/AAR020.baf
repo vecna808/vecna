@@ -1,0 +1,9 @@
+IF
+	Global("Android0Silence","AAR020",1)
+THEN
+	RESPONSE #100
+		AmbientActivate("AAR020A",TRUE)
+		SetGlobal("Android0Silence","AAR020",0)
+END
+
+

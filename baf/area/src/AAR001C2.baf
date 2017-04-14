@@ -1,0 +1,23 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		ClearActions(LastTrigger)
+		SetGlobal("AAEndGame","AAR001",1)
+		AmbientActivate("MESGODS2",FALSE)
+		Wait(2)
+		CreateCreature("AACRE121",[1770.423],14)
+		MoveViewObject("MESGODS2",INSTANT)
+		Wait(2)
+		ActionOverride("MESGODS2",StartDialogueNoSet(Player1))
+		AddexperienceParty(600000)
+		TriggerActivation("AA01CN00",TRUE)
+		TriggerActivation("AA01CN01",TRUE)
+		TriggerActivation("AA01CN02",TRUE)
+		TriggerActivation("AA01CN03",TRUE)
+		TriggerActivation("AA01CN04",TRUE)
+		EndCutSceneMode()
+END
+
+

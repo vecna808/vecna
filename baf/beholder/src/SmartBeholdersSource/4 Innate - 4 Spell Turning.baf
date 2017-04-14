@@ -1,0 +1,22 @@
+    // Innate Spell Turning.
+    IF
+        // Not all the time.
+        OR(2)
+            Delay(6)
+            HPGT(Myself,45)
+        !HasBounceEffects(Myself)
+        // There's a nasty spellcaster.
+        OR(4)
+            Exists([GOODCUTOFF.0.0.BARD])
+            Exists([GOODCUTOFF.0.0.DRUID_ALL])
+            Exists([GOODCUTOFF.0.0.CLERIC_ALL])
+            Exists([GOODCUTOFF.0.0.MAGE_ALL])
+    THEN
+        RESPONSE #100
+            DisplayString(Myself,10850) // Minor Spell Turning
+            ApplySpell(Myself,BEHOLDER_SPELL_TURNING)
+        RESPONSE #50
+            Continue()
+    END
+
+

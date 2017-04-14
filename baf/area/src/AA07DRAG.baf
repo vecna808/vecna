@@ -1,0 +1,12 @@
+IF
+		Global("AAFinalDrags","AAR007",0)
+	OR(2)
+		Entered([ANYONE])
+		Opened([ANYONE])
+THEN
+	RESPONSE #100
+		SetGlobal("AAFinalDrags","AAR007",1)
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR007C1")
+END

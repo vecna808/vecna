@@ -1,0 +1,12 @@
+IF
+	PartyHasItem("AAITM027")
+	PartyHasItem("AAITM028")
+THEN
+	RESPONSE #100
+		Wait(6)
+		TakePartyItem("AAITM027")
+		TakePartyItem("AAITM028")
+		GiveItemCreate("AAITM029",Player1,0,0,0)
+		DisplayString(LastTrigger,@0)
+END
+

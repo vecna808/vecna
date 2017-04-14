@@ -1,0 +1,91 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ShyresaCrypt","AAR031",1)
+		DisplayStringHead(Myself,@0)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",1)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@1) 
+		SetGlobal("ShyresaCrypt","AAR031",2)
+		CreateVisualEffect("AASUMM",[2444.407])
+		CreateVisualEffect("SPRAISED",[2347.371])
+		CreateVisualEffect("SPRAISED",[2545.440])
+		CreateVisualEffect("SPRAISED",[2173.438])
+		CreateVisualEffect("SPRAISED",[2648.530])
+		Wait(4)
+		CreateCreature("AACRE017",[2444.407],10)
+		CreateCreature("AACRE071",[2347.371],10)
+		CreateCreature("AACRE071",[2545.440],10)
+		CreateCreature("AACRE012",[2173.438],10)
+		CreateCreature("AACRE012",[2648.530],10)
+		CreateCreature("AACRE148",[2338.503],10)
+		CreateCreature("AACRE148",[2561.581],10)
+		CreateCreature("AACRE149",[2232.665],10)
+		CreateCreature("AACRE149",[2336.697],10)
+
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",2)
+	!Dead("DMLICH1")
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@2)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",2)
+	Dead("DMLICH1")
+THEN
+	RESPONSE #100
+		SetGlobal("ShyresaCrypt","AAR031",3)
+		DisplayStringHead(Myself,@3)
+		GiveItemCreate("AAITM028",LastTrigger,0,0,0)
+		GiveItemCreate("RING08",LastTrigger,5,5,5)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",3)
+THEN
+	RESPONSE #100
+		SetGlobal("ShyresaCrypt","AAR031",4)
+		DisplayStringHead(Myself,@4)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShyresaCrypt","AAR031",4)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@5)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,12)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@6)
+END
+
+
+
+
+
+

@@ -1,0 +1,214 @@
+// Find a target without Spell Turning or Magic Resistance.
+// (The cut-off resets the LastSeenBy.)
+
+    // Sixth nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // Target not too far.
+        Range(SixthNearestEnemyOf(),10)
+        // Only imprison worthwile targets.
+        CheckStatGT(SixthNearestEnemyOf(),7,LEVEL)
+        // Not immune to Imprisonment.
+        // Rage is pretty obvious.
+        !StateCheck(SixthNearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        // Don't try on berserkers.  Chances are that they will use their berserk ability when possible, anyway.
+        // (No way to detect the Berserker's Rage.)
+        !Kit(SixthNearestEnemyOf(Myself),BERSERKER)
+        // Dangerous spell that warrants contemplation; don't use before bouncing is known.
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        // Not bouncing spells.
+        OR(2)
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // Hopefully not carrying the Shield AND turning spells; quite a gamble!
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        // Legal target.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        !RandomNum(6,5)
+        Range(FifthNearestEnemyOf(),10)
+        CheckStatGT(FifthNearestEnemyOf(),7,LEVEL)
+        !StateCheck(FifthNearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        !Kit(FifthNearestEnemyOf(Myself),BERSERKER)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        OR(2)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        !RandomNum(6,4)
+        Range(FourthNearestEnemyOf(),10)
+        CheckStatGT(FourthNearestEnemyOf(),7,LEVEL)
+        !StateCheck(FourthNearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        !Kit(FourthNearestEnemyOf(Myself),BERSERKER)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        OR(2)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        !RandomNum(6,3)
+        Range(ThirdNearestEnemyOf(),10)
+        CheckStatGT(ThirdNearestEnemyOf(),7,LEVEL)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        !Kit(ThirdNearestEnemyOf(Myself),BERSERKER)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        OR(2)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        !RandomNum(6,2)
+        Range(SecondNearestEnemyOf(),10)
+        CheckStatGT(SecondNearestEnemyOf(),7,LEVEL)
+        !StateCheck(SecondNearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        !Kit(SecondNearestEnemyOf(Myself),BERSERKER)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        OR(2)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_IMPRISONMENT)
+        !RandomNum(6,1)
+        Range(NearestEnemyOf(),10)
+        CheckStatGT(NearestEnemyOf(),7,LEVEL)
+        !StateCheck(NearestEnemyOf(),STATE_BERSERK) // Minsc's Berserk
+        !Kit(NearestEnemyOf(Myself),BERSERKER)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        OR(2)
+            !HasBounceEffects(NearestEnemyOf())
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Imprisonment.
+IF
+    !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+    HaveSpell(WIZARD_IMPRISONMENT)
+    Range(LastSeenBy(),10)
+    CheckStatGT(LastSeenBy(),7,LEVEL)
+    !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc's Berserk
+    !Kit(LastSeenBy(Myself),BERSERKER)
+    GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+    OR(2)
+        !HasBounceEffects(LastSeenBy())
+        HasItemEquiped("WA2SHIEL",LastSeenBy())
+    !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+    CheckStat(LastSeenBy(),0,SANCTUARY)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+    // Avoid breaking up romances a bit.
+    OR(4)
+        // The target is not Aerie...
+        !Name("Aerie",LastSeenBy())
+        // or the romance hasn't started...
+        GlobalLT("AerieRomanceActive","GLOBAL",2)
+        // or the romance is broken up...
+        GlobalGT("AerieRomanceActive","GLOBAL",2)
+        // or I'm feeling nasty.
+        RandomNum(4,1)
+    OR(4)
+        !Name("Jaheira",LastSeenBy())
+        GlobalLT("JaheiraRomanceActive","GLOBAL",2)
+        GlobalGT("JaheiraRomanceActive","GLOBAL",2)
+        RandomNum(4,1)
+    OR(4)
+        !Name("Viconia",LastSeenBy())
+        GlobalLT("ViconiaRomanceActive","GLOBAL",2)
+        GlobalGT("ViconiaRomanceActive","GLOBAL",2)
+        RandomNum(4,1)
+    OR(4)
+        !Name("Anomen",LastSeenBy())
+        GlobalLT("AnomenRomanceActive","GLOBAL",2)
+        GlobalGT("AnomenRomanceActive","GLOBAL",2)
+        RandomNum(4,1)
+    // Avoid Imprisoning the protagonist a bit.
+    OR(3)
+        // The target is not the protagonist...
+        !InPartySlot(LastSeenBy(),0)
+        // or this is a solo game...
+        NumInParty(1)
+        // or I'm feeling nasty.
+        RandomNum(4,1)
+THEN
+    RESPONSE #100
+        // Must be next to target or spell will be interrupted by attack.
+        MoveToObject(LastSeenBy())
+        SetGlobalTimer("xyxSpellCast","LOCALS",6)
+        Spell(LastSeenBy(),WIZARD_IMPRISONMENT)
+    // Don't ALWAYS cast.  Spell Immunity - Abjuration prevents Imprisonment.
+    RESPONSE #100
+        Continue()
+END
+
+//==============================================================================
+

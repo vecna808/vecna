@@ -1,0 +1,48 @@
+// Unseeing Eye
+
+// Triggers:
+//  Improved Mantle
+//  Protection from Energy
+//  Spell Deflection (no visual)
+//  Stoneskin
+
+// Spells memorized:
+//  Power Word Kill x 2
+//  Horrid Wilting x 3
+//  Power Word Stun x 4
+//  Death Spell x 1
+
+// Powers                           HPGT    Wait
+// BEHOLDER_FEAR                    0       Delay 12 & Wait 1
+
+// Int 22, Wis 21.
+// Spots bouncing on sight.
+// Spots immunities on sight.
+
+//------------------------------------------------------------------------------
+
+// Special case:
+
+// Moving around is OK due to total awareness.
+// See below.
+
+//==============================================================================
+
+// Instant, total awareness.
+IF
+    Global("xyxInitialized","LOCALS",0)
+THEN
+    RESPONSE #100
+        // Call for reinforcements  (Don't wait until attacked...).
+        // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+        Shout(89)
+        // Notice bouncing immediately.
+        SetGlobalTimer("xyxDoesNotSeeBounce","LOCALS",0)
+        // Notice immunity immediately.
+        SetGlobalTimer("xyxDoesNotSeeImmunity","LOCALS",0)
+        SetGlobal("xyxInitialized","LOCALS",1)
+        Continue()
+END
+
+//==============================================================================
+

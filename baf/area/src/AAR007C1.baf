@@ -1,0 +1,15 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId(Player1)
+		CreateVisualEffect("AASUMM2",[669.367])
+		CreateVisualEffect("AASUMM2",[1199.723])
+		Wait(2)
+		CreateCreature("AACRE011",[669.367],10)
+		CreateCreature("AACRE032",[1199.723],10)
+		Wait(1)
+		EndCutSceneMode()
+END
+
+

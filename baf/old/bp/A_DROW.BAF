@@ -1,0 +1,147 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    Shout(66)
+END
+
+IF
+  Global("BPCHARM","LOCALS",1)
+  !StateCheck(Myself,STATE_CHARMED)
+THEN
+  RESPONSE #100
+    SetGlobal("BPCHARM","LOCALS",0)
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,EVILCUTOFF)
+  Heard([EVILCUTOFF],151)
+  !See(NearestEnemyOf(Myself))
+  !TargetUnreachable(LastHeardBy(Myself))
+THEN
+  RESPONSE #100
+    MoveToObject(LastHeardBy(Myself))
+END
+
+IF
+  OR(2)
+    !Allegiance(Myself,EVILCUTOFF)
+    !Detect([GOODCUTOFF])
+THEN
+  RESPONSE #100
+END
+
+IF
+  ActionListEmpty()
+  HaveSpellRES("SPDROWR3")
+  !GlobalTimerNotExpired("BPT","LOCALS")
+  Range(LastSeenBy(Myself),8)
+  CheckStat(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+  RandomNumLT(115,58)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPT","LOCALS",ONE_ROUND)
+    SpellRES("SPDROWR3",LastSeenBy(Myself))  // ~Burning Hands~
+END
+
+IF
+  ActionListEmpty()
+  !GlobalTimerNotExpired("KRSC","LOCALS")
+  !GlobalTimerNotExpired("KRDT","LOCALS")
+  LevelLT(Myself,7)
+  OR(2)
+    !AreaType(OUTDOOR)
+    !TimeOfDay(DAY)
+THEN
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDT","LOCALS",ONE_TURN)
+    SpellNoDec(LastSeenBy(Myself),INNATE_GLOBE_OF_DARKNESS)
+  RESPONSE #50
+    SetGlobalTimer("KRDT","LOCALS",ONE_ROUND)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRDT","LOCALS",14)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDT","LOCALS",TWO_TURNS)
+    SpellNoDec(LastSeenBy(Myself),INNATE_GLOBE_OF_DARKNESS)
+END
+
+IF
+  ActionListEmpty()
+  !GlobalTimerNotExpired("KRSC","LOCALS")
+  !GlobalTimerNotExpired("KRDT","LOCALS")
+  LevelGT(Myself,6)
+  OR(2)
+    !AreaType(OUTDOOR)
+    !TimeOfDay(DAY)
+THEN
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDT","LOCALS",ONE_TURN)
+    SpellNoDec(LastSeenBy(Myself),INNATE_IMPROVED_GLOBE_OF_DARKNESS)
+  RESPONSE #50
+    SetGlobalTimer("KRDT","LOCALS",TWO_ROUNDS)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRDT","LOCALS",32)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDT","LOCALS",TWO_TURNS)
+    SpellNoDec(LastSeenBy(Myself),INNATE_IMPROVED_GLOBE_OF_DARKNESS)
+END
+
+IF
+  ActionListEmpty()
+  !GlobalTimerNotExpired("KRSC","LOCALS")
+  !GlobalTimerNotExpired("KRFF","LOCALS")
+  OR(2)
+    !AreaType(OUTDOOR)
+    !TimeOfDay(DAY)
+THEN
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRFF","LOCALS",ONE_TURN)
+    SpellNoDec(LastSeenBy(Myself),INNATE_FAERIE_FIRE)
+  RESPONSE #50
+    SetGlobalTimer("KRFF","LOCALS",THREE_ROUNDS)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRFF","LOCALS",FOUR_ROUNDS)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRFF","LOCALS",TWO_TURNS)
+    SpellNoDec(LastSeenBy(Myself),INNATE_FAERIE_FIRE)
+END
+
+IF
+  ActionListEmpty()
+  See(NearestEnemyOf(Myself))
+  !GlobalTimerNotExpired("KRSC","LOCALS")
+  !GlobalTimerNotExpired("KDL","LOCALS")
+  OR(2)
+    !AreaType(OUTDOOR)
+    !TimeOfDay(DAY)
+THEN
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDL","LOCALS",ONE_TURN)
+    SpellNoDec(LastSeenBy(Myself),INNATE_DANCING_LIGHTS)
+  RESPONSE #50
+    SetGlobalTimer("KRDL","LOCALS",ONE_ROUND)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRDL","LOCALS",TWO_ROUNDS)
+    Continue()
+  RESPONSE #50
+    SetGlobalTimer("KRSC","LOCALS",ONE_ROUND)
+    SetGlobalTimer("KRDL","LOCALS",TWO_TURNS)
+    SpellNoDec(LastSeenBy(Myself),INNATE_DANCING_LIGHTS)
+END
+

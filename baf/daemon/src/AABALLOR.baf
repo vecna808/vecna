@@ -1,0 +1,38 @@
+IF
+  See([ANYONE])
+  Global("hostile","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("hostile","LOCALS",1)
+    Enemy()
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),TANARI_PARALYZE)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_NPC_SYMBOL_STUN)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_DISPEL_MAGIC)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_CONFUSION)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    Attack(NearestEnemyOf(Myself))
+END
+

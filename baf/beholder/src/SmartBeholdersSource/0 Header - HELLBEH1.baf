@@ -1,0 +1,24 @@
+// Elder Orb
+
+// Beholder powers                 HPGT     Spell   Cloak   Shield
+// BEHOLDER_ANTIMAGIC_RAY          0
+// BEHOLDER_CHARM_PERSON           65       x               x
+// BEHOLDER_DOMINATION             15       x               x
+// BEHOLDER_FEAR                   55       x               x
+// BEHOLDER_SLOW                   35       x               x
+// BEHOLDER_PARALYZATION           0        x               x
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS   5        x       x       x
+// BEHOLDER_DEATH_RAY              0        x       x       x
+// BEHOLDER_FLESH_TO_STONE         25       x       x       x
+
+// Spots bouncing after 3 seconds.
+// Spots immunities after 12 seconds.
+
+//------------------------------------------------------------------------------
+
+// Special case: Exactly the same as BEHOLD01, except:
+
+// no Death Spell contingency.
+
+//==============================================================================
+

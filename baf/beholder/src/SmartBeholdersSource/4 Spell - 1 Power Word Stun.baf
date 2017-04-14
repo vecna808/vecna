@@ -1,0 +1,315 @@
+//==============================================================================
+
+// Find a target without Spell Turning or Magic Resistance,
+//  that has 89 or less Hit Points.
+// (The cut-off resets the LastSeenBy.)
+
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        // Randomize a bit.
+        !RandomNum(6,6)
+        HPLT(SixthNearestEnemyOf(),90)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Shield of Balduran.
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        // Not immune to Stun.
+        // Rage is pretty obvious.
+        !StateCheck(SixthNearestEnemyOf(),STATE_BERSERK) // Minsc Berserk
+        !StateCheck(SixthNearestEnemyOf(),SCRIPTINGSTATE3) // Barbarian Rage
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",SixthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",SixthNearestEnemyOf(Myself)) // Sword of Avoreen
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not Improved Invisible or in Sanctuary.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Only use on worthwile targets.
+        CheckStatGT(SixthNearest(),7,LEVEL)
+        // Not immortal.
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,5)
+        HPLT(FifthNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        !StateCheck(FifthNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(FifthNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",FifthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",FifthNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        CheckStatGT(FifthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,4)
+        HPLT(FourthNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        !StateCheck(FourthNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(FourthNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",FourthNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",FourthNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        CheckStatGT(FourthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,3)
+        HPLT(ThirdNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        !StateCheck(ThirdNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(ThirdNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",ThirdNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",ThirdNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        CheckStatGT(ThirdNearest(),7,LEVEL)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,2)
+        HPLT(SecondNearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        !StateCheck(SecondNearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(SecondNearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",SecondNearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",SecondNearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        CheckStatGT(SecondNearest(),7,LEVEL)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_STUN)
+        !RandomNum(6,1)
+        HPLT(NearestEnemyOf(),90)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        !StateCheck(NearestEnemyOf(),STATE_BERSERK)
+        !StateCheck(NearestEnemyOf(),SCRIPTINGSTATE3)
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("FREERING",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("ROSSRING",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("RING09",NearestEnemyOf(Myself)) // Ring of Free Action
+        OR(2)
+            GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("NPSW01",NearestEnemyOf(Myself)) // Sword of Avoreen
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        CheckStatGT(Nearest(),7,LEVEL)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Power Word Stun.
+IF
+    !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+    HaveSpell(WIZARD_POWER_WORD_STUN)
+    HPLT(LastSeenBy(),90)
+    // Not immune to Stun.
+    // Rage is pretty obvious.
+    !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc Berserk
+    !StateCheck(LastSeenBy(),SCRIPTINGSTATE3) // Barbarian Rage
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("FREERING",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("ROSSRING",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("RING09",LastSeenBy(Myself)) // Ring of Free Action
+    OR(2)
+        GlobalTimerNotExpired("bt_doesNotSeeImmunity","LOCALS")
+        !HasItemEquiped("NPSW01",LastSeenBy(Myself)) // Sword of Avoreen
+    // Don't use on downed foes.
+    !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+    // Not totally magic resistant.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+    // Not bouncing.
+    // This spell is potentially disabling if it bounces, so be hesitant to use it while bouncing is not yet detected.
+    OR(3)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        RandomNum(2,1)
+        // I have enough Hit Points not to be affected (if I don't take damage the next second...).
+        HPGT(Myself,89)
+    OR(3)
+        !HasBounceEffects(LastSeenBy())
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        HasItemEquiped("WA2SHIEL",LastSeenBy())
+    !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+    CheckStat(LastSeenBy(),0,SANCTUARY)
+    CheckStatGT(LastSeenBy(),7,LEVEL)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxSpellCast","LOCALS",6)
+        Spell(LastSeenBy(),WIZARD_POWER_WORD_STUN)
+    RESPONSE #100
+        Continue()
+END
+
+//==============================================================================
+

@@ -1,0 +1,72 @@
+IF
+  !See(NearestEnemyOf(Myself))
+  Delay(3)
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,WIZARD_DISPEL_MAGIC)
+  RESPONSE #100
+    DisplayString(Myself,62975)  // ~I've heard enough!  Show yourself, whatever you are, so I might destroy you!~
+    DisplayString(Myself,57171)  // ~I'll kill you for trying to manipulate me!~
+    ForceSpellRES("wwundead",Myself)  // ~Teleport Field~
+END
+
+IF
+  OR(7)
+    See(Player1)
+    See(Player2)
+    See(Player3)
+    See(NearestEnemyOf(Myself))
+    See(Player4)
+    See(Player5)
+    See(Player6)
+  Global("DemiCC","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetGlobal("DemiCC","LOCALS",1)
+    DisplayString(Myself,25951)  // ~Spell Sequencer~
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_DISPEL_MAGIC)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_GREATER_MALISON)
+    ReallyForceSpell(LastSeenBy(Myself),WIZARD_CHAOS)
+    DisplayString(Myself,26328)  // ~Chain Contingency~
+    ReallyForceSpell(Myself,WIZARD_TELEPORT_FIELD)
+    ReallyForceSpell(Myself,WIZARD_SPHERE_OF_CHAOS)
+    ReallyForceSpell(Myself,CLERIC_PHYSICAL_MIRROR)
+    DisplayString(Myself,40252)  // ~Contingency - Protection from Magical Weapons~
+    ReallyForceSpell(Myself,WIZARD_STONE_SKIN)
+    CreateCreatureObject("rat01",Myself,1,1,1)  // ~Rat~
+    ReallyForceSpell("rat01",WIZARD_GATE)
+    ReallyForceSpell("rat01",WIZARD_GATE)
+    ReallyForceSpell("rat01",WIZARD_GATE)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("DemiTS","LOCALS")
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    SetGlobalTimer("DemiTS","LOCALS",ONE_TURN)
+    ForceSpell(Myself,WIZARD_TIME_STOP)
+    ForceSpell(Myself,WIZARD_TELEPORT_FIELD)
+    ForceSpell(Myself,CLERIC_PHYSICAL_MIRROR)
+    ForceSpell(Myself,WIZARD_SPELL_TRAP)
+END
+
+IF
+  OR(7)
+    See(Player1)
+    See(Player2)
+    See(Player3)
+    See(NearestEnemyOf(Myself))
+    See(Player4)
+    See(Player5)
+    See(Player6)
+  !GlobalTimerNotExpired("DEMI","LOCALS")
+THEN
+  RESPONSE #70
+    SetGlobalTimer("DEMI","LOCALS",4)
+    ForceSpell(LastSeenBy(Myself),DEMILICH_TRAP_SOUL)
+  RESPONSE #30
+    SetGlobalTimer("DEMI","LOCALS",4)
+    ForceSpell(LastSeenBy(Myself),DEMILICH_DEATH)
+END

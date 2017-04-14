@@ -1,0 +1,40 @@
+    // Finger of Death Ray.
+    IF
+        !GlobalTimerNotExpired("xyxUsedFingerOfDeathRay","LOCALS")
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),-1,SAVEVSDEATH)
+        // Not immune to Death.
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),ANTISOLAR)
+        // Not bouncing or deflecting.
+        !HasItemEquiped("CLCK26",LastSeenBy()) // Cloak of Mirroring
+        OR(2)
+            // The target is not bouncing anything...
+            !HasBounceEffects(LastSeenBy())
+            // or bounces rays only (hopefully).
+            HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        // Not totally magic resistant.
+        CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedFingerOfDeathRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),WIZARD_FINGER_OF_DEATH)
+        RESPONSE #100
+            Continue()
+    END
+
+

@@ -1,0 +1,8 @@
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedFingerOfDeatRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),BEHOLDER_FINGER_OF_DEATH)
+            // Wait(XXX)
+    END
+
+

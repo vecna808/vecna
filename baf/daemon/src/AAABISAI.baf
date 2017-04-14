@@ -1,0 +1,25 @@
+IF
+  See(NearestEnemyOf(Myself))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),TANARI_PARALYZE)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),TANARI_DEATH_GAZE)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),TANARI_VAMPIRIC_TOUCH)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    Attack(NearestEnemyOf(Myself))
+END
+

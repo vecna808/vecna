@@ -1,0 +1,10 @@
+IF
+  True()
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    DisplayStringHead(Myself,31868)  // ~I give up...I can't go on...there's no point...I must die~
+    ChangeAIScript("",SPECIFICS)
+    Wait(6)
+END
+

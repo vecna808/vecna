@@ -1,0 +1,15 @@
+// Director
+
+// Beholder powers             Wait    HPGT
+
+// BEHOLDER_SLOW               2       35
+// WIZARD_BURNING_HANDS        1       15
+// WIZARD_ICE_STORM            1       5
+// WIZARD_MAGIC_MISSILE        0       45
+
+// Spots bouncing after 6 seconds.
+// Spots immunities after 18 seconds.
+
+//==============================================================================
+
+

@@ -1,0 +1,41 @@
+IF
+	Die()
+THEN
+	RESPONSE #100
+		SetGlobalTimer("HasAngel","GLOBAL",0)
+		CreateVisualEffectObject("SPUNHOLY",Myself)
+		DestroySelf()
+END
+
+IF
+	OnCreation()
+THEN
+	RESPONSE #100
+		ChangeGender(Myself,MALE)
+	RESPONSE #100
+		ChangeGender(Myself,FEMALE)
+END
+
+IF
+	Allegiance(Myself,NEUTRAL)
+THEN
+	RESPONSE #100
+		Enemy()
+END
+
+IF
+	AttackedBy([GOODCUTOFF],DEFAULT)
+	!Allegiance(Myself,ENEMY)
+THEN
+	RESPONSE #100
+		Enemy()
+END
+
+IF
+	StateCheck(Myself,STATE_SILENCED)
+THEN
+	RESPONSE #100
+		ReallyForceSpell(Myself,WIZARD_VOCALIZE)
+END
+
+

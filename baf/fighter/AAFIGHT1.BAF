@@ -1,0 +1,542 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    Shout(66)
+END
+
+IF
+  Global("AACHARM","LOCALS",1)
+  !StateCheck(Myself,STATE_CHARMED)
+THEN
+  RESPONSE #100
+    SetGlobal("AACHARM","LOCALS",0)
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  OR(2)
+    Heard([NEUTRAL],79)
+    Heard([EVILCUTOFF],79)
+  Allegiance(Myself,NEUTRAL)
+  !Global("AA_PlotMan","LOCALS",1)
+THEN
+  RESPONSE #100
+    Enemy()
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  !Allegiance(Myself,PC)
+  OR(2)
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Allegiance(LastAttackerOf(Myself),GOODCUTOFF)
+THEN
+  RESPONSE #100
+    Enemy()
+    Shout(151)
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  !Allegiance(Myself,GOODCUTOFF)
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    Allegiance(LastHitter(Myself),GOODCUTOFF)
+THEN
+  RESPONSE #100
+    Shout(151)
+    Enemy()
+    Continue()
+END
+
+IF
+  OR(2)
+    !Allegiance(Myself,EVILCUTOFF)
+    !Detect([GOODCUTOFF])
+THEN
+  RESPONSE #100
+END
+
+IF
+  TargetUnreachable(LastSeenBy(Myself))
+  Delay(3)
+THEN
+  RESPONSE #100
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  HasItem("potn55",Myself)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  HPPercentLT(Myself,60)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    UseItem("potn55",Myself)
+END
+
+IF
+  HasItem("potn52",Myself)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  HPPercentLT(Myself,70)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,46150)
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    UseItem("potn52",Myself)
+END
+
+IF
+  ActionListEmpty()
+  HPPercentLT(Myself,35)
+  !HasItem("POTN55",Myself)
+  !HasItem("POTN52",Myself)
+  !GlobalTimerNotExpired("AAW","LOCALS")
+  See([EVILCUTOFF])
+THEN
+  RESPONSE #80
+    SetGlobalTimer("AAW","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,72808)
+    Shout(123)
+  RESPONSE #20
+    Continue()
+END
+
+IF
+  ActionListEmpty()
+  StateCheck(Myself,STATE_POISONED)
+  !GlobalTimerNotExpired("POIS","LOCALS")
+  See([EVILCUTOFF])
+  !HasItem("POTN17",Myself)
+  !HasItem("POTN20",Myself)
+THEN
+  RESPONSE #100
+    Shout(83)
+    DisplayStringHead(Myself,@0)
+    SetGlobalTimer("POIS","LOCALS",ONE_ROUND)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_RESIST_MAGIC)
+  CheckStatLT(Myself,50,RESISTMAGIC)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  OR(5)
+    See([GOODCUTOFF.0.0.CLERIC_ALL])
+    See([GOODCUTOFF.0.0.BARD_ALL])
+    See([GOODCUTOFF.0.0.DRUID_ALL])
+    See([GOODCUTOFF.0.0.LONG_BOW])
+    See([GOODCUTOFF.0.0.SORCERER])
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    Spell(Myself,WARRIOR_RESIST_MAGIC)
+END
+
+IF
+  ActionListEmpty()
+  HasItem("POTN07",Myself)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  See(NearestEnemyOf(Myself))
+  CheckStatLT(Myself,24,STR)
+  RandomNum(2,1)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    UseItem("POTN07",Myself)
+    DisplayStringHead(Myself,46150)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_WAR_CRY)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  Range(SecondNearestEnemyOf(Myself),10)
+  RandomNum(2,1)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,33783)
+    Spell(Myself,WARRIOR_WAR_CRY)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_HARDINESS)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  !GlobalTimerNotExpired("HARD","LOCALS")
+  !CombatCounter(0)
+  RandomNumLT(5,4)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63953)
+    Spell(Myself,WARRIOR_HARDINESS)
+    SetGlobalTimer("HARD","LOCALS",ONE_TURN)
+END
+
+IF
+  ActionListEmpty()
+  HitBy([GOODCUTOFF],CRUSHING)
+  !GlobalTimerNotExpired("RANG","LOCALS")
+  !StateCheck(Myself,STATE_POISONED)
+  CheckStatGT(Myself,7,INT)
+  OR(2)
+    See(LastAttackerOf(Myself))
+    See(LastHitter(Myself))
+  !Range(LastSeenBy(Myself),7)
+  !TargetUnreachable(LastSeenBy(Myself))
+  !InWeaponRange(LastSeenBy(Myself))
+  HPGT(LastSeenBy(Myself),0)
+THEN
+  RESPONSE #50
+    DisplayStringHead(Myself,@1)
+    SetGlobalTimer("RANG","LOCALS",ONE_ROUND)
+  RESPONSE #50
+    DisplayStringHead(Myself,@2)
+    SetGlobalTimer("RANG","LOCALS",ONE_ROUND)
+  RESPONSE #25
+    DisplayStringHead(Myself,@3)
+    SetGlobalTimer("RANG","LOCALS",ONE_ROUND)
+  RESPONSE #25
+    DisplayStringHead(Myself,@4)
+    SetGlobalTimer("RANG","LOCALS",ONE_ROUND)
+  RESPONSE #50
+    DisplayStringHead(Myself,@5)
+    SetGlobalTimer("RANG","LOCALS",THREE_ROUNDS)
+    EquipMostDamagingMelee()
+    MoveToObject(LastSeenBy(Myself))
+    AttackReevaluate(LastSeenBy(Myself),180)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNumLT(32,21)
+  OR(3)
+    Heard(ThirdNearest([EVILCUTOFF]),124)
+    Heard(SecondNearest([EVILCUTOFF]),124)
+    Heard([EVILCUTOFF],124)
+  HPGT(LastHeardBy(Myself),1)
+  Range(LastHeardBy(Myself),20)
+  HPGT(LastHitter(LastHeardBy(Myself)),1)
+  !See(LastHitter(LastHeardBy(Myself)))
+  HPGT(LastAttackerOf(LastHeardBy(Myself)),1)
+  !See(LastAttackerOf(LastHeardBy(Myself)))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  RandomNumLT(31,21)
+  OR(6)
+    See(NearestEnemyOf(Myself))
+    See(WeakestOf)
+    See(WorstAC)
+    See(MostDamagedOf)
+    See(LastAttackerOf(Myself))
+    See(LastHitter(Myself))
+  RandomNumLT(28,22)
+  OR(3)
+    See([GOODCUTOFF.0.0.0.0.SUMMONED_DEMON])
+    See([GOODCUTOFF.0.0.0.0.SUMMONED])
+    See([GOODCUTOFF.0.0.0.0.ILLUSIONARY])
+  RandomNumLT(29,23)
+  OR(7)
+    See([PC.0.0.RANGER_ALL])
+    See([PC.0.0.PALADIN_ALL])
+    See([PC.0.0.BARD_ALL])
+    See([PC.0.0.DRUID_ALL])
+    See([PC.0.0.CLERIC_ALL])
+    See([PC.0.0.LONG_BOW])
+    See([PC.0.0.SORCERER])
+  RandomNumLT(30,16)
+  See(Protagonist)
+  RandomNumLT(26,10)
+  OR(4)
+    See([GOODCUTOFF.0.0.RANGER_ALL])
+    See([GOODCUTOFF.0.0.DRUID_ALL])
+    See([GOODCUTOFF.0.0.PALADIN_ALL])
+    See([GOODCUTOFF.0.0.CLERIC_ALL])
+  RandomNumLT(27,10)
+  OR(3)
+    See([GOODCUTOFF.0.0.MONK])
+    See([GOODCUTOFF.0.0.BARD_ALL])
+    See([GOODCUTOFF.0.0.THIEF_ALL])
+  RandomNumLT(24,9)
+  OR(3)
+    See(StrongestOf)
+    See(BestAC)
+    See(LeastDamagedOf)
+  RandomNumLT(25,9)
+  See(WeakestOf)
+  RandomNumLT(23,8)
+  See(WorstAC)
+  RandomNumLT(21,8)
+  See(MostDamagedOf)
+  RandomNumLT(32,11)
+  OR(2)
+    See(TenthNearest([GOODCUTOFF.0.0.LONG_BOW]))
+    See(TenthNearest([GOODCUTOFF.0.0.SORCERER]))
+  RandomNumLT(20,8)
+  See(TenthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  OR(3)
+    Allegiance(LastSeenBy(Myself),ENEMY)
+    Allegiance(LastSeenBy(Myself),EVILCUTOFF)
+    Allegiance(LastSeenBy(Myself),GOODBUTRED)
+THEN
+  RESPONSE #100
+END
+
+IF
+  StateCheck(LastSeenBy(Myself),STATE_CHARMED)
+THEN
+  RESPONSE #80
+    Continue()
+  RESPONSE #20
+END
+
+IF
+  ActionListEmpty()
+  CheckStatGT(Myself,0,SCRIPTINGSTATE4)
+THEN
+  RESPONSE #100
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_SMITE)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  Range(LastSeenBy(Myself),7)
+  RandomNumLT(6,5)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,65598)
+    Spell(Myself,WARRIOR_SMITE)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_GREATER_WHIRLWIND)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  Range(LastSeenBy(Myself),8)
+  RandomNumLT(66,40)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63904)
+    Spell(Myself,WARRIOR_GREATER_WHIRLWIND)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_CRITICAL_STRIKE)
+  Range(LastSeenBy(Myself),8)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  RandomNumLT(68,38)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,65434)
+    Spell(Myself,WARRIOR_CRITICAL_STRIKE)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_GREATER_DEATHBLOW)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  CheckStatLT(LastSeenBy(Myself),13,LEVEL)
+  Range(LastSeenBy(Myself),8)
+  RandomNumLT(67,36)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63938)
+    Spell(Myself,WARRIOR_GREATER_DEATHBLOW)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_WHIRLWIND)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  Range(LastSeenBy(Myself),8)
+  RandomNumLT(72,32)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63904)
+    Spell(Myself,WARRIOR_WHIRLWIND)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_DEATHBLOW)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  CheckStatLT(LastSeenBy(Myself),9,LEVEL)
+  Range(LastSeenBy(Myself),8)
+  RandomNumLT(75,26)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63922)
+    Spell(Myself,WARRIOR_DEATHBLOW)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(WARRIOR_POWER_ATTACK)
+  !GlobalTimerNotExpired("AAT","LOCALS")
+  CheckStat(Myself,0,SCRIPTINGSTATE4)
+  Range(LastSeenBy(Myself),8)
+  RandomNumLT(76,20)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AAT","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,63941)
+    Spell(Myself,WARRIOR_POWER_ATTACK)
+    EquipMostDamagingMelee()
+    AttackReevaluate(LastSeenBy(Myself),45)
+END
+
+IF
+  ActionListEmpty()
+  HPPercentLT(Myself,25)
+  Range(LastHitter(Myself),10)
+  !GlobalTimerNotExpired("AAW","LOCALS")
+THEN
+  RESPONSE #30
+    DisplayStringHead(Myself,49767)
+    Shout(124)
+    SetGlobalTimer("AAW","LOCALS",10)
+    RunAwayFrom(LastHitter(Myself),40)
+  RESPONSE #30
+    DisplayStringHead(Myself,@6)
+    Shout(124)
+    SetGlobalTimer("AAW","LOCALS",10)
+    Attack(LastHitter(Myself))
+  RESPONSE #40
+    DisplayStringHead(Myself,49766)
+    Shout(123)
+    SetGlobalTimer("AAW","LOCALS",10)
+    AttackReevaluate(LastSeenBy(Myself),15)
+END
+
+IF
+  ActionListEmpty()
+THEN
+  RESPONSE #30
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #40
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #30
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  ActionListEmpty()
+  !Range(NearestEnemyOf(Myself),5)
+THEN
+  RESPONSE #30
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #40
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #30
+    EquipRanged()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  ActionListEmpty()
+  !Range(LastSeenBy(Myself),10)
+THEN
+  RESPONSE #16
+    EquipMostDamagingMelee()
+    AttackOneRound(NearestEnemyOf(Myself))
+  RESPONSE #16
+    EquipMostDamagingMelee()
+    AttackOneRound(NearestEnemyOf(Myself))
+    AttackOneRound(NearestEnemyOf(Myself))
+  RESPONSE #16
+    EquipMostDamagingMelee()
+    AttackOneRound(NearestEnemyOf(Myself))
+    AttackOneRound(NearestEnemyOf(Myself))
+    AttackOneRound(NearestEnemyOf(Myself))
+  RESPONSE #26
+    EquipMostDamagingMelee()
+    MoveToObjectNoInterrupt(LastSeenBy(Myself))
+    AttackReevaluate(LastSeenBy(Myself),135)
+  RESPONSE #26
+    EquipMostDamagingMelee()
+    MoveToObjectNoInterrupt(LastSeenBy(Myself))
+    AttackReevaluate(LastSeenBy(Myself),270)
+END
+
+IF
+  ActionListEmpty()
+THEN
+  RESPONSE #30
+    EquipMostDamagingMelee()
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #40
+    EquipMostDamagingMelee()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+  RESPONSE #30
+    EquipMostDamagingMelee()
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+END
+

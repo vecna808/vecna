@@ -1,0 +1,13 @@
+    // Initialize.
+    IF
+        // This only runs if there are GOODCUTOFF visible.
+        Global("xyxInitialized","LOCALS",0)
+    THEN
+        RESPONSE #100
+            // Call for reinforcements  (Don't wait until attacked...).
+            // (This Shout number is used in GENSHT01.BCS, the override script for all Beholders.)
+            Shout(89)
+            // Beholders are too smart to target a bouncing or immune character after they notice it.
+            // Notice bouncing after one round.
+            SetGlobalTimer("xyxDoesNotSeeBounce","LOCALS",6)
+

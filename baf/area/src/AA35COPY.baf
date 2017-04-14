@@ -1,0 +1,45 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AACOPIER","AAR035",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AACOPIER","AAR035",1)
+		DisplayStringHead(Myself,@0)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		SetGlobal("AAcopy","AAR035",1)
+		SetGlobal("AACOPIER","AAR035",2)
+		DisplayStringHead(Myself,@1) 
+
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("AACOPIER","AAR035",2)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@2)
+END
+
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,12)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@3)
+END
+
+
+
+
+
+

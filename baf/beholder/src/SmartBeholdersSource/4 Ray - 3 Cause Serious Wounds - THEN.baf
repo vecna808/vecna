@@ -1,0 +1,10 @@
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedCauseSeriousWoundsRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),BEHOLDER_CAUSE_SERIOUS_WOUNDS)
+            // Wait(XXX)
+        RESPONSE #20
+            Continue()
+    END
+
+

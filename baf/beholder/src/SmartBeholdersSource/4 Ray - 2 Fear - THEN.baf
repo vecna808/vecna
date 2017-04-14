@@ -1,0 +1,10 @@
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedFearRay","LOCALS",6)
+            ForceSpell(LastSeenBy(),BEHOLDER_FEAR)
+            // Wait(XXX)
+        RESPONSE #100
+            Continue()
+    END
+
+

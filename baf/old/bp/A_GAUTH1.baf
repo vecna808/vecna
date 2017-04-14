@@ -1,0 +1,408 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    Shout(66)
+END
+
+IF
+  OR(2)
+    Heard([NEUTRAL],79)
+    Heard([EVILCUTOFF],79)
+  Allegiance(Myself,NEUTRAL)
+  !Global("BP_PlotMan","LOCALS",1)
+THEN
+  RESPONSE #100
+    Enemy()
+END
+
+IF
+  Global("BPCHARM","LOCALS",1)
+  !StateCheck(Myself,STATE_CHARMED)
+THEN
+  RESPONSE #100
+    SetGlobal("BPCHARM","LOCALS",0)
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  GlobalTimerNotExpired("BPCHASE","LOCALS")
+  Global("BPCHASER","LOCALS",1)
+  OR(2)
+    See([GOODCUTOFF])
+    See(LastHitter(Myself))
+  !General(Myself,HUMANOID)
+  !General(Myself,GIANTHUMANOID)
+THEN
+  RESPONSE #10
+    DisplayStringHead(Myself,@0)
+    SetGlobal("BPCHASER","LOCALS",0)
+    AttackReevaluate(LastSeenBy(Myself),15)
+  RESPONSE #10
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),GAUTH_REPULSION)
+    SetGlobalTimer("BP_Rep","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthRep","LOCALS",1)
+  RESPONSE #15
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),GAUTH_CONE_OF_COLD)
+    SetGlobalTimer("BP_Cold","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthCold","LOCALS",1)
+  RESPONSE #10
+    ReallyForceSpell(SecondNearest([PC]),BEHOLDER_LIGHTNING_BOLT)
+    SetGlobalTimer("BP_Bolt","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthBolt","LOCALS",1)
+  RESPONSE #10
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_HOLD_PERSON)
+    SetGlobalTimer("BP_Hold","LOCALS",4)
+    IncrementGlobal("GauthHold","LOCALS",1)
+  RESPONSE #10
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_PARALYZATION)
+    SetGlobalTimer("BP_Paral","LOCALS",3)
+    IncrementGlobal("GauthParal","LOCALS",1)
+  RESPONSE #100
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_FEAR)
+    SetGlobalTimer("fear","LOCALS",4)
+    IncrementGlobal("BeFear","LOCALS",1)
+  RESPONSE #5
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_CAUSE_SERIOUS_WOUNDS)
+    SetGlobalTimer("wnd","LOCALS",2)
+    IncrementGlobal("BeWound","LOCALS",1)
+  RESPONSE #10
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_SLOW)
+    SetGlobalTimer("BP_Slow","LOCALS",7)
+    IncrementGlobal("GauthSlow","LOCALS",1)
+END
+
+IF
+  GlobalTimerExpired("BPCHASE","LOCALS")
+  Global("BPCHASER","LOCALS",1)
+  !See([GOODCUTOFF])
+  !See(LastHitter(Myself))
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,@1)
+    SetGlobal("BPCHASER","LOCALS",0)
+    ClearActions(Myself)
+    Continue()
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  !Allegiance(Myself,PC)
+  OR(2)
+    AttackedBy([GOODCUTOFF],DEFAULT)
+    Allegiance(LastAttackerOf(Myself),GOODCUTOFF)
+THEN
+  RESPONSE #100
+    Enemy()
+    Shout(151)
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+  !Allegiance(Myself,GOODCUTOFF)
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    Allegiance(LastHitter(Myself),GOODCUTOFF)
+THEN
+  RESPONSE #100
+    Shout(151)
+    Enemy()
+END
+
+IF
+  TookDamage()
+  Global("BPCHASER","LOCALS",0)
+  !See(LastHitter(Myself))
+  !See([GOODCUTOFF])
+THEN
+  RESPONSE #70
+    DisplayStringHead(Myself,@2)
+    SetGlobalTimer("BPCHASE","LOCALS",12)
+    SetGlobal("BPCHASER","LOCALS",1)
+    MoveToObject(LastHitter(Myself))
+  RESPONSE #30
+    DisplayStringHead(Myself,@2)
+    RunAwayFrom(LastHitter(Myself),45)
+END
+
+IF
+  CheckStatGT(Myself,10,WIZARD_GREATER_MALISON)
+  CheckStatGT(Myself,5,INT)
+  OR(2)
+    See(LastAttackerOf(Myself))
+    See(LastHitter(Myself))
+  CheckStatLT(LastSeenBy(Myself),11,WIZARD_GREATER_MALISON)
+  !GlobalTimerNotExpired("BPCHASE","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPCHASE","LOCALS",TWO_ROUNDS)
+    DisplayStringHead(Myself,@3)
+    EquipMostDamagingMelee()
+    MoveToObject(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  CheckStatGT(Myself,10,WIZARD_GREATER_MALISON)
+  CheckStatGT(Myself,5,INT)
+  OR(2)
+    See(TenthNearest([GOODCUTOFF]))
+    See(TenthNearest([PC]))
+  CheckStatLT(LastSeenBy(Myself),11,WIZARD_GREATER_MALISON)
+  !GlobalTimerNotExpired("BPCHASE","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPCHASE","LOCALS",TWO_ROUNDS)
+    DisplayStringHead(Myself,@3)
+    EquipMostDamagingMelee()
+    MoveToObject(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  CheckStatGT(Myself,10,WIZARD_GREATER_MALISON)
+  CheckStatGT(Myself,5,INT)
+  See(TenthNearest)
+  CheckStatLT(TenthNearest,11,WIZARD_GREATER_MALISON)
+  !GlobalTimerNotExpired("BPCHASE","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPCHASE","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,@3)
+    MoveToObject(TenthNearest)
+END
+
+IF
+  CheckStatGT(Myself,10,WIZARD_GREATER_MALISON)
+  CheckStatGT(Myself,5,INT)
+  !GlobalTimerNotExpired("BPCHASE","LOCALS")
+  See(Nearest)
+  CheckStatGT(Nearest,10,WIZARD_GREATER_MALISON)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BPCHASE","LOCALS",ONE_ROUND)
+    DisplayStringHead(Myself,@3)
+    RunAwayFrom(Nearest,15)
+END
+
+IF
+  CheckStatGT(Myself,10,WIZARD_GREATER_MALISON)
+  CheckStatGT(Myself,5,INT)
+  !GlobalTimerNotExpired("BPCHASE","LOCALS")
+  !See([GOODCUTOFF])
+THEN
+  RESPONSE #100
+    SetGlobal("BPCHASER","LOCALS",1)
+    SetGlobalTimer("BPCHASE","LOCALS",TWO_ROUNDS)
+    DisplayStringHead(Myself,@3)
+    MoveToObject(Player1)
+END
+
+IF
+  OR(2)
+    !Allegiance(Myself,EVILCUTOFF)
+    !Detect([GOODCUTOFF])
+THEN
+  RESPONSE #100
+END
+
+IF
+  Global("BP_ShBald","LOCALS",0)
+  PartyHasItem("WA2SHIEL")  // ~Shield of Balduran~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BP_ShDebate","LOCALS",10)
+    SetGlobal("BP_ShBald","LOCALS",1)
+END
+
+IF
+  Global("BP_ShBald","LOCALS",1)
+  GlobalTimerExpired("BPShDebate","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobal("BP_ShBald","LOCALS",2)
+END
+
+IF
+  RandomNumLT(20,7)
+  GlobalLT("GauthWound","LOCALS",18)
+  !GlobalTimerNotExpired("BP_Wound","LOCALS")
+  OR(5)
+    See(NearestEnemyOf(Myself))
+    See(Player1)
+    See(LastAttackerOf(Myself))
+    See(LastHitter(Myself))
+    See(MostDamagedOf)
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+THEN
+  RESPONSE #100
+    ReallyForceSpell([PC],BEHOLDER_CAUSE_SERIOUS_WOUNDS)
+    SetGlobalTimer("BP_Wound","LOCALS",2)
+    IncrementGlobal("GauthWound","LOCALS",1)
+END
+
+IF
+  OR(2)
+    RandomNum(20,7)
+    RandomNum(20,8)
+  GlobalLT("GauthCold","LOCALS",3)
+  !GlobalTimerNotExpired("BP_Cold","LOCALS")
+  See(ThirdNearestEnemyOf(Myself))
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+  CheckStatLT(LastSeenBy(Myself),51,RESISTMAGICCOLD)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(SecondNearestEnemyOf(Myself),GAUTH_CONE_OF_COLD)
+    SetGlobalTimer("BP_Cold","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthCold","LOCALS",1)
+END
+
+IF
+  OR(2)
+    RandomNum(20,9)
+    RandomNum(20,10)
+  GlobalLT("GauthBolt","LOCALS",3)
+  !GlobalTimerNotExpired("BP_Bolt","LOCALS")
+  OR(4)
+    See(ThirdNearestEnemyOf(Myself))
+    See([GOODCUTOFF.0.0.MAGE])
+    See([GOODCUTOFF.0.0.SORCERER])
+    See(MostDamagedOf)
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+  !CheckStatGT(LastSeenBy(Myself),50,RESISTELECTRICITY)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(SecondNearest([PC]),BEHOLDER_LIGHTNING_BOLT)
+    SetGlobalTimer("BP_Bolt","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthBolt","LOCALS",1)
+END
+
+IF
+  OR(11)
+    See(NearestEnemyOf(Myself))
+    See(LastAttackerOf(Myself))
+    See(LastHitter(Myself))
+    See([GOODCUTOFF.0.0.FIGHTER_ALL])
+    See([GOODCUTOFF.0.0.RANGER_ALL])
+    See([GOODCUTOFF.0.0.PALADIN_ALL])
+    See([GOODCUTOFF.0.0.BARD_ALL])
+    See([GOODCUTOFF.0.0.CLERIC_ALL])
+    See([GOODCUTOFF.0.0.DRUID_ALL])
+    See([GOODCUTOFF.0.0.LONG_BOW])
+    See([GOODCUTOFF.0.0.SORCERER])
+  False()
+THEN
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  OR(2)
+    RandomNum(20,11)
+    RandomNum(20,12)
+  GlobalLT("GauthParal","LOCALS",4)
+  !GlobalTimerNotExpired("BP_Paral","LOCALS")
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+  !StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+  !CheckStatGT(LastSeenBy(Myself),50,RESISTMAGIC)
+THEN
+  RESPONSE #100
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_PARALYZATION)
+    SetGlobalTimer("BP_Paral","LOCALS",3)
+    IncrementGlobal("GauthParal","LOCALS",1)
+END
+
+IF
+  OR(2)
+    RandomNum(20,16)
+    RandomNum(20,17)
+  GlobalLT("GauthRep","LOCALS",8)
+  !GlobalTimerNotExpired("BP_Rep","LOCALS")
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+THEN
+  RESPONSE #100
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),GAUTH_REPULSION)
+    SetGlobalTimer("BP_Rep","LOCALS",ONE_ROUND)
+    IncrementGlobal("GauthRep","LOCALS",1)
+END
+
+IF
+  RandomNumGT(20,18)
+  GlobalLT("GauthHold","LOCALS",4)
+  !GlobalTimerNotExpired("BP_Hold","LOCALS")
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+  !StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+  !CheckStatGT(LastSeenBy(Myself),50,RESISTMAGIC)
+THEN
+  RESPONSE #100
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_HOLD_PERSON)
+    SetGlobalTimer("BP_Hold","LOCALS",4)
+    IncrementGlobal("GauthHold","LOCALS",1)
+END
+
+IF
+  OR(3)
+    RandomNum(20,13)
+    RandomNum(20,14)
+    RandomNum(20,15)
+  GlobalLT("GauthSlow","LOCALS",6)
+  !GlobalTimerNotExpired("BP_Slow","LOCALS")
+  OR(6)
+    See(NearestEnemyOf(Myself))
+    See(Protagonist)
+    See([GOODCUTOFF.0.0.FIGHTER_ALL])
+    See([GOODCUTOFF.0.0.RANGER_ALL])
+    See([GOODCUTOFF.0.0.PALADIN_ALL])
+    See([GOODCUTOFF.0.0.0.0.SUMMONED])
+  OR(2)
+    !Global("BP_ShBald","LOCALS",2)
+    !HasItem("WA2SHIEL",LastSeenBy(Myself))  // ~Shield of Balduran~
+  !StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+  !StateCheck(LastSeenBy(Myself),STATE_SLOWED)
+  HPGT(Myself,35)
+THEN
+  RESPONSE #100
+    FaceObject(LastSeenBy(Myself))
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_SLOW)
+    SetGlobalTimer("BP_Slow","LOCALS",7)
+    IncrementGlobal("GauthSlow","LOCALS",1)
+END
+
+IF
+  Range(MostDamagedOf,8)
+THEN
+  RESPONSE #100
+    AttackReevaluate(MostDamagedOf,35)
+END
+
+IF
+  True()
+THEN
+  RESPONSE #90
+    AttackReevaluate(NearestEnemyOf(Myself),25)
+  RESPONSE #10
+END
+

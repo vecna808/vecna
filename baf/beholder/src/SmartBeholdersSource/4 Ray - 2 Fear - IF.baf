@@ -1,0 +1,42 @@
+    // Fear Ray.
+    IF
+        // HPGT(Myself,XXX)
+        !GlobalTimerNotExpired("xyxUsedFearRay","LOCALS")
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),1,SAVEVSSPELL)
+        // Not immune to Panic.
+        // (No good way to detect Remove Fear.)
+        !StateCheck(LastSeenBy(),STATE_BERSERK) // Minsc Berserk
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE3) // Barbarian Rage
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !Kit(LastSeenBy(),CAVALIER)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("CLCK30",LastSeenBy()) // Cloak of Bravery
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("MISCBC",LastSeenBy()) // Blackrazor
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !HasItemEquiped("SW1H32",LastSeenBy()) // Dragonslayer
+        // Not bouncing.
+        // This ray is potentially disabling if it bounces, so be hesitant to use it while bouncing is not yet detected.
+        OR(2)
+            GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+            RandomNum(2,1)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        // Don't use too much on downed foes.
+        OR(2)
+            !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+            RandomNum(4,1)
+        // Not totally magic resistant.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+

@@ -1,0 +1,39 @@
+// Eye of the Beholder
+
+// Triggers:
+//  Death Spell
+
+// Powers                           HPGT    Wait
+// BEHOLDER_PARALYZATION            0       0
+// BEHOLDER_CHARM_PERSON            65      0
+// BEHOLDER_FEAR                    55      0
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS    5       0
+// BEHOLDER_FLESH_TO_STONE          25      0
+// BEHOLDER_ANTIMAGIC_RAY           0       0
+// BEHOLDER_DOMINATION              15      0
+// BEHOLDER_SLOW                    35      0
+
+// Exactly the same as BEHOLD01, except for...
+
+// Spots bouncing after 9 seconds.
+// Spots immunities after 30 seconds.
+
+//------------------------------------------------------------------------------
+
+// Special case:
+
+// See below.
+
+//==============================================================================
+
+// Special effects upon death.
+IF
+    Die()
+THEN
+    RESPONSE #100
+        CreateVisualEffectObject("ICRMPARI",Myself)
+        DestroySelf()
+END
+
+//==============================================================================
+

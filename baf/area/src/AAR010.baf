@@ -1,0 +1,32 @@
+IF
+	Global("AAPHNIX","GLOBAL",1)
+	Global("A1InRange","GLOBAL",1)
+	Global("AAPhnixSummoned","AAR010",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AAPhnixSummoned","AAR010",1)
+		Explore()
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR010C1")
+END
+
+
+
+
+IF
+	PartyHasItem("AAITM004")
+	PartyHasItem("AAITM005")
+	PartyHasItem("AAITM006")
+	Global("STONECOMPLETE","AAR010",0)
+THEN
+	RESPONSE #100
+		SetGlobal("STONECOMPLETE","AAR010",1)
+		TakePartyItem("AAITM004")
+		TakePartyItem("AAITM005")
+		TakePartyItem("AAITM006")
+		GiveItemCreate("AAITM007",Player1,1,0,0)
+		DisplayString(LastTrigger,@0)
+END
+
+

@@ -1,0 +1,18 @@
+IF
+	Closed([ANYONE])
+	Global("AADoorClosed","AAR038",0)
+THEN
+	RESPONSE #100
+		ClearActions(LastTrigger)
+		CreateVisualEffect("AASUMM2",[544.1669])
+		CreateVisualEffect("AASUMM2",[532.1597])
+		CreateVisualEffect("AASUMM2",[774.1518])
+		CreateVisualEffect("AASUMM2",[850.1611])
+		Wait(2)
+		CreateCreature("AACRE077",[544.1669],6)
+		CreateCreature("AACRE131",[532.1597],6)
+		CreateCreature("AACRE065",[774.1518],6)
+		CreateCreature("AACRE065",[850.1611],6)
+		SetGlobal("AADoorClosed","AAR038",1)
+END
+

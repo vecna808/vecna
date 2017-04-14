@@ -1,0 +1,28 @@
+// BEHOLD01 Triggers
+
+    // Contingency.
+    IF
+        Global("xyxContingency","LOCALS",0)
+        NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],0)
+        Range([GOODCUTOFF.0.0.0.0.SUMMONED],16)
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one that's been there for some time.
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one big one.
+            CheckStatGT([GOODCUTOFF.0.0.0.0.SUMMONED],7,LEVEL)
+        Range(SecondNearest([GOODCUTOFF.0.0.0.0.SUMMONED]),16)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxContingency","LOCALS",1)
+            // Death Spell displays its own string.
+            ReallyForceSpell(Myself,WIZARD_DEATH_SPELL)
+            Continue()
+    END
+
+//==============================================================================
+

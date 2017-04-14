@@ -1,0 +1,7 @@
+IF
+   Global("AASeenBG2007","GLOBAL",0)
+THEN
+    RESPONSE #100
+             SetGlobal("AASeenBG2007","GLOBAL",1)
+             Continue()
+END

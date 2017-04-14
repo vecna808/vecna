@@ -1,0 +1,46 @@
+// Beholder powers                 Effect           Save        Cloak   Shield  Spells
+
+BEHOLDER_AGANNAZAR_SCORCHER     // 3d6 dam                      x       x       x
+BEHOLDER_ANTIMAGIC_RAY          // Dispel, spell failure
+BEHOLDER_CAUSE_SERIOUS_WOUNDS   // 17 dam                       x       x       x
+BEHOLDER_CHARM_PERSON           // Charm            Spells +3           x       x
+BEHOLDER_DEATH_RAY              // Death            Death       x       x       x
+BEHOLDER_DISINTEGRATE           // Disintegration   Spells      x       x       x
+BEHOLDER_DOMINATION             // Charm            Spells -2           x       x
+BEHOLDER_FEAR                   // Panic            Spells              x       x
+BEHOLDER_FINGER_OF_DEATH        // Death            Spells -2                   x
+BEHOLDER_FLESH_TO_STONE         // Petrification    Spells      x       x       x
+BEHOLDER_HOLD_PERSON            // Hold             Spells -1           x       x
+BEHOLDER_LIGHTNING_BOLT         // 3d6 + 2d6 dam    Spells      x       x       x
+BEHOLDER_PARALYZATION           // Hold             Spells -1           x       x
+BEHOLDER_SLOW                   // Slow             Spells -4           x       x
+BEHOLDER_SPELL_TURNING          // (Minor Spell Turning)
+CLERIC_CURE_CRITICAL_WOUNDS     // Cures 27 HP
+HIVE_MOTHER_ANTIMAGIC_RAY       // Dispel, spell failure, removes highest spell from memory (has Casting Time)
+HIVE_MOTHER_CAUSE_SERIOUS_WOUNDS // 5d8 dam                     x       x       x
+HIVE_MOTHER_DISINTEGRATE        // Disintegrate     Spells -4   x       x       x
+WIZARD_ABI_DALZIMS_HORRID_WILTING // 20d8           Spells 1/2  x
+WIZARD_BURNING_HANDS            // Very minor damage            x               x
+WIZARD_CHAIN_LIGHTNING          // 3d6 + 3d6 dam    Spells 1/2  x
+WIZARD_DEATH_SPELL              // Death
+WIZARD_DISPEL_MAGIC             // Dispel
+WIZARD_FINGER_OF_DEATH          // Death            Spells -2                   x
+WIZARD_ICE_STORM                // 2d8 per round (sort of)      x
+WIZARD_IMPRISONMENT             // Imprisonment                                 x
+WIZARD_IMPROVED_MANTLE          // Immunity to +3 weapons or lower
+WIZARD_LIGHTNING_BOLT           // 3d6 + 2d6 dam    Spells      x               x
+WIZARD_MAGIC_MISSILE            // Very minor damage            x               x
+WIZARD_MAZE                     // Maze                                         x
+WIZARD_MELF_ACID_ARROW          // 2d4 per round                x               x
+WIZARD_POWER_WORD_KILL          // Death                        x               x
+WIZARD_POWER_WORD_STUN          // Stun                                         x
+WIZARD_PRISMATIC_SPRAY          // Varies...        mostly Spells x
+WIZARD_STONE_SKIN               // Stoneskins
+
+// Targeting order
+Insta-kill
+Anti-Magic (Charmed spellcasters don't cast anyway)
+Charm & Disabling
+Debuff & Hampering
+Damage
+

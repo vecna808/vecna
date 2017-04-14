@@ -1,0 +1,88 @@
+// Find a charmed creature (be they enemy or ally...).
+
+    // Sixth nearest.
+    IF
+        // Search for charmed creatures.
+        StateCheck(SixthNearest(),STATE_CHARMED)
+        // Beholder teeth do Piercing damage.
+        CheckStatLT(SixthNearest(),100,RESISTPIERCING)
+        // Don't go after immortals (such as pre-ToB Wizard Eyes).
+        !HasItem("MINHP1",SixthNearest())
+        !HasItem("IMOENHP1",SixthNearest())
+        See(SixthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth nearest.
+    IF
+        StateCheck(FifthNearest(),STATE_CHARMED)
+        CheckStatLT(FifthNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FifthNearest())
+        !HasItem("IMOENHP1",FifthNearest())
+        See(FifthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth nearest.
+    IF
+        StateCheck(FourthNearest(),STATE_CHARMED)
+        CheckStatLT(FourthNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FourthNearest())
+        !HasItem("IMOENHP1",FourthNearest())
+        See(FourthNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third nearest.
+    IF
+        StateCheck(ThirdNearest(),STATE_CHARMED)
+        CheckStatLT(ThirdNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",ThirdNearest())
+        !HasItem("IMOENHP1",ThirdNearest())
+        See(ThirdNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second nearest.
+    IF
+        StateCheck(SecondNearest(),STATE_CHARMED)
+        CheckStatLT(SecondNearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",SecondNearest())
+        !HasItem("IMOENHP1",SecondNearest())
+        See(SecondNearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        StateCheck(Nearest(),STATE_CHARMED)
+        CheckStatLT(Nearest(),100,RESISTPIERCING)
+        !HasItem("MINHP1",Nearest())
+        !HasItem("IMOENHP1",Nearest())
+        See(Nearest())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Attack.
+IF
+    !StateCheck(Myself,STATE_CHARMED)
+    StateCheck(LastSeenBy(),STATE_CHARMED)
+THEN
+    RESPONSE #100
+        Attack(LastSeenBy())
+END
+
+//==============================================================================
+

@@ -1,0 +1,96 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",0)
+THEN
+	RESPONSE #100
+		SetGlobal("FlichCrypt","AAR031",1)
+		DisplayStringHead(Myself,@0)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",1)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@1) 
+		SetGlobal("FlichCrypt","AAR031",2)
+		CreateVisualEffect("AASUMM",[1448.1830])
+		CreateVisualEffect("AATPORT4",[1250.1747])
+		CreateVisualEffect("AATPORT4",[1215.1684])
+		CreateVisualEffect("AATPORT4",[1344.1620])
+		CreateVisualEffect("AATPORT4",[1710.1888])
+		CreateVisualEffect("AATPORT4",[1754.1833])
+		CreateVisualEffect("AATPORT4",[1804.1772])
+		Wait(4)
+		CreateCreature("AACRE022",[1448.1830],10)
+		CreateCreature("AACRE039",[1250.1747],10)
+		CreateCreature("AACRE039",[1215.1684],10)
+		CreateCreature("AACRE039",[1344.1620],10)
+		CreateCreature("AACRE039",[1710.1888],10)
+		CreateCreature("AACRE039",[1754.1833],10)
+		CreateCreature("AACRE039",[1804.1772],10)
+		CreateCreature("AACRE061",[1405.1719],10)
+		CreateCreature("AACRE061",[1655.1801],10)
+		CreateCreature("AACRE061",[1521.1688],10)
+		CreateCreature("AACRE061",[1570.1490],10)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",2)
+	!Dead("LICHD20")
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@2)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",2)
+	Dead("LICHD20")
+THEN
+	RESPONSE #100
+		SetGlobal("FlichCrypt","AAR031",3)
+		DisplayStringHead(Myself,@3)
+		GiveItemCreate("AAITM027",LastTrigger,1,0,0)
+		GiveItemCreate("AMUL22",LastTrigger,1,0,0)
+		GiveItemCreate("HELM34",LastTrigger,2,2,2)
+		GiveItemCreate("WAND18",LastTrigger,20,20,20)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",3)
+THEN
+	RESPONSE #100
+		SetGlobal("FlichCrypt","AAR031",4)
+		DisplayStringHead(Myself,@4)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("FlichCrypt","AAR031",4)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@5)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,12)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@6)
+END
+
+
+
+
+
+

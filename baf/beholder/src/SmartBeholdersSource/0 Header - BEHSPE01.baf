@@ -1,0 +1,78 @@
+// Spectator
+
+// Power                           HPGT    Wait
+
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS   20      3
+// BEHOLDER_CHARM_PERSON           45      4
+// BEHOLDER_FEAR                   65      1
+// BEHOLDER_PARALYZATION           35      0
+// BEHOLDER_SPELL_TURNING          45, 0   0, Delay 6
+
+// Spots bouncing after 6 seconds.
+// Spots immunities after 18 seconds.
+
+//------------------------------------------------------------------------------
+
+// Special case:
+
+// Not necessarily hostile.
+// Keep an eye on the party.
+// Run when attacked.
+
+//==============================================================================
+
+// Keep staring at the nearest party member.
+IF
+    // I am still neutral.
+    Allegiance(Myself,NEUTRAL)
+    // The party is not allowed in the chest (yet).
+    !Global("SpectatorAllowsChest","GLOBAL",1)
+THEN
+    RESPONSE #100
+        FaceObject([GOODCUTOFF])
+END
+
+// Look the "other way".
+IF
+    // I am still neutral.
+    Allegiance(Myself,NEUTRAL)
+    // The party *is* allowed in the chest (yet).
+    Global("SpectatorAllowsChest","GLOBAL",1)
+THEN
+    RESPONSE #100
+        Face(1)
+END
+
+// Not necessarily hostile (just in case the above fails).
+// (The Spectator's Override script (GENSHT01) will turn him hostile if attacked or damaged.)
+IF
+    Allegiance(Myself,NEUTRAL)
+THEN
+    RESPONSE #100
+        NoAction()
+END
+
+// Run when attacked.
+
+    // Keep running.
+    IF
+        GlobalTimerNotExpired("xyxRun","LOCALS")
+    THEN
+        RESPONSE #100
+            // Keep going; don't interrupt the running.
+    END
+
+    // Start running when attacked.
+    IF
+        OR(2)
+            HitBy([ANYTHING],DEFAULT)
+            AttackedBy([ANYTHING],DEFAULT)
+        Exists(LastAttackerOf())
+    THEN
+        RESPONSE #100
+            DisplayStringHead(Myself,1468) // Ahh, no! Help!
+            SetGlobalTimer("xyxRun","LOCALS",6)
+            RunAwayFrom(NearestEnemyOf(),90)
+    END
+
+

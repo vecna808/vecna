@@ -1,0 +1,10 @@
+IF
+   Global("AASeenAAR042","GLOBAL",0)
+THEN
+    RESPONSE #100
+             SetGlobal("AASeenAAR042","GLOBAL",1)
+             Continue()
+END
+
+
+

@@ -1,0 +1,102 @@
+// Target spellcasters for Anti-Magic Ray.
+
+    // Second Nearest Cleric.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // The target can still cast spells.
+        CheckStatLT(SecondNearestEnemyOfType([0.0.0.CLERIC_ALL]),100,SPELLFAILUREPRIEST)
+        !StateCheck(SecondNearestEnemyOfType([0.0.0.CLERIC_ALL]),STATE_OUT_OF_ACTION)
+        // The target is valid.
+        See(SecondNearestEnemyOfType([0.0.0.CLERIC_ALL]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest Cleric.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,5)
+        CheckStatLT(NearestEnemyOfType([0.0.0.CLERIC_ALL]),100,SPELLFAILUREPRIEST)
+        !StateCheck(NearestEnemyOfType([0.0.0.CLERIC_ALL]),STATE_OUT_OF_ACTION)
+        See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest Bard.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,4)
+        CheckStatLT(NearestEnemyOfType([0.0.0.BARD]),100,SPELLFAILUREMAGE)
+        !StateCheck(NearestEnemyOfType([0.0.0.BARD]),STATE_OUT_OF_ACTION)
+        See(NearestEnemyOfType([0.0.0.BARD]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest Druid.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,3)
+        CheckStatLT(NearestEnemyOfType([0.0.0.DRUID_ALL]),100,SPELLFAILUREPRIEST)
+        !StateCheck(NearestEnemyOfType([0.0.0.DRUID_ALL]),STATE_OUT_OF_ACTION)
+        See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second Nearest Mage.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,2)
+        CheckStatLT(SecondNearestEnemyOfType([0.0.0.MAGE_ALL]),100,SPELLFAILUREMAGE)
+        !StateCheck(SecondNearestEnemyOfType([0.0.0.MAGE_ALL]),STATE_OUT_OF_ACTION)
+        See(SecondNearestEnemyOfType([0.0.0.MAGE_ALL]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest Mage.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,1)
+        CheckStatLT(NearestEnemyOfType([0.0.0.MAGE_ALL]),100,SPELLFAILUREMAGE)
+        !StateCheck(NearestEnemyOfType([0.0.0.MAGE_ALL]),STATE_OUT_OF_ACTION)
+        See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Use Anti-Magic Ray to force spell failure in spellcasters.
+IF
+    !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+    !CheckStat(LastSeenBy(),100,SPELLFAILUREMAGE)
+    !CheckStat(LastSeenBy(),100,SPELLFAILUREPRIEST)
+    OR(6)
+        Class(LastSeenBy(),MAGE_ALL)
+        Class(LastSeenBy(),DRUID_ALL)
+        Class(LastSeenBy(),BARD)
+        Class(LastSeenBy(),CLERIC_ALL)
+        Name(LastSeenBy(),"Planatar") // Good Planetar
+        Name(LastSeenBy(),"Darkplanatar") // Evil Planetar
+    // Don't use on downed foes; it dispels disabling enchantments as well.
+    !StateCheck(LastSeenBy(),STATE_OUT_OF_ACTION)
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxUsedAntiMagicRay","LOCALS",6)
+        ForceSpell(LastSeenBy(),HIVE_MOTHER_ANTIMAGIC_RAY)
+    RESPONSE #100
+        Continue()
+END
+
+//==============================================================================
+
+

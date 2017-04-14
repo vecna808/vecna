@@ -1,0 +1,136 @@
+// Target enemies with dispellable enchantments.
+
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // The target has some juicy enchantments.
+        OR(4)
+            StateCheck(SixthNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(SixthNearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(SixthNearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(SixthNearestEnemyOf(),0,STONESKINS)
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,5)
+        OR(4)
+            StateCheck(FifthNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(FifthNearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(FifthNearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(FifthNearestEnemyOf(),0,STONESKINS)
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // FourthNearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,4)
+        OR(4)
+            StateCheck(FourthNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(FourthNearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(FourthNearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(FourthNearestEnemyOf(),0,STONESKINS)
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // ThirdNearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,3)
+        OR(4)
+            StateCheck(ThirdNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(ThirdNearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(ThirdNearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(ThirdNearestEnemyOf(),0,STONESKINS)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // SecondNearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,2)
+        OR(4)
+            StateCheck(SecondNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(SecondNearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(SecondNearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(SecondNearestEnemyOf(),0,STONESKINS)
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+        !RandomNum(6,1)
+        OR(4)
+            StateCheck(NearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+            CheckStat(NearestEnemyOf(),1,MINORGLOBE)
+            CheckStat(NearestEnemyOf(),1,SCRIPTINGSTATE2)
+            CheckStatGT(NearestEnemyOf(),0,STONESKINS)
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Use Anti-Magic Ray to dispel enchantments.
+// (Does not remove bounce spells...)
+IF
+    !GlobalTimerNotExpired("xyxUsedAntiMagicRay","LOCALS")
+    // The target has some juicy enchantments.
+    OR(4)
+        StateCheck(LastSeenBy(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+        CheckStat(LastSeenBy(),1,MINORGLOBE)
+        CheckStat(LastSeenBy(),1,SCRIPTINGSTATE2)
+        CheckStatGT(LastSeenBy(),0,STONESKINS)
+    // This ray does not bounce.
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxUsedAntiMagicRay","LOCALS",6)
+        ForceSpell(LastSeenBy(),BEHOLDER_ANTIMAGIC_RAY)
+        // Wait(XXX)
+    RESPONSE #100
+        Continue()
+END
+
+//==============================================================================
+

@@ -1,0 +1,15 @@
+// Gauth
+
+// Power                           HPGT    Wait
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS   55      2
+// BEHOLDER_HOLD_PERSON            35      2
+// BEHOLDER_LIGHTNING_BOLT         5       2
+// BEHOLDER_PARALYZATION           15      0
+// BEHOLDER_SLOW                   25      1
+
+// Spots bouncing after 9 seconds.
+// Spots immunities after 30 seconds.
+
+//==============================================================================
+
+

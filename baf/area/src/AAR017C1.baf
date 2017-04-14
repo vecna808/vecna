@@ -1,0 +1,63 @@
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("PITLORD")
+		MoveViewObject(Myself,INSTANT)
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+		EndCutSceneMode()
+END
+
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("HAG1")
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+END
+
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("HAG2")
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+END
+
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("HAG3")
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+END
+
+
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("HAG4")
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+END
+
+
+IF
+	True()
+THEN
+	RESPONSE #100
+		CutSceneId("HAG5")
+		CreateVisualEffectObject("AATPORT2",Myself)
+		Wait(3)
+		DestroySelf()
+END

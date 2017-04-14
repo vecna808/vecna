@@ -1,0 +1,75 @@
+IF
+	HarmlessEntered([PC])
+	Global("1900_Switch","AR1900",1)
+THEN
+	RESPONSE #100
+		SetCorpseEnabled("effect_1",1)
+		SetCorpseEnabled("effect_2",0)
+		SetCorpseEnabled("effect_3",0)
+		SetCorpseEnabled("effect_4",0)
+		SetCorpseEnabled("effect_5",0)
+		SetCorpseEnabled("effect_6",0)
+		SetCorpseEnabled("effect_7",0)
+		SetCorpseEnabled("effect_8",0)
+		SetCorpseEnabled("effect_9",0)
+		SetCorpseEnabled("effect_10",0)
+		SetCorpseEnabled("effect_11",0)
+		SmallWait(5)
+		MoveViewPoint([3608.3018],INSTANT)
+		TeleportParty("AR1900",[3608.3018],6)
+END
+
+IF
+	HarmlessEntered([PC])
+THEN
+	RESPONSE #100
+		SetCorpseEnabled("effect_1",1)
+		SetCorpseEnabled("effect_2",0)
+		SetCorpseEnabled("effect_3",0)
+		SetCorpseEnabled("effect_4",0)
+		SetCorpseEnabled("effect_5",0)
+		SetCorpseEnabled("effect_6",0)
+		SetCorpseEnabled("effect_7",0)
+		SetCorpseEnabled("effect_8",0)
+		SetCorpseEnabled("effect_9",0)
+		SetCorpseEnabled("effect_10",0)
+		SetCorpseEnabled("effect_11",0)
+		SetGlobal("1900_Switch","AR1900",1)
+		SmallWait(5)
+		MoveViewPoint([626.2317],INSTANT)
+		TeleportParty("AR1900",[636.2317],10)
+END
+
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    CutSceneId(Player1)  // 
+    CreateVisualEffectObject("SPDIMNDR",Player1)
+    CreateVisualEffectObject("SPDIMNDR",Player2)
+    CreateVisualEffectObject("SPDIMNDR",Player3)
+    CreateVisualEffectObject("SPDIMNDR",Player4)
+    CreateVisualEffectObject("SPDIMNDR",Player5)
+    CreateVisualEffectObject("SPDIMNDR",Player6)
+    Wait(3)
+    FadeToColor([20.0],0)
+    Wait(1)
+    LeaveAreaLUA("AR0700","",[636.2317],S)
+    ActionOverride(Player2,LeaveAreaLUA("AR0700","",[636.2317],SWW))
+    ActionOverride(Player3,LeaveAreaLUA("AR0700","",[636.2317],NW))
+    ActionOverride(Player4,LeaveAreaLUA("AR0700","",[636.2317],NNE))
+    ActionOverride(Player5,LeaveAreaLUA("AR0700","",[636.2317],E))
+    ActionOverride(Player6,LeaveAreaLUA("AR0700","",[636.2317],SSE))
+    MultiPlayerSync()
+    Wait(1)
+    FadeFromColor([20.0],0)
+    CreateVisualEffectObject("SPDIMNDR",Myself)
+    ActionOverride(Player2,CreateVisualEffectObject("SPDIMNDR",Myself))
+    ActionOverride(Player3,CreateVisualEffectObject("SPDIMNDR",Myself))
+    ActionOverride(Player4,CreateVisualEffectObject("SPDIMNDR",Myself))
+    ActionOverride(Player5,CreateVisualEffectObject("SPDIMNDR",Myself))
+    ActionOverride(Player6,CreateVisualEffectObject("SPDIMNDR",Myself))
+    Wait(3)
+    EndCutSceneMode()
+END

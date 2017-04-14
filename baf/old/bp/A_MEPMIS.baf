@@ -1,0 +1,44 @@
+IF
+  See(NearestEnemyOf(Myself))
+  Global("mistmephitcombat","LOCALS",0)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),MEPHIT_MIST)
+    IncrementGlobal("mistmephitcombat","LOCALS",1)
+END
+
+IF
+  Delay(12)
+  See(NearestEnemyOf(Myself))
+  GlobalLT("mistmephitcombat","LOCALS",3)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),MEPHIT_MIST)
+    IncrementGlobal("mistmephitcombat","LOCALS",1)
+    AttackOneRound(NearestEnemyOf(Myself))
+END
+
+IF
+  HaveSpell(WIZARD_BLUR)
+  !StateCheck(Myself,STATE_BLUR)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_BLUR)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  See([GOODCUTOFF.0.0.MAGE])
+  See(LastAttackerOf([EVILCUTOFF.0.0.MAGE_ALL]))
+THEN
+  RESPONSE #100
+    AttackReevaluate(LastSeenBy(Myself),15)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    AttackReevaluate(NearestEnemyOf(Myself),30)
+END
+

@@ -1,0 +1,19 @@
+IF
+		Global("AALolSummoned","AAR001",0)
+		Dead("CHDEMON")
+		Dead("DEMPRNC3")
+		Dead("LICHP34")
+		Dead("MAGEB32")
+		Dead("MAGEF25")
+		Dead("MAGEG22")
+		Dead("MARLORD")
+	OR(2)
+		Entered([ANYONE])
+		Opened([ANYONE])
+THEN
+	RESPONSE #100
+		SetGlobal("AALolSummoned","AAR001",1)
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR001C1")
+END

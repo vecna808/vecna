@@ -1,0 +1,428 @@
+IF
+	Global("StartEndBios","AR6200",1)
+THEN
+	RESPONSE #100
+		SetCursorState(TRUE)
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Aerie")
+	OR(2)
+		!Global("AerieRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	Global("AerieBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AerieBio","GLOBAL",1)
+		TextScreen("AERIEND1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Aerie")
+	Global("PlayerChoseEssence","GLOBAL",0)
+	Global("AerieRomanceActive","GLOBAL",2)
+	Global("AerieBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AerieBio","GLOBAL",1)
+		TextScreen("AERIEND2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Nalia")
+	Global("NaliaBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("NaliaBio","GLOBAL",1)
+		TextScreen("NALIAND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Anomen")
+	OR(2)
+		!Global("AnomenRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	Global("AnomenBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AnomenBio","GLOBAL",1)
+		TextScreen("ANOMEND1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Anomen")
+	Global("PlayerChoseEssence","GLOBAL",0)
+	Global("AnomenRomanceActive","GLOBAL",2)
+	Global("AnomenBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("AnomenBio","GLOBAL",1)
+		TextScreen("ANOMEND2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Viconia")
+	OR(2)
+		!Global("ViconiaRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	Global("ViconiaBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ViconiaBio","GLOBAL",1)
+		TextScreen("VICONND1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Viconia")
+	Global("PlayerChoseEssence","GLOBAL",0)
+	Global("ViconiaRomanceActive","GLOBAL",2)
+	Global("ViconiaBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ViconiaBio","GLOBAL",1)
+		TextScreen("VICONND2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Valygar")
+	Global("ValygarBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ValygarBio","GLOBAL",1)
+		TextScreen("VALYGND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Haerdalis")
+	Global("HaerdalisBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("HaerdalisBio","GLOBAL",1)
+		TextScreen("HAERND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Cernd")
+	Global("CerndBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("CerndBio","GLOBAL",1)
+		TextScreen("CERNDND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Sarevok")
+	Global("SarevokBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("SarevokBio","GLOBAL",1)
+		TextScreen("SAREVND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Minsc")
+	Global("MinscBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("MinscBio","GLOBAL",1)
+		TextScreen("MINSCND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Edwin")
+	Global("EdwinBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("EdwinBio","GLOBAL",1)
+		TextScreen("EDWINND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Imoen2")
+	Global("ImoenBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ImoenBio","GLOBAL",1)
+		TextScreen("IMOENND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Jaheira")
+	OR(2)
+		!Global("JaheiraRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	Global("JaheiraBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JaheiraBio","GLOBAL",1)
+		TextScreen("JAHEIND1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Jaheira")
+	Global("PlayerChoseEssence","GLOBAL",0)
+	Global("JaheiraRomanceActive","GLOBAL",2)
+	Global("JaheiraBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JaheiraBio","GLOBAL",1)
+		TextScreen("JAHEIND2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Mazzy")
+	Global("MazzyBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("MazzyBio","GLOBAL",1)
+		TextScreen("MAZZYND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Jan")
+	Global("JanBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("JanBio","GLOBAL",1)
+		TextScreen("JANND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Korgan")
+	Global("KorganBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("KorganBio","GLOBAL",1)
+		TextScreen("KORGAND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Keldorn")
+	Global("KeldornBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("KeldornBio","GLOBAL",1)
+		TextScreen("KELDORND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	!Global("RasaadRomanceActive","GLOBAL",2)
+	Global("ohr_tft_outcome","global",0)
+	InParty("Rasaad")
+	Global("RasaadBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("RasaadBio","GLOBAL",1)
+		TextScreen("RASAADD1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	!Global("RasaadRomanceActive","GLOBAL",2)
+	!Global("ohr_tft_outcome","global",0)
+	InParty("Rasaad")
+	Global("RasaadBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("RasaadBio","GLOBAL",1)
+		TextScreen("RASAADD2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("RasaadRomanceActive","GLOBAL",2)
+	InParty("Rasaad")
+	Global("RasaadBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("RasaadBio","GLOBAL",1)
+		TextScreen("RASAADD3")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	InParty("Wilson")
+	Global("WilsonBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("WilsonBio","GLOBAL",1)
+		TextScreen("WILSOND")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	OR(2)
+		!Global("DornRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	InParty("Dorn")
+	Global("OHD_bio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("OHD_bio","GLOBAL",1)
+		TextScreen("OHDDORN")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("DornRomanceActive","GLOBAL",2)
+	Global("PlayerChoseEssence","GLOBAL",0)
+	InParty("Dorn")
+	Global("OHD_bio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("OHD_bio","GLOBAL",1)
+		TextScreen("OHDDORN2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	OR(2)
+		!Global("HexxatRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	InParty("Hexxat")
+	Global("OHH_bio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("OHH_bio","GLOBAL",1)
+		TextScreen("OHHHEX")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("HexxatRomanceActive","GLOBAL",2)
+	Global("PlayerChoseEssence","GLOBAL",0)
+	InParty("Hexxat")
+	Global("OHH_bio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("OHH_bio","GLOBAL",1)
+		TextScreen("OHHHEX2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	OR(2)
+		!Global("NeeraRomanceActive","GLOBAL",2)
+		Global("PlayerChoseEssence","GLOBAL",1)
+	InParty("Neera")
+	Global("NeeraBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("NeeraBio","GLOBAL",1)
+		TextScreen("NeeraD1")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+	Global("NeeraRomanceActive","GLOBAL",2)
+	Global("PlayerChoseEssence","GLOBAL",0)
+	InParty("Neera")
+	Global("NeeraBio","GLOBAL",0)
+THEN
+	RESPONSE #100
+		SetGlobal("NeeraBio","GLOBAL",1)
+		TextScreen("NeeraD2")
+		SmallWait(1)
+		Continue()
+END
+
+IF
+	Global("StartEndBios","AR6200",1)
+THEN
+	RESPONSE #100
+		SetGlobal("StartEndBios","AR6200",2)
+		SetCursorState(FALSE)
+		EndCredits()
+END
+
+IF
+	Global("FinalFight","AR6200",1)
+	Global("OHD_inscribed_melissan","GLOBAL",1)
+THEN
+	RESPONSE #100
+		SetGlobal("OHD_inscribed_melissan","GLOBAL",2)
+		CreateCreatureObject("ohdsplan",Player1,1,0,0) // Planetar of Justice - Planetar
+END
+
+

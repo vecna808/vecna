@@ -1,0 +1,63 @@
+// BEHHIV01 Triggers
+
+    // Chain Contingency.
+    IF
+        Global("xyxChainContingency","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxChainContingency","LOCALS",1)
+            DisplayString(Myself,26328) // Chain Contingency
+            DisplayString(Myself,8300) // Stoneskin
+            ApplySpell(Myself,WIZARD_STONE_SKIN)
+            // Cure Critical Wounds displays its own string.
+            ApplySpell(Myself,CLERIC_CURE_CRITICAL_WOUNDS)
+            SetGlobalTimer("xyxImprovedMantle","LOCALS",24) // 4 rounds
+            // Improved Mantle displays its own string.
+            ApplySpell(Myself,WIZARD_IMPROVED_MANTLE)
+            Continue()
+    END
+
+    // Chain Contingency - re-cast.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        Global("xyxChainContingency","LOCALS",1)
+        // No more stoneskins.
+        CheckStat(Myself,0,STONESKINS)
+        // Improved Mantle worn off.
+        GlobalTimerExpired("xyxImprovedMantle","LOCALS")
+    THEN
+        RESPONSE #100
+            // Fake casting of Chain Contingency.
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            DisplayString(Myself,26328) // Chain Contingency
+            CreateVisualEffectObject("SPCONTIN",Myself) // Contingency
+            SetGlobal("xyxChainContingency","LOCALS",0)
+            Wait(1)
+    END
+
+    // Contingency.
+    IF
+        Global("xyxContingency","LOCALS",0)
+        NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],0)
+        Range([GOODCUTOFF.0.0.0.0.SUMMONED],16)
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one that's been there for some time.
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one big one.
+            CheckStatGT([GOODCUTOFF.0.0.0.0.SUMMONED],7,LEVEL)
+        Range(SecondNearest([GOODCUTOFF.0.0.0.0.SUMMONED]),16)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxContingency","LOCALS",1)
+            // Death Spell displays its own string.
+            ReallyForceSpell(Myself,WIZARD_DEATH_SPELL)
+            Continue()
+    END
+
+//==============================================================================
+

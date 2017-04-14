@@ -1,0 +1,12 @@
+IF
+		Global("AAUndeadCall","AAR046",0)
+	OR(2)
+		Entered([ANYONE])
+		Opened([ANYONE])
+THEN
+	RESPONSE #100
+		SetGlobal("AAUndeadCall","AAR046",1)
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR046C1")
+END

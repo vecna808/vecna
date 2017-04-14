@@ -1,0 +1,200 @@
+IF
+  HPPercentLT(Myself,50)
+  HasItem("potn52",Myself)  // ~Potion of Extra Healing~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    UseItem("potn52",Myself)  // ~Potion of Extra Healing~
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !StateCheck(Myself,STATE_HASTED)
+  HasItem("potn14",Myself)  // ~Oil of Speed~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    UseItem("potn14",Myself)  // ~Oil of Speed~
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  HasItem("potn10",Myself)  // ~Potion of Invisibility~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    UseItem("potn10",Myself)  // ~Potion of Invisibility~
+END
+
+IF
+  CheckStatLT(Myself,18,STR)
+  HasItem("potn12",Myself)  // ~Potion of Stone Giant Strength~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    UseItem("potn12",Myself)  // ~Potion of Stone Giant Strength~
+END
+
+IF
+  HasItem("POTN34",Myself)  // ~Potion of Magic Protection~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    UseItem("POTN34",Myself)  // ~Potion of Magic Protection~
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+END
+
+IF
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  HasItem("ring05",Myself)  // ~Ring of Invisibility ~
+THEN
+  RESPONSE #100
+    UseItem("ring05",Myself)  // ~Ring of Invisibility ~
+END
+
+IF
+  HasItem("POTN05",Myself)  // ~Potion of Fire Giant Strength~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    UseItem("POTN05",Myself)  // ~Potion of Fire Giant Strength~
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+END
+
+IF
+  HasItem("POTN45",Myself)  // ~Potion of Freedom~
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    UseItem("POTN45",Myself)  // ~Potion of Freedom~
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    Continue()
+END
+
+IF
+  HasItem("POTN52",Myself)  // ~Potion of Extra Healing~
+  HPPercentLT(Myself,100)
+  !GlobalTimerNotExpired("KR_POTION_TIMER","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_POTION_TIMER","LOCALS",6)
+    UseItem("POTN52",Myself)  // ~Potion of Extra Healing~
+    DisplayStringHead(Myself,46150)  // ~quaffs a potion~
+    Continue()
+END
+
+IF
+  OR(4)
+    See([GOODCUTOFF.0.0.BARD_ALL])
+    See([GOODCUTOFF.0.0.DRUID_ALL])
+    See([GOODCUTOFF.0.0.CLERIC_ALL])
+    See([GOODCUTOFF.0.0.MAGE_ALL])
+  RandomNumGT(4,1)
+  !GlobalTimerNotExpired("KR_REVAL_TARGETS","LOCALS")
+THEN
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",6)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",18)
+  RESPONSE #100
+    Shout(907)
+    Attack(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+END
+
+IF
+  OR(4)
+    See([GOODCUTOFF.0.0.THIEF_ALL])
+    See([GOODCUTOFF.0.0.RANGER_ALL])
+    See([GOODCUTOFF.0.0.PALADIN_ALL])
+    See([GOODCUTOFF.0.0.FIGHTER_ALL])
+  RandomNumLT(4,2)
+  !GlobalTimerNotExpired("KR_REVAL_TARGETS","LOCALS")
+THEN
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",6)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",18)
+  RESPONSE #100
+    Shout(907)
+    Attack(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+END
+
+IF
+  GlobalTimerExpired("KR_REVAL_TARGETS","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",18)
+END
+
+IF
+  Heard([ANYONE],907)
+THEN
+  RESPONSE #100
+    MoveToObjectNoInterrupt(LastHeardBy(Myself))
+    AttackOneRound(LastTargetedBy(LastHeardBy(Myself)))
+END
+
+IF
+  OR(2)
+    See([GOODCUTOFF])
+    See([PC])
+THEN
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",6)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+  RESPONSE #100
+    Shout(907)
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    AttackOneRound(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",18)
+  RESPONSE #100
+    Shout(907)
+    Attack(LastSeenBy(Myself))
+    SetGlobalTimer("KR_REVAL_TARGETS","LOCALS",12)
+END
+

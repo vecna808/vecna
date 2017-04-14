@@ -1,0 +1,15 @@
+// Deeper Shadows - Hive Mother.
+
+// Relocate the Eyestalk quest item.
+IF
+    OnCreation()
+THEN
+    RESPONSE #100
+        // Spawn the Hive Mother at the back of the Hive.
+        CreateCreature("BEHHIV01",[3000.1400],15)
+        // Move the Elder Orb carrying the Eyestalk quest item next to the Hive Mother.
+        ActionOverride("UDELDER",JumpToPoint([3200.1500]))
+        // Place a Death Tyrant where the Elder Orb was.
+        CreateCreature("BEHUND01",[165.1025],15)
+END
+

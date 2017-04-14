@@ -1,0 +1,10 @@
+// Prevent background scripts from doing something stupid...
+IF
+    True()
+THEN
+    RESPONSE #100
+        NoAction()
+END
+
+//==============================================================================
+

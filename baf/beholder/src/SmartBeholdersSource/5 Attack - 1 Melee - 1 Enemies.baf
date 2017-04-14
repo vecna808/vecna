@@ -1,0 +1,93 @@
+// Target a vulnerable foe.
+
+    // Sixth nearest.
+    IF
+        // Randomize a bit.
+        !RandomNum(6,6)
+        // Beholder teeth do Piercing damage.
+        CheckStatLT(SixthNearestEnemyOf(),100,RESISTPIERCING)
+        // Don't go after immortals (such as pre-ToB Wizard Eyes).
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth nearest.
+    IF
+        !RandomNum(6,5)
+        CheckStatLT(FifthNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth nearest.
+    IF
+        !RandomNum(6,4)
+        CheckStatLT(FourthNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third nearest.
+    IF
+        !RandomNum(6,3)
+        CheckStatLT(ThirdNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second nearest.
+    IF
+        !RandomNum(6,2)
+        StateCheck(SecondNearestEnemyOf(),STATE_CHARMED)
+        CheckStatLT(SecondNearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !RandomNum(6,1)
+        CheckStatLT(NearestEnemyOf(),100,RESISTPIERCING)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Attack.
+IF
+    OR(2)
+        Allegiance(LastSeenBy(),GOODCUTOFF)
+        StateCheck(Myself,STATE_CHARMED)
+    CheckStatLT(LastSeenBy(),100,RESISTPIERCING)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        Attack(LastSeenBy())
+END
+
+//==============================================================================
+

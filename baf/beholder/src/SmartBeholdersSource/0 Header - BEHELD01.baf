@@ -1,0 +1,33 @@
+// Elder Orb
+
+// Triggers:
+//  Death Spell
+//  Dispel Magic
+//  Fireball
+//  Melf's Acid Arrow
+//  Spell Trap
+//  Stoneskin x 2
+//  True Sight
+//  Innate Spell Turning
+
+// Spells memorized:
+//  Imprisonment
+//  Maze
+//  Power Word Kill
+//  Spell Turning
+//  True Sight
+//  Vocalize
+
+// Powers                           HPGT    Wait
+// BEHOLDER_ANTIMAGIC_RAY           0       0
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS    5       0
+// BEHOLDER_DEATH_RAY               55      0
+// BEHOLDER_DOMINATION              15      0
+// BEHOLDER_FLESH_TO_STONE          25      0
+// BEHOLDER_SLOW                    35      2
+
+// Spots bouncing after 3 seconds.
+// Spots immunities after 12 seconds.
+
+//==============================================================================
+

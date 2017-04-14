@@ -1,0 +1,8 @@
+IF
+	StateCheck(Myself,STATE_SILENCED)
+THEN
+	RESPONSE #100
+		ReallyForceSpell(Myself,WIZARD_VOCALIZE)
+END
+
+

@@ -1,0 +1,61 @@
+IF
+  See([ANYONE])
+  Global("hostile","LOCALS",0)
+  !Allegiance(Myself,ENEMY)
+  !Allegiance(Myself,CONTROLLED)
+THEN
+  RESPONSE #100
+    SetGlobal("hostile","LOCALS",1)
+    Enemy()
+    Continue()
+END
+
+IF
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+    Continue()
+END
+
+IF
+  HPPercentLT(Myself,50)
+  !GlobalTimerNotExpired("Gate","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,WIZARD_GATE)
+    SetGlobalTimer("Gate","LOCALS",600)
+END
+
+IF
+  OR(2)
+    See(NearestEnemyOf(Myself))
+    See([ANYONE])
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  !HasItem("IMPPIT",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),DEATHKNIGHT_FIREBALL)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_DISPEL_MAGIC)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),WIZARD_SYMBOL_FEAR)
+    SetGlobalTimer("Cast","LOCALS",3)
+    Continue()
+END
+
+IF
+  OR(2)
+    See(NearestEnemyOf(Myself))
+    See([ANYONE])
+  CheckStatLT(LastSeenBy(Myself),100,RESISTPIERCING)
+  !HasItem("MINHP1",LastSeenBy(Myself))
+  !HasItem("IMPPIT",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    AttackReevaluate(LastSeenBy(Myself),7)
+END

@@ -1,0 +1,106 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",0)
+THEN
+	RESPONSE #100
+		SetGlobal("ShangCrypt","AAR031",1)
+		DisplayStringHead(Myself,@0)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",1)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@1) 
+		SetGlobal("ShangCrypt","AAR031",2)
+		CreateVisualEffect("AASUMM2",[402.536])
+		CreateVisualEffect("SPPROIMG",[281.595])
+		CreateVisualEffect("SPPROIMG",[388.433])
+		CreateVisualEffect("SPPROIMG",[480.846])
+		CreateVisualEffect("SPPROIMG",[710.456])
+		CreateVisualEffect("SPPROIMG",[724.346])
+		CreateVisualEffect("SPPROIMG",[345.887])
+		CreateVisualEffect("SPPROIMG",[534.759])
+		CreateVisualEffect("SPPROIMG",[671.546])
+		CreateVisualEffect("SPPROIMG",[701.639])
+		CreateVisualEffect("SPPROIMG",[633.737])
+		Wait(4)
+		CreateCreature("AACRE023",[402.536],10)
+		CreateCreature("AACRE081",[281.595],10)
+		CreateCreature("AACRE081",[388.433],10)
+		CreateCreature("AACRE171",[480.846],10)
+		CreateCreature("AACRE171",[710.456],10)
+		CreateCreature("AACRE033",[724.346],10)
+		CreateCreature("AACRE033",[345.887],10)
+		CreateCreature("AACRE172",[534.759],10)
+		CreateCreature("AACRE172",[671.546],10)
+		CreateCreature("AACRE034",[701.639],10)
+		CreateCreature("AACRE034",[633.737],10)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",2)
+	!Dead("AASHANG")
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@2)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",2)
+	Dead("AASHANG")
+THEN
+	RESPONSE #100
+		SetGlobal("ShangCrypt","AAR031",3)
+		DisplayStringHead(Myself,@3)
+		GiveItemCreate("AAITM024",LastTrigger,0,0,0)
+		GiveItemCreate("STAF11",LastTrigger,10,5,5)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",3)
+THEN
+	RESPONSE #100
+		SetGlobal("ShangCrypt","AAR031",4)
+		DisplayStringHead(Myself,@4)
+END
+
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,12)
+	Global("ShangCrypt","AAR031",4)
+THEN
+	RESPONSE #100
+		DisplayStringHead(Myself,@5)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,12)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@6)
+END
+
+
+
+
+
+
+
+
+
+
+
+
+
+

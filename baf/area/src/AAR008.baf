@@ -1,0 +1,14 @@
+IF
+	PartyHasItem("AAITM004")
+	PartyHasItem("AAITM005")
+	PartyHasItem("AAITM006")
+	Global("STONECOMPLETE","AAR008",0)
+THEN
+	RESPONSE #100
+		SetGlobal("STONECOMPLETE","AAR008",1)
+		TakePartyItem("AAITM004")
+		TakePartyItem("AAITM005")
+		TakePartyItem("AAITM006")
+		GiveItemCreate("AAITM007",Player1,1,0,0)
+		DisplayString(LastTrigger,@0)
+END

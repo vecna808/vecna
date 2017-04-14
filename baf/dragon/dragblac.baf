@@ -1,0 +1,305 @@
+/////////////////////////////////////////////////////////////////////
+//            Improved Smarter Nizidramanii'yt Script
+/////////////////////////////////////////////////////////////////////
+// Wes Weimer <weimer@cs.berkeley.edu>
+/////////////////////////////////////////////////////////////////////
+//
+// Goals:
+//	(1) Make Nizi smarter (and thus harder to kill) ... without
+//	adding any new powers or changing any stats. 
+//	(2) Eliminate possible player cheese:
+//		(a) no sitting in cloudkills forever
+//		(b) no hacking at Mordy forever
+//	(3) "Time to perish, manling!" 
+//
+/////////////////////////////////////////////////////////////////////
+// Version History:
+//	v1   	Sun Nov 11 11:14:17  2001
+//		Project started.
+//      v2      Fri Nov 30 23:24:39  2001
+//              Use `SpellNoDec' instead of `ForceSpell' when possible.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Discussion
+// 
+// See the Improved Smarter Nizi patch. Nizi is different from the
+// big F, however. Original Nizi powers:
+//      dispel magic (once/rest)
+//      haste (once/rest)
+//      heal (resting)
+//      black dragon insect
+//      black dragon plant
+//      charm person (inf - drow)
+// Nizi has INT 21, WIS 21. Let's use 'em!
+// 
+// Problems with the original:
+// (0) bug in black dragon breath, wrong damage and range
+// (1) poor target selection (e.g., Mordy jail)
+// (2) poor casting order (chaos *then* greater malison?) 
+// (4) subject to hit-sleep-run attacks, since spells never come back
+// (5) sits in one place, inviting traps
+//
+// Original script behaves inconsistently w/r/t the Wardstone
+// and summoned monsters: it "sees" the first summon and toasts it
+// but does not go after other ones. We'll assume that nothing
+// can be "seen" until we are angered.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Re-cast Stoneskin if we have been given some hours of
+// rest
+/////////////////////////////////////////////////////////////////////
+IF
+  GlobalTimerExpired("NiziStone","GLOBAL")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,CLERIC)
+  ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("NiziStone","GLOBAL",600) // can recast
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Meat Of The Fight 
+// Nizi Wisdom:
+//	(1) "Best way to block punch: no be there." (thanks Mr. Miyagi)
+//	(2) Nuke 'em 'till they glow.
+//	(3) Use those special Dragon tricks on enemies in range. 
+//	(4) Target Player1 (or the party), just at Player1 will target
+//	Mellisan and ignore her summons. The fight ends if you kill 
+//	Gorion's Ward.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Nizi Prep
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Global("NiziHaste","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    SetGlobal("NiziHaste","LOCALS",1)
+    Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Black Dragon Breath
+// Acid Damage: 20d10+12 (save vs. breath for half)
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("BLACKDRAGONBREATH","GLOBAL")
+ See(NearestEnemyOfType([PC]))
+THEN
+ RESPONSE #100
+  SetGlobalTimer("BLACKDRAGONBREATH","GLOBAL",18)
+  // "ReallyForce" allows us to take advantage of the full range of
+  // this spell (which exceeds conventional line of sight). FK is
+  // at least 40' tall and should have no trouble seeing to the end
+  // of his cavern. 
+  ReallyForceSpell(LastSeenBy(Myself),BLACK_DRAGON_BREATH)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Wing Buffet
+// Spell Range 30, Speed 1, Unlimited 
+// This is at the top of the list because we don't ever want to
+// get hit (if at all possible). Keep pushing them back. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Range(NearestEnemyOf(Myself),25)
+ !GlobalTimerNotExpired("Buffet","LOCALS")
+THEN
+ RESPONSE #100
+  ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+  SetGlobalTimer("Buffet","LOCALS",2)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Remove Magic
+// Spell Range 40, Speed 3, Once Per Rest
+// This is very important now that it works (the original script's
+// casting of this did nothing). It subsumes lower fire res to some
+// degree because it will cancel most fire protection potions, etc.
+// F's high level means that it also takes down most spell protections
+// and stoneskins. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Detect(Player1)
+ Global("NiziRemove","LOCALS",0)
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Player1,WIZARD_DISPEL_MAGIC)
+  SetGlobal("NiziRemove","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Insects, Fear and Plants
+// Plants: Set movement rate to 6, AC bonus of -2 (save spell -10)
+// Insects: casting failure to 100%, normal insects
+/////////////////////////////////////////////////////////////////////
+IF
+ See(NearestEnemyOfType([PC]))
+ Global("NiziInsect","LOCALS",0)
+ Allegiance(Myself,ENEMY)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  // they're all force spell in the original: these are innate abilities
+  ReallyForceSpell(LastSeenBy(Myself),BLACK_DRAGON_INSECT)
+  ReallyForceSpell(LastSeenBy(Myself),DRAGON_FEAR)
+  ReallyForceSpell(Myself,BLACK_DRAGON_PLANT)
+  SetGlobal("NiziInsect","LOCALS",1)
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Charm Person 
+// Range 30, Speed 1, Unlimited
+/////////////////////////////////////////////////////////////////////
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ See(NearestEnemyOfType([PC]))
+ CheckStatGT(NearestEnemyOfType([PC]),1,SAVEVSSPELL)
+   !Class(LastSeenBy(Myself),MONK)
+   !Kit(LastSeenBy(Myself),INQUISITOR)
+   !HasItemEquiped("HELM06",LastSeenBy(Myself)) // Helm of Charm Protection
+   !HasItemEquiped("MISCBC",LastSeenBy(Myself)) // Blackrazor
+   !HasItemEquiped("NPCHAN",LastSeenBy(Myself)) // Corthala Family Armor
+   !HasItemEquiped("REAVER",LastSeenBy(Myself)) // Unholy Reaver
+   !HasItemEquiped("SHLD25",LastSeenBy(Myself)) // Shield of Harmony +2
+   !HasItemEquipedReal("SPER07",LastSeenBy(Myself)) // Spear of the Unicorn +2
+   !HasItemEquipedReal("STAF11",LastSeenBy(Myself)) // Staff of the Magi
+   !HasItemEquipedReal("SW1H35",LastSeenBy(Myself)) // Adjatha the Drinker +2
+   !HasItemEquipedReal("SW1H54",LastSeenBy(Myself)) // The Equalizer
+   !HasItemEquipedReal("SW2H14",LastSeenBy(Myself)) // Lilarcor
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(NearestEnemyOfType([PC]),WIZARD_CHARM_PERSON)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ See(SecondNearestEnemyOfType([PC]))
+ CheckStatGT(SecondNearestEnemyOfType([PC]),1,SAVEVSSPELL)
+   !Class(LastSeenBy(Myself),MONK)
+   !Kit(LastSeenBy(Myself),INQUISITOR)
+   !HasItemEquiped("HELM06",LastSeenBy(Myself)) // Helm of Charm Protection
+   !HasItemEquiped("MISCBC",LastSeenBy(Myself)) // Blackrazor
+   !HasItemEquiped("NPCHAN",LastSeenBy(Myself)) // Corthala Family Armor
+   !HasItemEquiped("REAVER",LastSeenBy(Myself)) // Unholy Reaver
+   !HasItemEquiped("SHLD25",LastSeenBy(Myself)) // Shield of Harmony +2
+   !HasItemEquipedReal("SPER07",LastSeenBy(Myself)) // Spear of the Unicorn +2
+   !HasItemEquipedReal("STAF11",LastSeenBy(Myself)) // Staff of the Magi
+   !HasItemEquipedReal("SW1H35",LastSeenBy(Myself)) // Adjatha the Drinker +2
+   !HasItemEquipedReal("SW1H54",LastSeenBy(Myself)) // The Equalizer
+   !HasItemEquipedReal("SW2H14",LastSeenBy(Myself)) // Lilarcor
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_CHARM_PERSON)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ See(ThirdNearestEnemyOfType([PC]))
+ CheckStatGT(ThirdNearestEnemyOfType([PC]),1,SAVEVSSPELL)
+   !Class(LastSeenBy(Myself),MONK)
+   !Kit(LastSeenBy(Myself),INQUISITOR)
+   !HasItemEquiped("HELM06",LastSeenBy(Myself)) // Helm of Charm Protection
+   !HasItemEquiped("MISCBC",LastSeenBy(Myself)) // Blackrazor
+   !HasItemEquiped("NPCHAN",LastSeenBy(Myself)) // Corthala Family Armor
+   !HasItemEquiped("REAVER",LastSeenBy(Myself)) // Unholy Reaver
+   !HasItemEquiped("SHLD25",LastSeenBy(Myself)) // Shield of Harmony +2
+   !HasItemEquipedReal("SPER07",LastSeenBy(Myself)) // Spear of the Unicorn +2
+   !HasItemEquipedReal("STAF11",LastSeenBy(Myself)) // Staff of the Magi
+   !HasItemEquipedReal("SW1H35",LastSeenBy(Myself)) // Adjatha the Drinker +2
+   !HasItemEquipedReal("SW1H54",LastSeenBy(Myself)) // The Equalizer
+   !HasItemEquipedReal("SW2H14",LastSeenBy(Myself)) // Lilarcor
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_CHARM_PERSON)
+END
+
+IF
+ Detect(NearestEnemyOfType([PC]))
+ !GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    Attack(Player1)	// Kill Gorion's Ward!
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Fight Ends (or we're all resting)
+// The original resting condition was !Detect([PC]), HPLT(Myself,50)
+// CombatCounter(0). Lazy scripting: the HPLT was apparently to guard
+// against repeated healings but it meant that a 75% health dragon
+// never got back his spell-like abilities. I'm happy to heal
+// even when it is useless: it'll make the players edgy. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ !Detect(NearestEnemyOf(Myself))	// (*)
+ CombatCounter(0)			// (*)
+ Delay(9)
+THEN
+ RESPONSE #100
+  DisplayString(Myself,26703)		// "Damn, where are they?"
+  ForceSpell(Myself,CLERIC_HEAL)
+  SetGlobal("NiziHaste","LOCALS",0)    // can cast Haste
+  SetGlobal("NiziRemove","LOCALS",0) // can cast Remove
+  SetGlobal("NiziInsect","LOCALS",0) // can cast Insects
+  StartCombatCounter()
+  Attack(Player1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// How To Provoke A Dragon
+// Doing these things will make Nizi angry. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,NEUTRAL)
+ OR(5)
+   AttackedBy([ANYTHING],DEFAULT)
+   SpellCast([GOODCUTOFF],0)		// triggers on any spell
+   SpellCastPriest([GOODCUTOFF],0)	// triggers on any spell
+   SpellCastInnate([GOODCUTOFF],0)	// triggers on any ability
+   Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+ RESPONSE #100
+  DisplayString(Myself,21726)	// "Are you trying to threaten me?"
+  DisplayString(Myself,60511)	// "Time to perish, manling!"
+  Enemy()
+END
+
+/////////////////////////////////////////////////////////////////////
+// Initialize our Juggernaut
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("NiziInit","LOCALS",0)
+THEN
+ RESPONSE #100
+  ForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("NiziStone","GLOBAL",600) // can recast
+  SetGlobalTimer("BLACKDRAGONBREATH","GLOBAL",0)
+  SetGlobalTimer("Cast","LOCALS",0)
+  EquipMostDamagingMelee() // use those claws!
+  SetGlobal("NiziInit","LOCALS",1)
+  ChangeAIScript("",DEFAULT) // lose WtaSight
+END

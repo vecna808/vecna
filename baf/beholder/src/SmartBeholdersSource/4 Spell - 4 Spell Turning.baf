@@ -1,0 +1,20 @@
+    // Spell Turning.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_SPELL_TURNING)
+        !HasBounceEffects(Myself)
+        // There's a nasty spellcaster.
+        OR(4)
+            Exists([GOODCUTOFF.0.0.BARD])
+            Exists([GOODCUTOFF.0.0.DRUID_ALL])
+            Exists([GOODCUTOFF.0.0.CLERIC_ALL])
+            Exists([GOODCUTOFF.0.0.MAGE_ALL])
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_SPELL_TURNING)
+        RESPONSE #100
+            Continue()
+    END
+
+

@@ -1,0 +1,693 @@
+IF
+  Global("GBDoOnce","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  !HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+THEN
+  RESPONSE #100
+    SetGlobal("GBDoOnce","LOCALS",1)
+    SetGlobalTimer("GBOneDay","LOCALS",2880)
+    ChangeAIScript("",DEFAULT)
+    Continue()
+END
+
+IF
+  Global("GBDoOnce","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+THEN
+  RESPONSE #100
+    SetGlobal("GBDoOnce","LOCALS",1)
+    SetGlobalTimer("GBOneDay","LOCALS",2880)
+    ChangeAIScript("",DEFAULT)
+    ChangeClass(Myself,MAGE)
+    CreateCreatureObject("UmbHul01",Myself,0,0,0)  // ~Umber Hulk~
+    CreateCreatureObject("UmbHul01",Myself,0,0,0)  // ~Umber Hulk~
+    Continue()
+END
+
+IF
+  GlobalTimerExpired("GBOneDay","LOCALS")
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBOneDay","LOCALS",2880)
+    SetGlobal("GBPrep1","LOCALS",0)
+    ReallyForceSpell(Myself,CLERIC_HEAL)
+    ReallyForceSpell(Myself,CLERIC_MASS_CURE)
+END
+
+IF
+  HPLT(Myself,25)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+  !AreaCheck("AR2100")
+  !AreaCheck("AR1508")
+  !AreaCheck("AR3021")
+THEN
+  RESPONSE #100
+    DropInventory()
+    SpellNoDec(Myself,DRYAD_TELEPORT)
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player1)
+  InMyArea(Player2)
+  InMyArea(Player3)
+  InMyArea(Player4)
+  InMyArea(Player5)
+  InMyArea(Player6)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player1)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player1,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player2)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player2,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player3)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player3,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player4)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player4,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player5)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player5,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player6)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player6,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player1)
+  InMyArea(Player2)
+  InMyArea(Player3)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player1)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player1,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player2)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player2,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player3)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player3,0,0,0)  // ~Umber Hulk~
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player1)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player1)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player1,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player2)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player2)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player2,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player3)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player3)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player3,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player4)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player4)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player4,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player5)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player5)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player5,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Delay(10)
+  !Detect([PC])
+  OR(2)
+    HitBy([GOODCUTOFF],CRUSHING)
+    See(NearestEnemyOf(Myself))
+  InMyArea(Player6)
+  Allegiance(Myself,ENEMY)
+  !AreaCheck("AR6200")
+THEN
+  RESPONSE #100
+    ReallyForceSpellRES("GBAstral",Player6)  // GBAstral
+    CreateCreatureObjectDoor("UmbHul01",Player6,0,0,0)  // ~Umber Hulk~
+END
+
+IF
+  Global("GBPrep1","LOCALS",0)
+  HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+  Detect([PC])
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobal("GBPrep1","LOCALS",1)
+    SetGlobalTimer("GBProMagWeap","LOCALS",24)
+    ReallyForceSpell(Myself,WIZARD_STONE_SKIN)
+    ReallyForceSpell(Myself,WIZARD_MIRROR_IMAGE)
+    ReallyForceSpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+    ReallyForceSpell(Myself,WIZARD_IMPROVED_INVISIBILITY)
+    ReallyForceSpell(Myself,WIZARD_SPELL_IMMUNITY_DIVINATION)
+    ReallyForceSpell(Myself,WIZARD_SPELL_SHIELD)
+    Continue()
+END
+
+IF
+  TookDamage()
+  HitBy([GOODCUTOFF],CRUSHING)
+  HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+  !GlobalTimerNotExpired("GBProMagWeap","LOCALS")
+  GlobalLT("GBProMagicWeap","LOCALS",4)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SetGlobalTimer("GBProMagWeap","LOCALS",24)
+    IncrementGlobal("GBProMagicWeap","LOCALS",1)
+    ReallyForceSpell(Myself,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+END
+
+IF
+  OR(2)
+    HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+    HasItem("MOVE7",Myself)  // ~Boots of Speed~
+  !GlobalTimerNotExpired("GBPsiCure","LOCALS")
+  GlobalLT("GBCureSelf","LOCALS",4)
+  HPPercentLT(Myself,75)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SetGlobalTimer("GBPsiCure","LOCALS",18)
+    IncrementGlobal("GBCureSelf","LOCALS",1)
+    ReallyForceSpell(Myself,CLERIC_CURE_CRITICAL_WOUNDS)
+END
+
+IF
+  !GlobalTimerNotExpired("GBPsiInvis","LOCALS")
+  !StateCheck(Myself,STATE_INVISIBLE)
+  See(NearestEnemyOf(Myself))
+  Allegiance(Myself,ENEMY)
+  OR(2)
+    HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+    HasItem("MOVE7",Myself)  // ~Boots of Speed~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SetGlobalTimer("GBPsiInvis","LOCALS",12)
+    ReallyForceSpell(Myself,3544)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !GlobalTimerNotExpired("GBPsiInvis","LOCALS")
+  See(NearestEnemyOf(Myself))
+  Allegiance(Myself,ENEMY)
+  !HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+  !HasItem("MOVE7",Myself)  // ~Boots of Speed~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBPsiInvis","LOCALS",12)
+    ReallyForceSpell(Myself,WIZARD_INVISIBILITY)
+END
+
+IF
+  !GlobalTimerNotExpired("GBBusy","LOCALS")
+  HasItem("IMMCHS",Myself)  // <Invalid Strref -1>
+  RandomNum(2,1)
+  Detect([PC])
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec([PC],WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SecondNearest([PC]),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FourthNearest([PC]),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FifthNearest([PC]),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SixthNearest([PC]),WIZARD_ABI_DALZIMS_HORRID_WILTING)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec([PC],WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SecondNearest([PC]),WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FourthNearest([PC]),WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FifthNearest([PC]),WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SixthNearest([PC]),WIZARD_FLESH_TO_STONE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec([PC],WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SecondNearest([PC]),WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FourthNearest([PC]),WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FifthNearest([PC]),WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SixthNearest([PC]),WIZARD_CONE_OF_COLD)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec([PC],WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SecondNearest([PC]),WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FourthNearest([PC]),WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FifthNearest([PC]),WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SixthNearest([PC]),WIZARD_FIREBALL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec([PC],WIZARD_MAGIC_MISSILE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SecondNearest([PC]),WIZARD_MAGIC_MISSILE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(ThirdNearest([PC]),WIZARD_MAGIC_MISSILE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FourthNearest([PC]),WIZARD_MAGIC_MISSILE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(FifthNearest([PC]),WIZARD_MAGIC_MISSILE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    SpellNoDec(SixthNearest([PC]),WIZARD_MAGIC_MISSILE)
+END
+
+IF
+  !GlobalTimerNotExpired("GBBusy","LOCALS")
+  Detect([PC])
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #200
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),MIND_FLAYER_PSIONIC_BLAST)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),MIND_FLAYER_DOMINATION)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_MAZE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_DISINTEGRATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_INFLICT_PAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_EMOTION_KILL)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_LIFE_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_PROJECT_FORCE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_EGOWHIP)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_BALLISTIC)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell([PC],PSIONIC_DETONATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SecondNearest([PC]),PSIONIC_DETONATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(ThirdNearest([PC]),PSIONIC_DETONATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FourthNearest([PC]),PSIONIC_DETONATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(FifthNearest([PC]),PSIONIC_DETONATE)
+  RESPONSE #100
+    SetGlobalTimer("GBBusy","LOCALS",6)
+    ReallyForceSpell(SixthNearest([PC]),PSIONIC_DETONATE)
+END
+
+IF
+  StateCheck([PC],STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack([PC])
+END
+
+IF
+  StateCheck(SecondNearest([PC]),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(SecondNearest([PC]))
+END
+
+IF
+  StateCheck(ThirdNearest([PC]),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(ThirdNearest([PC]))
+END
+
+IF
+  StateCheck(FourthNearest([PC]),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(FourthNearest([PC]))
+END
+
+IF
+  StateCheck(FifthNearest([PC]),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(FifthNearest([PC]))
+END
+
+IF
+  StateCheck(SixthNearest([PC]),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(SixthNearest([PC]))
+END
+
+IF
+  StateCheck(NearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(NearestEnemyOf(Myself))
+END
+
+IF
+  StateCheck(SecondNearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(SecondNearestEnemyOf(Myself))
+END
+
+IF
+  StateCheck(ThirdNearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(ThirdNearestEnemyOf(Myself))
+END
+
+IF
+  StateCheck(FourthNearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(FourthNearestEnemyOf(Myself))
+END
+
+IF
+  StateCheck(FifthNearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(FifthNearestEnemyOf(Myself))
+END
+
+IF
+  StateCheck(SixthNearestEnemyOf(Myself),STATE_HELPLESS)
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    Attack(SixthNearestEnemyOf(Myself))
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  See([PC])
+THEN
+  RESPONSE #100
+    Attack([PC])
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+    Attack(NearestEnemyOf(Myself))
+END
+

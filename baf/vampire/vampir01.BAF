@@ -1,0 +1,787 @@
+IF
+  Die()
+THEN
+  RESPONSE #100
+    ReallyForceSpellDead(Myself,VAMPIRE_GAS_FORM_CHANGE)
+END
+
+IF
+  HPLT(Myself,10)
+THEN
+  RESPONSE #100
+    ReallyForceSpellDead(Myself,VAMPIRE_BAT_FORM_CHANGE)
+END
+
+IF
+  TimeGT(5)
+  TimeLT(DUSK_END)
+  AreaType(OUTDOOR)
+THEN
+  RESPONSE #100
+    ReallyForceSpellDead(Myself,VAMPIRE_BAT_FORM_CHANGE)
+END
+
+IF
+  RandomNum(4,1)
+  !Detect(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+  OR(3)
+    Global("xyxInitialized","LOCALS",1)
+    Heard([ANYONE],89)
+    HitBy([ANYTHING],CRUSHING)
+THEN
+  RESPONSE #35
+    MoveToObject(Player1)
+END
+
+IF
+  RandomNum(4,2)
+  !Detect(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+  OR(3)
+    Global("xyxInitialized","LOCALS",1)
+    Heard([ANYONE],89)
+    HitBy([ANYTHING],CRUSHING)
+THEN
+  RESPONSE #35
+    MoveToObject(Player2)
+END
+
+IF
+  RandomNum(4,3)
+  !Detect(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+  OR(3)
+    Global("xyxInitialized","LOCALS",1)
+    Heard([ANYONE],89)
+    HitBy([ANYTHING],CRUSHING)
+THEN
+  RESPONSE #35
+    MoveToObject(Player6)
+END
+
+IF
+  RandomNum(4,4)
+  !Detect(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+  OR(3)
+    Global("xyxInitialized","LOCALS",1)
+    Heard([ANYONE],89)
+    HitBy([ANYTHING],CRUSHING)
+THEN
+  RESPONSE #35
+    MoveToObject(Player4)
+END
+
+IF
+  !See(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+END
+
+IF
+  !Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+END
+
+IF
+  Global("xyxInitialized","LOCALS",0)
+THEN
+  RESPONSE #100
+    Shout(89)
+    SetGlobalTimer("xyxDoesNotSeeBounce","LOCALS",12)
+    SetGlobal("xyxInitialized","LOCALS",1)
+    Continue()
+END
+
+IF
+  See(Player1)
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  Class(Player1,MAGE_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player1,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player1,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player2)
+  Class(Player2,MAGE_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player2,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player2,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player3)
+  Class(Player3,MAGE_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player3,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player3,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player4)
+  Class(Player4,MAGE_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player4,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player4,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player5)
+  Class(Player5,MAGE_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player5,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player5,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player6)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  Class(Player6,MAGE_ALL)
+  !Allegiance(Player6,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player6,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player1)
+  Class(Player1,CLERIC_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player1,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player1,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player2)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  Class(Player2,CLERIC_ALL)
+  !Allegiance(Player2,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player2,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player3)
+  Class(Player3,CLERIC_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player3,EVILCUTOFF)
+  GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player3,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player4)
+  Class(Player4,CLERIC_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player4,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player4,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player5)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  Class(Player5,CLERIC_ALL)
+  !Allegiance(Player5,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player5,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player6)
+  Class(Player6,CLERIC_ALL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player6,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player6,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player1)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player1,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player1,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player2)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player2,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player2,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player3)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player3,EVILCUTOFF)
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player3,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player4)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  !Allegiance(Player4,EVILCUTOFF)
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player4,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player5)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player5,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(Player5,VAMPIRE_DOMINATION)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See(Player6)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !Allegiance(Player6,EVILCUTOFF)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Player6,VAMPIRE_DOMINATION)
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+END
+
+IF
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  See([GOODCUTOFF])
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),INQUISITOR)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),-1,SAVEVSSPELL)
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(LastSeenBy(Myself),VAMPIRE_DOMINATION)
+END
+
+IF
+  See([GOODCUTOFF])
+  Global("KR_REVAL_INNATES","LOCALS",0)
+  !GlobalTimerNotExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",1)
+    SetGlobalTimer("KR_VAMPIRE_INNATES_FIRST","LOCALS",12)
+    ReallyForceSpell(LastSeenBy(Myself),VAMPIRE_DOMINATION)
+END
+
+IF
+  GlobalTimerExpired("KR_VAMPIRE_INNATES_FIRST","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobal("KR_REVAL_INNATES","LOCALS",0)
+END
+
+IF
+  !CheckStatGT(SixthNearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",SixthNearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",SixthNearestEnemyOf(Myself))
+  !StateCheck(SixthNearestEnemyOf(Myself),STATE_HELPLESS)
+  CheckStat(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+  See(SixthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(FifthNearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",FifthNearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",FifthNearestEnemyOf(Myself))
+  !StateCheck(FifthNearestEnemyOf(Myself),STATE_HELPLESS)
+  See(FifthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(FourthNearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",FourthNearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",FourthNearestEnemyOf(Myself))
+  !StateCheck(FourthNearestEnemyOf(Myself),STATE_HELPLESS)
+  See(FourthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(ThirdNearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",ThirdNearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",ThirdNearestEnemyOf(Myself))
+  !StateCheck(ThirdNearestEnemyOf(Myself),STATE_HELPLESS)
+  See(ThirdNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(SecondNearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",SecondNearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",SecondNearestEnemyOf(Myself))
+  !StateCheck(SecondNearestEnemyOf(Myself),STATE_HELPLESS)
+  See(SecondNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(NearestEnemyOf(Myself),0,0)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",NearestEnemyOf(Myself))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",NearestEnemyOf(Myself))
+  !StateCheck(NearestEnemyOf(Myself),STATE_HELPLESS)
+  See(NearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]),0,SCRIPTINGSTATE3)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]))
+  !StateCheck(NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]),STATE_HELPLESS)
+  See(NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]),0,SCRIPTINGSTATE3)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+  !StateCheck(SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]),STATE_HELPLESS)
+  See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]),0,SCRIPTINGSTATE3)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("Amul21",NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+  !StateCheck(NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]),STATE_HELPLESS)
+  See(NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(ThirdNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),0,SCRIPTINGSTATE3)
+  !GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("AMUL21",ThirdNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",ThirdNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  !StateCheck(ThirdNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),STATE_HELPLESS)
+  See(ThirdNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(SecondNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),0,SCRIPTINGSTATE3)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("AMUL21",SecondNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",SecondNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  !StateCheck(SecondNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),STATE_HELPLESS)
+  See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !CheckStatGT(NearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),0,SCRIPTINGSTATE3)
+  GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  !HasItem("AMUL21",NearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))  // ~Amulet of Power~
+  !HasItemEquiped("Blun25",NearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  !StateCheck(NearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]),STATE_HELPLESS)
+  See(NearestEnemyOfType([GOODCUTOFF.0.0.MAGE_ALL]))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+THEN
+  RESPONSE #100
+    Attack(LastSeenBy(Myself))
+END
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    RandomWalk()
+END
+

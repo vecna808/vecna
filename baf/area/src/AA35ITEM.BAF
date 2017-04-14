@@ -1,0 +1,69 @@
+IF
+	Contains("AAVECNA1",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("AAVECNA1",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("AAVECNA2",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("AAVECNA2",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("SCRL9A",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("SCRL9A",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("SCRL9B",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("SCRL9B",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("SCRL9C",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("SCRL9C",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("SCRL9D",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("SCRL9D",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END
+
+IF
+	Contains("SCRL9E",Myself)
+	Global("AACOPIER","AAR035",1)
+THEN
+	RESPONSE #100
+		PlaySound("chr_bell")
+		GiveItemCreate("SCRL9E",Player1,0,0,0)
+		SetGlobal("AACOPIER","AAR035",0)
+END

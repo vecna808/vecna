@@ -1,0 +1,23 @@
+    // Death Spell
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_DEATH_SPELL)
+        NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],0)
+        Range([GOODCUTOFF.0.0.0.0.SUMMONED],16)
+        OR(2)
+            // There are at least two summons...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],1)
+            // or one that's been there for some time.
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+        OR(2)
+            Range(SecondNearest([GOODCUTOFF.0.0.0.0.SUMMONED]),16)
+            GlobalTimerExpired("xyxDoesNotSeeImmunity","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_DEATH_SPELL)
+        RESPONSE #100
+            Continue()
+    END
+
+

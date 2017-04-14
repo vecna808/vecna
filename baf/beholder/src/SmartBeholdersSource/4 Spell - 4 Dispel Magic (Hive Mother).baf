@@ -1,0 +1,23 @@
+    // Dispel Magic.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        // Several potential victims in range.
+        NumCreatureGT([GOODCUTOFF],2)
+        Range(ThirdNearestEnemyOf(),14)
+        // They all carry enchantments.
+        StateCheck(NearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+        StateCheck(SecondNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+        StateCheck(ThirdNearestEnemyOf(),STATE_ENCHANTED) // Mirror Image, Blur, Chant, Improved Invisibility, Bless, Haste, Invisibility
+        // Relatively safe to cast.
+        OR(2)
+            CheckStatGT(Myself,2,STONESKINS)
+            GlobalTimerNotExpired("xyxImprovedMantle","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            SpellNoDec(Myself,WIZARD_DISPEL_MAGIC)
+        RESPONSE #100
+            Continue()
+    END
+
+

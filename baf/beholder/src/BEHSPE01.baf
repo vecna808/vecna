@@ -1,0 +1,571 @@
+IF
+  Allegiance(Myself,NEUTRAL)
+  !Global("SpectatorAllowsChest","GLOBAL",1)
+THEN
+  RESPONSE #100
+    FaceObject([GOODCUTOFF])
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+  Global("SpectatorAllowsChest","GLOBAL",1)
+THEN
+  RESPONSE #100
+    Face(1)
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+THEN
+  RESPONSE #100
+    NoAction()
+END
+
+IF
+  GlobalTimerNotExpired("xyxRun","LOCALS")
+THEN
+  RESPONSE #100
+END
+
+IF
+  OR(2)
+    HitBy([ANYTHING],CRUSHING)
+    AttackedBy([ANYTHING],DEFAULT)
+  Exists(LastAttackerOf(Myself))
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,1468)  // ~Ahh, no! Help!~
+    SetGlobalTimer("xyxRun","LOCALS",6)
+    RunAwayFrom(NearestEnemyOf(Myself),90)
+END
+
+IF
+  !See(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+  OR(4)
+    Global("xyxInitialized","LOCALS",1)
+    Heard([ANYONE],89)
+    Heard([ANYONE],111)
+    HitBy([ANYTHING],CRUSHING)
+  !StateCheck(Myself,STATE_CHARMED)
+THEN
+  RESPONSE #100
+    RandomWalkContinuous()
+END
+
+IF
+  !See(Player1)
+  !See(Player2)
+  !See(Player3)
+  !See(Player4)
+  !See(Player5)
+  !See(Player6)
+  !See(NearestEnemyOf(Myself))
+THEN
+  RESPONSE #100
+END
+
+IF
+  Global("xyxInitialized","LOCALS",0)
+THEN
+  RESPONSE #100
+    Shout(89)
+    SetGlobalTimer("xyxDoesNotSeeBounce","LOCALS",6)
+    SetGlobalTimer("xyxDoesNotSeeImmunity","LOCALS",18)
+    SetGlobal("xyxInitialized","LOCALS",1)
+    Continue()
+END
+
+IF
+  OR(2)
+    Delay(6)
+    HPGT(Myself,45)
+  !HasBounceEffects(Myself)
+  OR(4)
+    Exists([GOODCUTOFF.0.0.BARD])
+    Exists([GOODCUTOFF.0.0.DRUID_ALL])
+    Exists([GOODCUTOFF.0.0.CLERIC_ALL])
+    Exists([GOODCUTOFF.0.0.MAGE_ALL])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,10850)  // ~Minor Spell Turning~
+    ApplySpell(Myself,BEHOLDER_SPELL_TURNING)
+  RESPONSE #50
+    Continue()
+END
+
+IF
+  !RandomNum(6,6)
+  OR(3)
+    !HasBounceEffects(SixthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",SixthNearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf(Myself))
+  !StateCheck(SixthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(SixthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",SixthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",SixthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",SixthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(SixthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,5)
+  OR(3)
+    !HasBounceEffects(FifthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",FifthNearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf(Myself))
+  !StateCheck(FifthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(FifthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",FifthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",FifthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",FifthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(FifthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,4)
+  OR(3)
+    !HasBounceEffects(FourthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",FourthNearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf(Myself))
+  !StateCheck(FourthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(FourthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",FourthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",FourthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",FourthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(FourthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,3)
+  OR(3)
+    !HasBounceEffects(ThirdNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",ThirdNearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf(Myself))
+  !StateCheck(ThirdNearestEnemyOf(Myself),-2146164691)
+  CheckStat(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(ThirdNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",ThirdNearestEnemyOf(Myself))
+  !HasItem("MINHP1",ThirdNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",ThirdNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(ThirdNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,2)
+  OR(3)
+    !HasBounceEffects(SecondNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",SecondNearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf(Myself))
+  !StateCheck(SecondNearestEnemyOf(Myself),-2146164691)
+  CheckStat(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(SecondNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",SecondNearestEnemyOf(Myself))
+  !HasItem("MINHP1",SecondNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",SecondNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(SecondNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,1)
+  OR(3)
+    !HasBounceEffects(NearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    HasItemEquiped("CLCK26",NearestEnemyOf(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",NearestEnemyOf(Myself))
+  !StateCheck(NearestEnemyOf(Myself),-2146164691)
+  CheckStat(NearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(NearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",NearestEnemyOf(Myself))
+  !HasItem("MINHP1",NearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",NearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(NearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  HPGT(Myself,35)
+  !GlobalTimerNotExpired("xyxUsedParalyzationRay","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),0,SAVEVSSPELL)
+  !StateCheck(LastSeenBy(Myself),STATE_BERSERK)
+  !StateCheck(LastSeenBy(Myself),0)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !Kit(LastSeenBy(Myself),UNDEADHUNTER)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !Kit(LastSeenBy(Myself),INQUISITOR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("FREERING",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("ROSSRING",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("RING09",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("NPPLAT",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SW1H27",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+    RandomNum(2,1)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",LastSeenBy(Myself))
+  OR(2)
+    !StateCheck(LastSeenBy(Myself),-2146164691)
+    RandomNum(4,1)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(LastSeenBy(Myself),100,RESISTMAGIC)
+  !HasItem("MINHP1",LastSeenBy(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",LastSeenBy(Myself))  // ~Imoen's Belt~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("xyxUsedParalyzationRay","LOCALS",6)
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_PARALYZATION)
+  RESPONSE #80
+    Continue()
+END
+
+IF
+  HPGT(Myself,65)
+  !GlobalTimerNotExpired("xyxUsedFearRay","LOCALS")
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !StateCheck(LastSeenBy(Myself),STATE_BERSERK)
+  !StateCheck(LastSeenBy(Myself),0)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !Kit(LastSeenBy(Myself),CAVALIER)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("CLCK30",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("SW1H32",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+    RandomNum(2,1)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",LastSeenBy(Myself))
+  OR(2)
+    !StateCheck(LastSeenBy(Myself),-2146164691)
+    RandomNum(4,1)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(LastSeenBy(Myself),100,RESISTMAGIC)
+  !HasItem("MINHP1",LastSeenBy(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",LastSeenBy(Myself))  // ~Imoen's Belt~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("xyxUsedFearRay","LOCALS",6)
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_FEAR)
+    Wait(1)
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  HPGT(Myself,45)
+  !GlobalTimerNotExpired("xyxUsedCharmPersonRay","LOCALS")
+  General(LastSeenBy(Myself),HUMANOID)
+  CheckStatGT(LastSeenBy(Myself),4,SAVEVSSPELL)
+  !StateCheck(LastSeenBy(Myself),STATE_BERSERK)
+  !StateCheck(LastSeenBy(Myself),0)
+  !Class(LastSeenBy(Myself),MONK)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !Kit(LastSeenBy(Myself),INQUISITOR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    Race(LastSeenBy(Myself),PLANATAR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    Race(LastSeenBy(Myself),DARKPLANATAR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    Race(LastSeenBy(Myself),SOLAR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    Race(LastSeenBy(Myself),ANTISOLAR)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",LastSeenBy(Myself))
+  OR(2)
+    !StateCheck(LastSeenBy(Myself),-2146164691)
+    RandomNum(4,1)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(LastSeenBy(Myself),100,RESISTMAGIC)
+  !HasItem("MINHP1",LastSeenBy(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",LastSeenBy(Myself))  // ~Imoen's Belt~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("xyxUsedCharmPersonRay","LOCALS",6)
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_CHARM_PERSON)
+    Wait(4)
+  RESPONSE #100
+    Continue()
+END
+
+IF
+  !RandomNum(6,6)
+  OR(2)
+    !HasBounceEffects(SixthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",SixthNearestEnemyOf(Myself))
+  !StateCheck(SixthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(SixthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(SixthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",SixthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",SixthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",SixthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(SixthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,5)
+  OR(2)
+    !HasBounceEffects(FifthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",FifthNearestEnemyOf(Myself))
+  !StateCheck(FifthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(FifthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(FifthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",FifthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",FifthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",FifthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(FifthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,4)
+  OR(2)
+    !HasBounceEffects(FourthNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",FourthNearestEnemyOf(Myself))
+  !StateCheck(FourthNearestEnemyOf(Myself),-2146164691)
+  CheckStat(FourthNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(FourthNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",FourthNearestEnemyOf(Myself))
+  !HasItem("MINHP1",FourthNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",FourthNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(FourthNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,3)
+  OR(2)
+    !HasBounceEffects(ThirdNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",ThirdNearestEnemyOf(Myself))
+  !StateCheck(ThirdNearestEnemyOf(Myself),-2146164691)
+  CheckStat(ThirdNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(ThirdNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",ThirdNearestEnemyOf(Myself))
+  !HasItem("MINHP1",ThirdNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",ThirdNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(ThirdNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,2)
+  OR(2)
+    !HasBounceEffects(SecondNearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",SecondNearestEnemyOf(Myself))
+  !StateCheck(SecondNearestEnemyOf(Myself),-2146164691)
+  CheckStat(SecondNearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(SecondNearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",SecondNearestEnemyOf(Myself))
+  !HasItem("MINHP1",SecondNearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",SecondNearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(SecondNearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  !RandomNum(6,1)
+  OR(2)
+    !HasBounceEffects(NearestEnemyOf(Myself))
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",NearestEnemyOf(Myself))
+  !StateCheck(NearestEnemyOf(Myself),-2146164691)
+  CheckStat(NearestEnemyOf(Myself),0,SANCTUARY)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(NearestEnemyOf(Myself),50,RESISTMAGIC)
+  !Name("Viconia",NearestEnemyOf(Myself))
+  !HasItem("MINHP1",NearestEnemyOf(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",NearestEnemyOf(Myself))  // ~Imoen's Belt~
+  See(NearestEnemyOf(Myself))
+  False()
+THEN
+  RESPONSE #100
+END
+
+IF
+  HPGT(Myself,20)
+  !GlobalTimerNotExpired("xyxUsedCauseSeriousWoundsRay","LOCALS")
+  CheckStatLT(LastSeenBy(Myself),75,MAGICDAMAGERESISTANCE)
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("CLCK26",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    !HasItemEquiped("WA2SHIEL",LastSeenBy(Myself))
+  OR(2)
+    GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+    CheckStatLT(LastSeenBy(Myself),100,RESISTMAGIC)
+  !HasItem("MINHP1",LastSeenBy(Myself))  // <Invalid Strref -1>
+  !HasItem("IMOENHP1",LastSeenBy(Myself))  // ~Imoen's Belt~
+THEN
+  RESPONSE #100
+    SetGlobalTimer("xyxUsedCauseSeriousWoundsRay","LOCALS",6)
+    ForceSpell(LastSeenBy(Myself),BEHOLDER_CAUSE_SERIOUS_WOUNDS)
+    Wait(3)
+  RESPONSE #20
+    Continue()
+END
+
+IF
+  True()
+THEN
+  RESPONSE #100
+    NoAction()
+END
+

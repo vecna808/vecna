@@ -1,0 +1,187 @@
+IF
+	HPPercentLT(Myself,50)
+	Global("DevaHeal","LOCALS",0)
+THEN
+	RESPONSE #100
+		ForceSpellRES("devaheal",Myself) // Heal
+		SetGlobal("DevaHeal","LOCALS",1)
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	!CheckStatGT(Myself,0,SANCTUARY)
+	Range(NearestEnemyOf(Myself),5)
+	HaveSpell(CLERIC_HEAL)
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(Myself),60)
+	RESPONSE #100
+		RandomWalkContinuous()
+END
+
+IF
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!GlobalTimerNotExpired("SpInv","LOCALS")
+	!CheckStatGT(Myself,0,SANCTUARY)
+	!Range(NearestEnemyOf(Myself),5)
+	HaveSpell(CLERIC_SANCTUARY)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		SetGlobalTimer("SpInv","LOCALS",THREE_ROUNDS)
+		SetInterrupt(FALSE)
+		Spell(Myself,CLERIC_SANCTUARY)
+		SetInterrupt(TRUE)
+		ClearActions(Myself)
+END
+
+IF
+	HPPercentLT(Myself,50)
+	OR(2)
+		GlobalTimerNotExpired("Spell","LOCALS")
+		GlobalTimerNotExpired("SpHeal","LOCALS")
+THEN
+	RESPONSE #100
+		RunAwayFrom(NearestEnemyOf(Myself),60)
+	RESPONSE #100
+		RandomWalkContinuous()
+END
+
+IF
+	HPPercentLT(Myself,50)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!GlobalTimerNotExpired("SpHeal","LOCALS")
+	OR(2)
+		CheckStatGT(Myself,0,SANCTUARY)
+		!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(CLERIC_HEAL)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		SetGlobalTimer("SpHeal","LOCALS",THREE_ROUNDS)
+		Spell(Myself,CLERIC_HEAL)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	HaveSpell(CLERIC_LESSER_RESTORATION)
+	See([PC])
+	CheckStatGT(LastSeenBy(Myself),0,LEVELDRAIN)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(LastSeenBy(Myself),CLERIC_LESSER_RESTORATION)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	HaveSpell(CLERIC_NEUTRALIZE_POISON)
+	See([PC])
+	StateCheck(LastSeenBy(Myself),STATE_POISONED)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(LastSeenBy(Myself),CLERIC_NEUTRALIZE_POISON)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	HaveSpell(CLERIC_REMOVE_FEAR)
+	See([PC])
+	StateCheck(LastSeenBy(Myself),STATE_PANIC)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(LastSeenBy(Myself),CLERIC_REMOVE_FEAR)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(CLERIC_REMOVE_PARALYSIS)
+	See([PC])
+	OR(2)
+		StateCheck(LastSeenBy(Myself),STATE_HELPLESS)
+		StateCheck(LastSeenBy(Myself),STATE_STUNNED)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(LastSeenBy(Myself),CLERIC_REMOVE_PARALYSIS)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	HaveSpell(CLERIC_CURE_DISEASE)
+	See([PC])
+	StateCheck(LastSeenBy(Myself),STATE_DISEASED)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(LastSeenBy(Myself),CLERIC_CURE_DISEASE)
+END
+
+IF
+	!Allegiance(Myself,ENEMY)
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!Range(NearestEnemyOf(Myself),10)
+	HPPercentLT(MostDamagedOf(Myself),50)
+	See([PC])
+	HaveSpell(CLERIC_HEAL)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		Spell(MostDamagedOf(Myself),CLERIC_HEAL)
+END
+
+IF
+	OR(3)
+		See(NearestEnemyOfType([0.0.0.SORCERER]))
+		See(NearestEnemyOfType([0.0.0.LONG_BOW]))
+		See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!GlobalTimerNotExpired("Insect","LOCALS")
+	!Range(NearestEnemyOf(Myself),10)
+	HaveSpell(CLERIC_INSECT_PLAGUE)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		SetGlobalTimer("Insect","LOCALS",SIX_MINUTES)
+		Spell(LastSeenBy(Myself),CLERIC_INSECT_PLAGUE)
+END
+
+IF
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!GlobalTimerNotExpired("TrueSight","LOCALS")
+	See(NearestEnemyOf(Myself))
+	!Range(LastSeenBy(Myself),13)
+	OR(2)
+		StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+		StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+	HaveSpell(CLERIC_TRUE_SIGHT)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		SetGlobalTimer("TrueSight","LOCALS",TWELVE_MINUTES)
+		Spell(Myself,CLERIC_TRUE_SIGHT)
+END
+
+IF
+	!GlobalTimerNotExpired("Spell","LOCALS")
+	!GlobalTimerNotExpired("TrueSight","LOCALS")
+	!See(NearestEnemyOf(Myself))
+	HaveSpell(CLERIC_TRUE_SIGHT)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Spell","LOCALS",ONE_ROUND)
+		SetGlobalTimer("TrueSight","LOCALS",EIGHTEEN_MINUTES)
+		Spell(Myself,CLERIC_TRUE_SIGHT)
+END
+
+

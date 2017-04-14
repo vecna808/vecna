@@ -1,0 +1,343 @@
+//==============================================================================
+
+// Find a target without Spell Turning, Magic Resistance or the Cloak of Mirroring,
+//  that has 60 or less Hit Points.
+// (The cut-off resets the LastSeenBy.)
+
+    // Sixth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        // Randomize a bit.
+        !RandomNum(6,6)
+        HPLT(SixthNearestEnemyOf(),61)
+        // Not bouncing ALL spells.
+        OR(3)
+            // The target isn't bouncing spells...
+            !HasBounceEffects(SixthNearestEnemyOf())
+            // or this Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target has the Shield of Balduran.
+            HasItemEquiped("WA2SHIEL",SixthNearestEnemyOf())
+        OR(2)
+            // This Beholder hasn't caught on yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or the target doesn't have the Cloak of Mirroring (which bounces Power Word Kill...).
+            !HasItemEquiped("CLCK26",SixthNearestEnemyOf())
+        // Not immune to Death.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(SixthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SixthNearestEnemyOf(),ANTISOLAR)
+        // Not already out of action.
+        !StateCheck(SixthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        // Not Improved Invisible or in Sanctuary.
+        !StateCheck(SixthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SixthNearestEnemyOf(),0,SANCTUARY)
+        // Not too resistant.
+        OR(2)
+            // This Beholder hasn't noticed yet...
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            // or not too resistant.
+            CheckStatLT(SixthNearestEnemyOf(),50,RESISTMAGIC)
+        // Viconia is pretty resistant.  Beholders would know a Drow when they see one.
+        !Name("Viconia",SixthNearestEnemyOf())
+        // Only use on worthwile targets.
+        CheckStatGT(SixthNearest(),7,LEVEL)
+        // Not immortal
+        !HasItem("MINHP1",SixthNearestEnemyOf())
+        !HasItem("IMOENHP1",SixthNearestEnemyOf())
+        // Target.
+        See(SixthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fifth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,5)
+        HPLT(FifthNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(FifthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FifthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",FifthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(FifthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FifthNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(FifthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FifthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FifthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FifthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FifthNearestEnemyOf())
+        CheckStatGT(FifthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FifthNearestEnemyOf())
+        !HasItem("IMOENHP1",FifthNearestEnemyOf())
+        See(FifthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Fourth Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,4)
+        HPLT(FourthNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(FourthNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",FourthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",FourthNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(FourthNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(FourthNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(FourthNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(FourthNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(FourthNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(FourthNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",FourthNearestEnemyOf())
+        CheckStatGT(FourthNearest(),7,LEVEL)
+        !HasItem("MINHP1",FourthNearestEnemyOf())
+        !HasItem("IMOENHP1",FourthNearestEnemyOf())
+        See(FourthNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Third Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,3)
+        HPLT(ThirdNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(ThirdNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",ThirdNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",ThirdNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(ThirdNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(ThirdNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(ThirdNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(ThirdNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(ThirdNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",ThirdNearestEnemyOf())
+        CheckStatGT(ThirdNearest(),7,LEVEL)
+        !HasItem("MINHP1",ThirdNearestEnemyOf())
+        !HasItem("IMOENHP1",ThirdNearestEnemyOf())
+        See(ThirdNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Second Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,2)
+        HPLT(SecondNearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(SecondNearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",SecondNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",SecondNearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(SecondNearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(SecondNearestEnemyOf(),ANTISOLAR)
+        !StateCheck(SecondNearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(SecondNearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(SecondNearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(SecondNearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",SecondNearestEnemyOf())
+        CheckStatGT(SecondNearest(),7,LEVEL)
+        !HasItem("MINHP1",SecondNearestEnemyOf())
+        !HasItem("IMOENHP1",SecondNearestEnemyOf())
+        See(SecondNearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+    // Nearest.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_POWER_WORD_KILL)
+        !RandomNum(6,1)
+        HPLT(NearestEnemyOf(),61)
+        OR(3)
+            !HasBounceEffects(NearestEnemyOf())
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            HasItemEquiped("WA2SHIEL",NearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",NearestEnemyOf())
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            !StateCheck(NearestEnemyOf(),SCRIPTINGSTATE2) // Death Ward
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(NearestEnemyOf(),ANTISOLAR)
+        !StateCheck(NearestEnemyOf(),STATE_OUT_OF_ACTION)
+        !StateCheck(NearestEnemyOf(),STATE_IMPROVEDINVISIBILITY)
+        CheckStat(NearestEnemyOf(),0,SANCTUARY)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(NearestEnemyOf(),50,RESISTMAGIC)
+        !Name("Viconia",NearestEnemyOf())
+        CheckStatGT(Nearest(),7,LEVEL)
+        !HasItem("MINHP1",NearestEnemyOf())
+        !HasItem("IMOENHP1",NearestEnemyOf())
+        See(NearestEnemyOf())
+        False()
+    THEN
+        RESPONSE #100
+    END
+
+// Power Word Kill.
+IF
+    !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+    HaveSpell(WIZARD_POWER_WORD_KILL)
+    HPLT(LastSeenBy(),61)
+    // Not immune to Death.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        !StateCheck(LastSeenBy(),SCRIPTINGSTATE2) // Death Ward
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),PLANATAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),DARKPLANATAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),SOLAR)
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !Race(LastSeenBy(),ANTISOLAR)
+    // Yes, the cloak bounces Power Word Kill...
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        !HasItemEquiped("CLCK26",LastSeenBy()) // Cloak of Mirroring
+    // Not totally magic resistant.
+    OR(2)
+        GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+        CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+    // Not bouncing.
+    // This ray is potentially deadly if it bounces, so be hesitant to use it while bouncing is not yet detected.
+    OR(3)
+        GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+        RandomNum(3,1)
+        // I will not be affected (if I don't take damage in the next second...).
+        HPGT(Myself,60)
+    OR(3)
+        !HasBounceEffects(LastSeenBy())
+        GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+        HasItemEquiped("WA2SHIEL",LastSeenBy())
+    !StateCheck(LastSeenBy(),STATE_IMPROVEDINVISIBILITY)
+    CheckStat(LastSeenBy(),0,SANCTUARY)
+    CheckStatGT(LastSeenBy(),7,LEVEL)
+    !HasItem("MINHP1",LastSeenBy())
+    !HasItem("IMOENHP1",LastSeenBy())
+THEN
+    RESPONSE #100
+        SetGlobalTimer("xyxSpellCast","LOCALS",6)
+        Spell(LastSeenBy(),WIZARD_POWER_WORD_KILL)
+    // Caution is advised...
+    RESPONSE #100
+        Continue()
+END
+
+//==============================================================================
+

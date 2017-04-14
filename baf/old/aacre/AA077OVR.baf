@@ -1,0 +1,262 @@
+IF
+	See(NearestEnemyOf(Myself))
+	!GlobalTimerNotExpired("DemilichHowl","LOCALS")
+	!GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+	RESPONSE #100
+		SetGlobalTimer("DemilichHowl","LOCALS",TWELVE_MINUTES)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		ForceSpell(Myself,DEMILICH_DEATH)
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	OR(10)
+		See(TenthNearestEnemyOf(Myself))
+		See(NinthNearestEnemyOf(Myself))
+		See(EighthNearestEnemyOf(Myself))
+		See(SeventhNearestEnemyOf(Myself))
+		See(SixthNearestEnemyOf(Myself))
+		See(FifthNearestEnemyOf(Myself))
+		See(FourthNearestEnemyOf(Myself))
+		See(ThirdNearestEnemyOf(Myself))
+		See(SecondNearestEnemyOf(Myself))
+		See(NearestEnemyOf(Myself))
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(EASIEST)
+	OR(2)
+		!See(NearestEnemyOf(Myself))
+		RandomNumGT(2,1)
+	OR(2)
+		!See(SecondNearestEnemyOf(Myself))
+		RandomNumGT(4,2)
+	OR(2)
+		!See(ThirdNearestEnemyOf(Myself))
+		RandomNumGT(6,3)
+	OR(2)
+		!See(FourthNearestEnemyOf(Myself))
+		RandomNumGT(8,4)
+	OR(2)
+		!See(FifthNearestEnemyOf(Myself))
+		RandomNumGT(10,5)
+	OR(2)
+		!See(SixthNearestEnemyOf(Myself))
+		RandomNumGT(12,6)
+	OR(2)
+		!See(SixthNearestEnemyOf(Myself))
+		RandomNumGT(14,7)
+	OR(2)
+		!See(SixthNearestEnemyOf(Myself))
+		RandomNumGT(16,8)
+	OR(2)
+		!See(SixthNearestEnemyOf(Myself))
+		RandomNumGT(18,9)
+	OR(2)
+		!See(SixthNearestEnemyOf(Myself))
+		RandomNumGT(20,10)
+	See(NearestEnemyOf(Myself))
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(EASY)
+	RandomNum(4,1)
+	OR(2)
+		!See(Player1)
+		RandomNumGT(2,1)
+	OR(2)
+		!See(Player2)
+		RandomNumGT(3,1)
+	OR(2)
+		!See(Player3)
+		RandomNumGT(5,3)
+	OR(2)
+		!See(Player4)
+		RandomNumGT(6,4)
+	OR(2)
+		!See(Player5)
+		RandomNumGT(8,4)
+	OR(2)
+		!See(Player6)
+		RandomNumGT(7,3)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(EASY)
+	RandomNum(4,2)
+	OR(2)
+		!See(Player2)
+		RandomNumGT(2,1)
+	OR(2)
+		!See(Player1)
+		RandomNumGT(3,2)
+	OR(2)
+		!See(Player4)
+		RandomNumGT(5,2)
+	OR(2)
+		!See(Player3)
+		RandomNumGT(6,5)
+	OR(2)
+		!See(Player6)
+		RandomNumGT(8,3)
+	OR(2)
+		!See(Player5)
+		RandomNumGT(7,4)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(EASY)
+	RandomNum(4,3)
+	OR(2)
+		!See(Player5)
+		RandomNumGT(2,1)
+	OR(2)
+		!See(Player4)
+		RandomNumGT(3,2)
+	OR(2)
+		!See(Player2)
+		RandomNumGT(5,1)
+	OR(2)
+		!See(Player6)
+		RandomNumGT(6,3)
+	OR(2)
+		!See(Player3)
+		RandomNumGT(8,6)
+	OR(2)
+		!See(Player1)
+		RandomNumGT(7,4)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(EASY)
+	RandomNum(4,4)
+	OR(2)
+		!See(Player6)
+		RandomNumGT(2,1)
+	OR(2)
+		!See(Player5)
+		RandomNumGT(3,1)
+	OR(2)
+		!See(Player4)
+		RandomNumGT(5,3)
+	OR(2)
+		!See(Player3)
+		RandomNumGT(6,4)
+	OR(2)
+		!See(Player2)
+		RandomNumGT(8,4)
+	OR(2)
+		!See(Player1)
+		RandomNumGT(7,3)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(NORMAL)
+	RandomNum(3,2)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.SORCERER]))
+		RandomNumGT(21,10)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.LONG_BOW]))
+		RandomNumGT(22,11)
+	OR(2)
+		!See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.LONG_BOW]))
+		RandomNumGT(23,11)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+		RandomNumGT(24,14)
+	OR(2)
+		!See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.CLERIC_ALL]))
+		RandomNumGT(25,12)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.DRUID_ALL]))
+		RandomNumGT(26,13)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.BARD_ALL]))
+		RandomNumGT(27,10)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	DifficultyGT(NORMAL)
+	RandomNum(3,3)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.MONK]))
+		RandomNumGT(21,10)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.FIGHTER_ALL]))
+		RandomNumGT(22,11)
+	OR(2)
+		!See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.FIGHTER_ALL]))
+		RandomNumGT(23,11)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.PALADIN_ALL]))
+		RandomNumGT(24,14)
+	OR(2)
+		!See(SecondNearestEnemyOfType([GOODCUTOFF.0.0.PALADIN_ALL]))
+		RandomNumGT(25,12)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.RANGER_ALL]))
+		RandomNumGT(26,13)
+	OR(2)
+		!See(NearestEnemyOfType([GOODCUTOFF.0.0.THIEF_ALL]))
+		RandomNumGT(27,10)
+	False()
+THEN
+	RESPONSE #100
+		Continue()
+END
+
+IF
+	!GlobalTimerNotExpired("Cast","LOCALS")
+	See(NearestEnemyOf(Myself))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		ForceSpell(NearestEnemyOf(Myself),DEMILICH_TRAP_SOUL)
+END
+
+IF
+	See(NearestEnemyOf(Myself))
+	Range(NearestEnemyOf(Myself),5)
+THEN
+	RESPONSE #100
+		Attack(NearestEnemyOf(Myself))
+END
+
+

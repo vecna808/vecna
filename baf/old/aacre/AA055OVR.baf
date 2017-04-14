@@ -1,0 +1,328 @@
+IF
+	GlobalTimerExpired("AdalonStone","GLOBAL")
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,CLERIC)
+		ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+		ReallyForceSpell(Myself,CLERIC_DEATH_WARD)
+		SetGlobalTimer("AdalonStone","GLOBAL",TWO_HOURS)
+		Continue()
+END
+
+IF
+	OR(2)
+		See([NEUTRAL])
+		See([ENEMY])
+	!Allegiance(Myself,ENEMY)
+	HPGT(LastSeenBy(Myself),0)
+THEN
+	RESPONSE #60
+		ForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+		ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+		ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+		ForceSpell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+	RESPONSE #60
+		ForceSpell(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+	RESPONSE #60
+		AttackReevaluate(LastSeenBy(Myself),15)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	Global("AdalonTurning","LOCALS",0)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		ReallyForceSpell(Myself,BEHOLDER_SPELL_TURNING)
+		ReallyForceSpell(Myself,WIZARD_HASTE)
+		SetGlobal("AdalonTurning","LOCALS",1)
+		Continue()
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("SILVERDRAGONBREATH","GLOBAL")
+	See(NearestEnemyOfType([PC]))
+THEN
+	RESPONSE #100
+		SetGlobalTimer("SILVERDRAGONBREATH","GLOBAL",THREE_ROUNDS)
+		ReallyForceSpell(LastSeenBy(Myself),SILVER_DRAGON_BREATH_PARALIZATION)
+		ReallyForceSpell(LastSeenBy(Myself),SILVER_DRAGON_BREATH_COLD)
+		Continue()
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	!CombatCounter(0)
+	!Detect(Player1)
+	InMyArea(Player1)
+	Delay(6)
+THEN
+	RESPONSE #100
+		ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	Range(NearestEnemyOf(Myself),25)
+	!GlobalTimerNotExpired("Buffet","LOCALS")
+THEN
+	RESPONSE #100
+		ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+		SetGlobalTimer("Buffet","LOCALS",2)
+		Continue()
+END
+
+IF
+	Detect(Player1)
+	Global("AdalonRemove","LOCALS",0)
+	Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("Cast","LOCALS")
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(Player1,WIZARD_TRUE_DISPEL_MAGIC)
+		SetGlobal("AdalonRemove","LOCALS",1)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	Detect(StrongestOf)
+	Global("AdalonGreater","LOCALS",0)
+	GlobalTimerExpired("Cast","LOCALS")
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+		ReallyForceSpell(StrongestOf,DRAGON_FEAR)
+		SetGlobal("AdalonGreater","LOCALS",1)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("Cast","LOCALS")
+	See(Player1)
+	CheckStatGT(Player1,0,RESISTMAGIC)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+		ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+		ReallyForceSpell(Player1,WIZARD_LOWER_RESISTANCE)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("Cast","LOCALS")
+	See(NearestEnemyOfType([PC]))
+	CheckStatGT(LastSeenBy(Myself),0,RESISTMAGIC)
+	!CheckStatGT(Player1,0,RESISTMAGIC)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+		ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+		ReallyForceSpell(LastSeenBy(Myself),WIZARD_LOWER_RESISTANCE)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOfType([PC]))
+	GlobalTimerExpired("Cast","LOCALS")
+	HaveSpell(WIZARD_FINGER_OF_DEATH)
+	CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+	CheckStat(LastSeenBy(Myself),0,SCRIPTINGSTATE2)
+	CheckStatLT(LastSeenBy(Myself),10,RESISTMAGIC)
+	!HasItemEquiped("CLCK26",LastSeenBy(Myself)) // Cloak of Cheesing
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	See(SecondNearestEnemyOfType([PC]))
+	GlobalTimerExpired("Cast","LOCALS")
+	HaveSpell(WIZARD_FINGER_OF_DEATH)
+	CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+	CheckStat(LastSeenBy(Myself),0,SCRIPTINGSTATE2)
+	CheckStatLT(LastSeenBy(Myself),10,RESISTMAGIC)
+	!HasItemEquiped("CLCK26",LastSeenBy(Myself)) // Cloak of Cheesing
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_FINGER_OF_DEATH)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	Global("AdalonIce","LOCALS",0)
+	GlobalTimerExpired("Cast","LOCALS")
+	See(NearestEnemyOfType([PC]))
+	!HasItem("clck26",NearestEnemyOfType([PC])) // Cloak of Cheesing
+	CheckStatLT(NearestEnemyOfType([PC]),75,RESISTCOLD)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(LastSeenBy(Myself),WIZARD_ICE_STORM)
+		SetGlobal("AdalonIce","LOCALS",1)
+END
+
+IF
+	See(NearestEnemyOfType([PC]))
+	CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+	!Kit(LastSeenBy(Myself),INQUISITOR)
+	!HasItemEquiped("FREERING",LastSeenBy(Myself)) // Ring of Free Action
+	!HasItemEquiped("ROSSRING",LastSeenBy(Myself)) // Ring of Free Action
+	!HasItemEquiped("RING09",LastSeenBy(Myself)) // Ring of Free Action
+	!HasItemEquiped("NPSW01",LastSeenBy(Myself)) // Sword of Arvoreen +2
+	Global("AdalonHold","LOCALS",0)
+	Allegiance(Myself,ENEMY)
+	GlobalTimerExpired("Cast","LOCALS")
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,CLERIC)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(Player1,CLERIC_HOLD_PERSON)
+		SetGlobal("AdalonHold","LOCALS",1)
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	Global("AdalonSilence","LOCALS",0)
+	GlobalTimerExpired("Cast","LOCALS")
+	OR(2)
+		See(NearestEnemyOfType([0.0.0.LONG_BOW]))
+		See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,CLERIC)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(LastSeenBy(Myself),CLERIC_SILENCE_15_FOOT)
+		SetGlobal("AdalonSilence","LOCALS",1)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(NearestEnemyOfType([PC]))
+	!HasItem("clck26",NearestEnemyOfType([PC])) // Cloak of Cheesing
+	CheckStatLT(NearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(NearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(SecondNearestEnemyOfType([PC]))
+	!HasItem("clck26",SecondNearestEnemyOfType([PC])) // Cloak of Cheesing
+	CheckStatLT(SecondNearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(ThirdNearestEnemyOfType([PC]))
+	!HasItem("clck26",ThirdNearestEnemyOfType([PC])) // Cloak of Cheesing
+	CheckStatLT(ThirdNearestEnemyOfType([PC]),75,RESISTFIRE)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_FLAME_ARROW)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(NearestEnemyOfType([PC]))
+	CheckStatGT(NearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(NearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(SecondNearestEnemyOfType([PC]))
+	CheckStatGT(SecondNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+
+IF
+	GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	Detect(ThirdNearestEnemyOfType([PC]))
+	CheckStatGT(ThirdNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+	RESPONSE #100
+		ChangeClass(Myself,MAGE)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+
+IF
+	!GlobalTimerExpired("Cast","LOCALS")
+	Allegiance(Myself,ENEMY)
+	See(NearestEnemyOfType([PC]))
+THEN
+	RESPONSE #100
+		Attack(LastSeenBy(Myself))
+END
+
+IF
+	Allegiance(Myself,ENEMY)
+	!Detect(NearestEnemyOf(Myself))
+	CombatCounter(0)
+	Delay(9)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,26703) // Damn, where are they?
+		ForceSpell(Myself,CLERIC_HEAL)
+		SetGlobal("AdalonGreater","LOCALS",0)
+		SetGlobal("AdalonHaste","LOCALS",0)
+		SetGlobal("AdalonSilence","LOCALS",0)
+		SetGlobal("AdalonRemove","LOCALS",0)
+		SetGlobal("AdalonHold","LOCALS",0)
+		SetGlobal("AdalonIce","LOCALS",0)
+		SetGlobal("AdalonTurning","LOCALS",0)
+		StartCombatCounter()
+		ReallyForceSpell(Player1,WIZARD_DIMENSION_DOOR)
+END
+
+IF
+	Global("AdalonInit","LOCALS",0)
+THEN
+	RESPONSE #100
+		SetGlobalTimer("AdalonStone","GLOBAL",0)
+		SetGlobalTimer("SILVERDRAGONBREATH","GLOBAL",THREE_ROUNDS)
+		SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+		EquipMostDamagingMelee()
+		SetGlobal("AdalonInit","LOCALS",1)
+END
+
+

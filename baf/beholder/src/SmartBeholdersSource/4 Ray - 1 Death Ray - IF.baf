@@ -1,0 +1,38 @@
+    // Death Ray.
+    IF
+        // HPGT(Myself,XXX)
+        !GlobalTimerNotExpired("xyxUsedDeathRay","LOCALS")
+        // Saves not too good.
+        CheckStatGT(LastSeenBy(),1,SAVEVSDEATH)
+        // Not immune to Death.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),PLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),DARKPLANATAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),SOLAR)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !Race(LastSeenBy(),ANTISOLAR)
+        // Not bouncing.
+        // This ray is potentially deadly if it bounces, so be hesitant to use it while bouncing is not yet detected.
+        OR(2)
+            GlobalTimerExpired("xyxDoesNotSeeBounce","LOCALS")
+            RandomNum(3,1)
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("WA2SHIEL",LastSeenBy()) // Shield of Balduran
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            !HasItemEquiped("CLCK26",LastSeenBy()) // Cloak of Mirroring
+        // Not totally magic resistant.
+        OR(2)
+            GlobalTimerNotExpired("xyxDoesNotSeeImmunity","LOCALS")
+            CheckStatLT(LastSeenBy(),100,RESISTMAGIC)
+        // Not immortal.
+        !HasItem("MINHP1",LastSeenBy())
+        !HasItem("IMOENHP1",LastSeenBy())
+

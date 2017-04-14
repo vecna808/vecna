@@ -1,0 +1,10 @@
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxUsedIceStorm","LOCALS",6)
+            ForceSpell(TenthNearestEnemyOf(),WIZARD_ICE_STORM)
+            // Wait(XXX)
+        RESPONSE #100
+            Continue()
+    END
+
+

@@ -1,0 +1,16 @@
+    // Ice Storm.
+    IF
+        // HPGT(Myself,XXX)
+        !GlobalTimerNotExpired("xyxUsedIceStorm","LOCALS")
+        !Range(TenthNearestEnemyOf(),17) // minimum
+        // There are at least three potential victims.
+        // (Ice Storm takes some time to cast and is easily abused by players.)
+        NumCreatureGT([GOODCUTOFF],2)
+        OR(3)
+            // No-one will bounce the damage...
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            // the Beholder has not yet noticed BounceEffects...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or there are at least five potential victims, in which case it's worth it.
+            NumCreatureGT([GOODCUTOFF],4)
+

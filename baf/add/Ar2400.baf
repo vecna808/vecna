@@ -1,0 +1,27 @@
+IF
+   Global("AASeenBG2400","GLOBAL",0)
+THEN
+    RESPONSE #100
+             SetGlobal("AASeenBG2400","GLOBAL",1)
+             Continue()
+END
+
+IF
+	!Dead("udmaster")
+	Global("RZNotAllowTeleport","GLOBAL",0)
+THEN
+    RESPONSE #100
+             SetGlobal("RZNotAllowTeleport","GLOBAL",1)
+             Continue()
+END
+
+IF
+	Dead("udmaster")
+	Global("RZNotAllowTeleport","GLOBAL",1)
+THEN
+    RESPONSE #100
+             SetGlobal("RZNotAllowTeleport","GLOBAL",0)
+             Continue()
+END
+
+

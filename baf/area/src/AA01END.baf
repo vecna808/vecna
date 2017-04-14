@@ -1,0 +1,25 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,5)
+	Global("AAEndGame","AAR001",0)
+	Dead("AACRE007")
+	Dead("AACRE013")
+	Dead("AACRE036")
+THEN
+	RESPONSE #100
+		SetGlobal("AAEndGame","AAR001",1)
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR001C2")
+
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,5)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702)
+END
+
+

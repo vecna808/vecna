@@ -1,0 +1,18 @@
+IF
+	Global("AAPHNIX","GLOBAL",0)
+	NumTimesTalkedTo(0)
+	Detect([PC])
+THEN
+	RESPONSE #100
+		StartDialogueNoSet(LastSeenBy(Myself))
+END
+
+	
+	
+IF
+	Global("A1InRange","GLOBAL",0)
+	Detect([PC])
+THEN
+	RESPONSE #100
+	SetGlobal("A1InRange","GLOBAL",1)
+END

@@ -1,0 +1,1810 @@
+IF
+  Global("AAAllowTeleport","GLOBAL",0)
+  !AreaCheck("AR0011")
+  !AreaCheck("AR0012")
+  !AreaCheck("AR0013")
+  !AreaCheck("AR0014")
+  !AreaCheck("AR0015")
+  !AreaCheck("AR0016")
+  !AreaCheck("AR0017")
+  !AreaCheck("AR0018")
+  !AreaCheck("AR0028")
+  !AreaCheck("AR0084")
+  !AreaCheck("AR0414")
+  !AreaCheck("AR0516")
+  !AreaCheck("AR0517")
+  !AreaCheck("AR0518")
+  !AreaCheck("AR0519")
+  !AreaCheck("AR0520")
+  !AreaCheck("AR0521")
+  !AreaCheck("AR0601")
+  !AreaCheck("AR1501")
+  !AreaCheck("AR1502")
+  !AreaCheck("AR1503")
+  !AreaCheck("AR1504")
+  !AreaCheck("AR1505")
+  !AreaCheck("AR1506")
+  !AreaCheck("AR1507")
+  !AreaCheck("AR1508")
+  !AreaCheck("AR1509")
+  !AreaCheck("AR1510")
+  !AreaCheck("AR1511")
+  !AreaCheck("AR1512")
+  !AreaCheck("AR1513")
+  !AreaCheck("AR1514")
+  !AreaCheck("AR1515")
+  !AreaCheck("AR1516")
+  !AreaCheck("AR1607")
+  !AreaCheck("AR2900")
+  !AreaCheck("AR2901")
+  !AreaCheck("AR2902")
+  !AreaCheck("AR2903")
+  !AreaCheck("AR2904")
+  !AreaCheck("AR2905")
+  !AreaCheck("AR2906")
+  !AreaCheck("AR6200")
+  !AreaCheck("AR4000")
+  !AreaCheck("AR4500")
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",1)
+    Continue()
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",0)
+  OR(28)
+    AreaCheck("AR0011")
+    AreaCheck("AR0012")
+    AreaCheck("AR0013")
+    AreaCheck("AR0014")
+    AreaCheck("AR0015")
+    AreaCheck("AR0016")
+    AreaCheck("AR0017")
+    AreaCheck("AR0018")
+    AreaCheck("AR0028")
+    AreaCheck("AR0084")
+    AreaCheck("AR0414")
+    AreaCheck("AR0516")
+    AreaCheck("AR0517")
+    AreaCheck("AR0518")
+    AreaCheck("AR0519")
+    AreaCheck("AR0520")
+    AreaCheck("AR0521")
+    AreaCheck("AR0601")
+    AreaCheck("AR1607")
+    AreaCheck("AR2900")
+    AreaCheck("AR2901")
+    AreaCheck("AR2902")
+    AreaCheck("AR2903")
+    AreaCheck("AR2904")
+    AreaCheck("AR2905")
+    AreaCheck("AR2906")
+    AreaCheck("AR6200")
+    AreaCheck("AR4500")
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",2)
+    Continue()
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",0)
+  OR(35)
+    AreaCheck("AR1501")
+    AreaCheck("AR1502")
+    AreaCheck("AR1503")
+    AreaCheck("AR1504")
+    AreaCheck("AR1505")
+    AreaCheck("AR1506")
+    AreaCheck("AR1507")
+    AreaCheck("AR1508")
+    AreaCheck("AR1509")
+    AreaCheck("AR1510")
+    AreaCheck("AR1511")
+    AreaCheck("AR1512")
+    AreaCheck("AR1513")
+    AreaCheck("AR1514")
+    AreaCheck("AR1515")
+    AreaCheck("AR1516")
+    AreaCheck("AR4000")
+    AreaCheck("AR5000")
+    AreaCheck("AR5001")
+    AreaCheck("AR5002")
+    AreaCheck("AR5003")
+    AreaCheck("AR5004")
+    AreaCheck("AR5005")
+    AreaCheck("AR5006")
+    AreaCheck("AR5007")
+    AreaCheck("AR5008")
+    AreaCheck("AR5009")
+    AreaCheck("AR5010")
+    AreaCheck("AR5011")
+    AreaCheck("AR5012")
+    AreaCheck("AR5013")
+    AreaCheck("AR5014")
+    AreaCheck("AR5015")
+    AreaCheck("AR5016")
+    Global("RZNotAllowTeleport","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",3)
+    Continue()
+END
+
+IF
+  GlobalGT("AAAllowTeleport","GLOBAL",0)
+  Global("AAStartCut","GLOBAL",0)
+THEN
+  RESPONSE #100
+    StartDialogNoSet(LastSummonerOf(Myself))
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",1)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT01")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",2)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT02")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",3)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT03")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",4)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT04")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",5)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT05")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",6)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT06")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",7)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT07")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",8)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT08")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",9)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT09")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",10)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT10")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",11)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT11")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",12)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT12")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",13)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT13")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",14)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT14")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",15)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT15")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",16)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT16")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",17)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT17")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",18)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT18")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",19)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT19")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",20)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT20")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",21)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT21")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",22)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT22")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",23)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT23")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",24)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT24")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",25)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT25")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",26)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT26")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",27)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT27")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",28)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT28")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",29)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT29")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",30)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT30")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",31)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT31")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",32)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT32")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",33)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT33")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",34)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT34")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",35)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT35")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",36)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT36")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",37)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT37")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",38)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT38")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",39)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT39")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",40)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT40")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",41)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT41")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",42)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT42")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",43)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT43")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",44)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT44")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",45)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT45")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",46)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT46")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",47)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT47")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",48)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT48")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",49)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT49")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",50)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT50")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",51)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT51")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",52)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT52")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",53)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT53")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",54)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT54")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",55)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT55")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",56)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT56")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",57)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT57")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",58)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT58")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",59)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT59")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",60)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT60")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",61)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT61")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",62)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT62")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",63)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT63")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",64)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT64")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",65)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT65")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",66)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT66")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",67)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT67")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",68)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT68")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",69)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT69")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",70)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT70")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",71)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT71")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",72)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT72")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",73)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT73")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",74)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT74")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",75)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT75")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",76)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT76")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",77)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT77")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",78)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT78")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",79)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT79")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",80)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT81")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",82)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT82")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",83)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT83")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",84)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT84")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",85)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT85")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",86)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT86")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",87)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT87")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",88)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT88")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",89)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT89")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",90)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT90")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",91)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT91")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",92)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT92")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",93)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT93")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",94)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT94")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",95)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT95")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",96)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT96")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",97)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT97")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",98)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT98")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",99)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT99")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",100)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT100")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",101)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT101")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",102)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT102")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",103)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT103")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",104)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT104")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",105)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT105")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",106)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT106")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",107)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT107")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",108)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT108")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",109)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT109")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",110)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT110")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",111)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT111")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",112)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT112")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",113)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT113")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",114)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT114")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",115)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT115")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",116)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT116")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",117)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT117")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",118)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT118")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",119)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT119")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",126)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT126")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",127)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT127")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",128)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT128")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",129)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT129")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",130)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT130")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",131)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT131")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",132)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT132")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",133)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT133")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",134)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT134")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",135)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT135")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",136)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT136")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",137)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT137")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",138)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT138")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",139)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT139")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",140)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT140")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",141)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT141")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",142)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT142")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",143)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT143")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",144)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT144")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",145)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT145")
+END
+
+IF
+  Global("AAAllowTeleport","GLOBAL",1)
+  Global("AAStartCut","GLOBAL",146)
+THEN
+  RESPONSE #100
+    SetGlobal("AAAllowTeleport","GLOBAL",0)
+    SetGlobal("AAStartCut","GLOBAL",0)
+    DestroySelf()
+    StartCutSceneMode()
+    StartCutScene("AACUT146")
+END
+

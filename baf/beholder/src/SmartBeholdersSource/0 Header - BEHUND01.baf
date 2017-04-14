@@ -1,0 +1,17 @@
+// Death Tyrant (13K XP)
+
+// Powers                           HPGT    Wait
+// BEHOLDER_ANTIMAGIC_RAY           0       2
+// BEHOLDER_CAUSE_SERIOUS_WOUNDS    5       2
+// BEHOLDER_DEATH_RAY               0       0
+// BEHOLDER_FEAR                    55      2
+// BEHOLDER_FLESH_TO_STONE          25      2
+// BEHOLDER_PARALYZATION            45      0
+// BEHOLDER_SLOW                    35      2
+
+// Spots bouncing after 6 seconds.
+// Spots immunities after 18 seconds.
+
+//==============================================================================
+
+

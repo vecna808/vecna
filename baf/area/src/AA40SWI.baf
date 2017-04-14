@@ -1,0 +1,10 @@
+IF
+		Global("AASwitch","AAR040",0)
+		Opened([ANYONE])
+THEN
+	RESPONSE #100
+		SetGlobal("AASwitch","AAR040",1)
+		CreateVisualEffect("AASUMM2",[735.862])
+		Wait(2)
+		CreateCreature("AACRE010",[735.862],10) // Dragon Lich
+END

@@ -1,0 +1,13 @@
+IF
+	OR(3)
+		Entered([ANYONE])
+		Opened([ANYONE])
+		IsOverMe([ANYONE])
+	See([PC.0.0.MAGE])
+THEN
+	RESPONSE #100
+		DisplayString([PC.0.0.MAGE],14381) // Trap Sprung
+		ForceSpell([PC.0.0.MAGE],TRAP_MISCAST_MAGIC) // SPPR986.SPL (Miscast Magic)
+END
+
+

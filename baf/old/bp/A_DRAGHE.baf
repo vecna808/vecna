@@ -1,0 +1,159 @@
+IF
+  Global("FirkraagInit","LOCALS",0)
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    EquipMostDamagingMelee()
+    SetGlobal("FirkraagInit","LOCALS",1)
+    ChangeAIScript("",RACE)
+END
+
+IF
+  Global("FirkraagScoff","LOCALS",0)
+  Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,45920)  // ~Your lackeys will not save you!~
+    SetGlobal("FirkraagScoff","LOCALS",1)
+    Continue()
+END
+
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  !GlobalTimerNotExpired("FirkraagStone","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,DRAGON_STONE_SKIN)
+    SetGlobalTimer("FirkraagStone","LOCALS",TWO_HOURS)
+    Continue()
+END
+
+IF
+  !GlobalTimerNotExpired("BLACKDRAGONBREATH","LOCALS")
+  See([PC])
+THEN
+  RESPONSE #100
+    SetGlobalTimer("BLACKDRAGONBREATH","LOCALS",THREE_ROUNDS)
+    ReallyForceSpell(LastSeenBy(Myself),BLACK_DRAGON_BREATH)
+    ReallyForceSpell(LastSeenBy(Myself),DRAGON_FEAR)
+    Continue()
+END
+
+IF
+  Range(NearestEnemyOf(Myself),25)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+    Continue()
+END
+
+IF
+  Detect(Player1)
+  Global("FirkraagRemove","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Player1,WIZARD_REMOVE_MAGIC)
+    SetGlobal("FirkraagRemove","LOCALS",1)
+END
+
+IF
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See([PC])
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_CHARM_PERSON)
+END
+
+IF
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See(SecondNearest([PC]))
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_CHARM_PERSON)
+END
+
+IF
+  !GlobalTimerNotExpired("Cast","LOCALS")
+  Allegiance(Myself,ENEMY)
+  See(ThirdNearest([PC]))
+  CheckStatGT(LastSeenBy(Myself),1,SAVEVSSPELL)
+  !Class(LastSeenBy(Myself),MONK)
+  !Kit(LastSeenBy(Myself),16)
+  !HasItemEquiped("HELM06",LastSeenBy(Myself))
+  !HasItemEquiped("MISCBC",LastSeenBy(Myself))
+  !HasItemEquiped("NPCHAN",LastSeenBy(Myself))
+  !HasItemEquiped("REAVER",LastSeenBy(Myself))
+  !HasItemEquiped("SHLD25",LastSeenBy(Myself))
+  !HasItemEquipedReal("SPER07",LastSeenBy(Myself))
+  !HasItemEquipedReal("STAF11",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H35",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW1H54",LastSeenBy(Myself))
+  !HasItemEquipedReal("SW2H14",LastSeenBy(Myself))
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_CHARM_PERSON)
+END
+
+IF
+  Detect([PC])
+  GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    Attack(Player1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !Detect(NearestEnemyOf(Myself))
+  CombatCounter(0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,26703)  // ~Damn, where are they?~
+    ChangeClass(Myself,MAGE)
+    ReallyForceSpell(Myself,CLERIC_HEAL)
+    ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    SetGlobal("FirkraagRemove","LOCALS",0)
+    Continue()
+END
+

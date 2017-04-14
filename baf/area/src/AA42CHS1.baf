@@ -1,0 +1,13 @@
+IF
+		Opened([ANYONE])
+		Global("AAChest1Open","AAR042",0)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,@0) 
+		SetGlobal("AAChest1Open","AAR042",1)
+		CreateVisualEffect("SPPROIMG",[937.900])
+		CreateVisualEffect("SPPROIMG",[1072.851])
+		Wait(3)
+		CreateCreature("AACRE132",[937.900],10)
+		CreateCreature("AACRE132",[1072.851],10)
+END

@@ -1,0 +1,12 @@
+IF
+	OR(3)
+		Entered([ANYONE])
+		Opened([ANYONE])
+		IsOverMe([GOODCUTOFF])
+THEN
+	RESPONSE #100
+		DisplayString(LastTrigger,14381) // Trap Sprung
+		ForceSpell(LastTrigger,WIZARD_POWER_WORD_SLEEP) // SPWI220.SPL (Power Word, Sleep)
+END
+
+

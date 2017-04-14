@@ -1,0 +1,83 @@
+// BEHELD01 Triggers
+
+    // Chain Contingency.
+    IF
+        Global("xyxChainContingency","LOCALS",0)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxChainContingency","LOCALS",1)
+            DisplayString(Myself,26328) // Chain Contingency
+            DisplayString(Myself,8300) // Stoneskin
+            ApplySpell(Myself,WIZARD_STONE_SKIN)
+            DisplayString(Myself,25633) // True Sight
+            SetGlobalTimer("xyxTrueSight","LOCALS",60) // 10 rounds
+            ApplySpell(Myself,WIZARD_TRUE_SIGHT)
+            // Spell Trap displays its own string.
+            ApplySpell(Myself,WIZARD_SPELL_TRAP)
+            Continue()
+    END
+
+    // Spell Trigger.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        Global("xyxSpellTrigger","LOCALS",0)
+        OR(5)
+            // Stoneskin has worn off...
+            CheckStat(Myself,0,STONESKINS)
+            // Spell Trap was dispelled...
+            SpellCastOnMe([ANYONE],WIZARD_RUBY_RAY_OF_REVERSAL)
+            SpellCastOnMe([ANYONE],WIZARD_PIERCE_SHIELD)
+            SpellCastOnMe([ANYONE],WIZARD_SPELL_STRIKE)
+            // or there are several summoned creatures...
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.SUMMONED],2)
+        OR(5)
+            CheckStat(Myself,0,STONESKINS)
+            SpellCastOnMe([ANYONE],WIZARD_RUBY_RAY_OF_REVERSAL)
+            SpellCastOnMe([ANYONE],WIZARD_PIERCE_SHIELD)
+            SpellCastOnMe([ANYONE],WIZARD_SPELL_STRIKE)
+            // in the area.
+            Range(SecondNearest([GOODCUTOFF.0.0.0.0.SUMMONED]),16)
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxSpellTrigger","LOCALS",1)
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            DisplayString(Myself,26243) // Spell Trigger
+            DisplayString(Myself,8300) // Stoneskin
+            ApplySpell(Myself,WIZARD_STONE_SKIN)
+            DisplayString(Myself,8273) // Spell Turning
+            ApplySpell(Myself,BEHOLDER_SPELL_TURNING)
+            // Death Spell displays its own string.
+            ReallyForceSpell(Myself,WIZARD_DEATH_SPELL)
+    END
+
+    // Spell Sequencer.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        Global("xyxSpellSequencer","LOCALS",0)
+        !Range(TenthNearestEnemyOf(),16) // minimum
+        OR(3)
+            // No-one will bounce the Fireball...
+            !PartyHasItem("CLCK26") // Cloak of Mirroring
+            // the Beholder has not yet noticed BounceEffects...
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+            // or there are at least four potential victims, in which case it's worth it.
+            NumCreatureGT([GOODCUTOFF],3)
+        OR(3)
+            // The target will not bounce Melf's Acid Arrow.
+            !HasItemEquiped("CLCK26",TenthNearestEnemyOf()) // Cloak of Mirroring
+            GlobalTimerNotExpired("xyxDoesNotSeeBounce","LOCALS")
+    THEN
+        RESPONSE #100
+            SetGlobal("xyxSpellSequencer","LOCALS",1)
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            DisplayString(Myself,25951) // Spell Sequencer
+            // Fireball displays its own string.
+            ReallyForceSpell(TenthNearestEnemyOf(),WIZARD_FIREBALL)
+            // Dispel Magic displays its own string.
+            ReallyForceSpell(TenthNearestEnemyOf(),WIZARD_DISPEL_MAGIC)
+            // Melf's Acid Arrow displays its own string.
+            ReallyForceSpell(TenthNearestEnemyOf(),WIZARD_MELF_ACID_ARROW)
+    END
+
+//==============================================================================
+

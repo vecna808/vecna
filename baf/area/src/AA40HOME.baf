@@ -1,0 +1,21 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,8)
+	Global("AA40HomePort","AAR040",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAR040C1")
+		SetGlobal("AA40HomePort","AAR040",1)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,8)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702) // You are too far away to use that.
+END
+
+

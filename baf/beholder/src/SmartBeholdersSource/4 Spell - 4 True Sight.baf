@@ -1,0 +1,29 @@
+    // True Sight.
+    IF
+        !GlobalTimerNotExpired("xyxSpellCast","LOCALS")
+        HaveSpell(WIZARD_TRUE_SIGHT)
+        // True Sight from Chain Contingency has worn off.
+        GlobalTimerExpired("xyxTrueSight","LOCALS")
+        OR(11)
+            // Someone is using illusions...
+            StateCheck(NearestEnemyOf(),STATE_ILLUSIONS) // Invisibility, Improved Invisibility, Mirror Image or Blur.
+            StateCheck(SecondNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(ThirdNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(FourthNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(FifthNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(SixthNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(SeventhNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(EighthNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(NinthNearestEnemyOf(),STATE_ILLUSIONS)
+            StateCheck(TenthNearestEnemyOf(),STATE_ILLUSIONS)
+            // or there's an illusory creature around.
+            NumCreatureGT([GOODCUTOFF.0.0.0.0.ILLUSIONARY],0)
+    THEN
+        RESPONSE #100
+            SetGlobalTimer("xyxSpellCast","LOCALS",6)
+            Spell(Myself,WIZARD_TRUE_SIGHT)
+        RESPONSE #100
+            Continue()
+    END
+
+

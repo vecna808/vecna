@@ -1,0 +1,21 @@
+IF
+	Clicked([ANYONE])
+	Range(LastTrigger,8)
+	Global("PMTRANS","AAR005",0)
+THEN
+	RESPONSE #100
+		ClearAllActions()
+		StartCutSceneMode()
+		StartCutScene("AAPMcut")
+		SetGlobal("PMTRANS","AAR005",1)
+END
+
+IF
+	Clicked([ANYONE])
+	!Range(LastTrigger,8)
+THEN
+	RESPONSE #100
+		DisplayString(Myself,14702) // You are too far away to use that.
+END
+
+

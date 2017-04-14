@@ -1,0 +1,232 @@
+IF
+  HPLT(Myself,2)
+  Global("BP_DragonDrop","GLOBAL",1)
+THEN
+  RESPONSE #100
+    DestroySelf()
+    AddexperienceParty(45000)
+    SetGlobal("BP_DragonDrop","GLOBAL",2)
+END
+
+IF
+  Global("BP_DragonScoff","LOCALS",0)
+  Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,45920)  // ~Your lackeys will not save you!~
+    SetGlobal("BP_DragonScoff","LOCALS",1)
+    Continue()
+END
+
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  !GlobalTimerNotExpired("BP_DragonStone","LOCALS")
+THEN
+  RESPONSE #100
+    ForceSpell(Myself,DRAGON_STONE_SKIN)
+    SetGlobalTimer("BP_DragonStone","LOCALS",FOUR_TURNS)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("REDDRAGONBREATH","LOCALS")
+  Exists(StrongestOf)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("REDDRAGONBREATH","LOCALS",THREE_ROUNDS)
+    ReallyForceSpell(StrongestOf,RED_DRAGON_BREATH)
+    ReallyForceSpell(StrongestOf,RED_DRAGON_HIT)
+    SetGlobal("BP_DragonTaunt","LOCALS",1)
+    Continue()
+END
+
+IF
+  Global("BP_DragonTaunt","LOCALS",1)
+THEN
+  RESPONSE #20
+    DisplayString(Myself,60511)  // ~ Time to perish, manling!~ [FIRKRA03]
+    SetGlobal("BP_DragonTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,19063)  // ~  Your life shall be mine!~ [PC5FE3]
+    SetGlobal("BP_DragonTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,19054)  // ~  Your life ends here.~ [PC3MA3]
+    SetGlobal("BP_DragonTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,60715)  // ~ Your life ends with this!~ [SAHPR104]
+    SetGlobal("BP_DragonTaunt","LOCALS",0)
+    Continue()
+  RESPONSE #20
+    DisplayString(Myself,21728)  // ~Run down the road on fire, for all I care.~
+    SetGlobal("BP_DragonTaunt","LOCALS",0)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Range(NearestEnemyOf(Myself),25)
+THEN
+  RESPONSE #100
+    ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+    Continue()
+END
+
+IF
+  Detect(Player1)
+  Global("BP_DragonRemove","LOCALS",0)
+  Allegiance(Myself,ENEMY)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Player1,WIZARD_DISPEL_MAGIC)
+    SetGlobal("BP_DragonRemove","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect(StrongestOf)
+  Global("BP_DragonGreater","LOCALS",0)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+    SetGlobal("BP_DragonGreater","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect(Player1)
+  Global("BP_DragonLower","LOCALS",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Player1,DRAGON_FEAR)
+    ReallyForceSpell(Player1,DRAGON_LOWER_FIRE)
+    SetGlobal("BP_DragonLower","LOCALS",1)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("BP_DragonSilence","LOCALS",0)
+  Detect(WeakestOf)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,CLERIC)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(WeakestOf,CLERIC_SILENCE_15_FOOT)
+    SetGlobal("BP_DragonSilence","LOCALS",1)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Global("BP_DragonHaste","LOCALS",0)
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(Myself,WIZARD_HASTE)
+    SetGlobal("BP_DragonHaste","LOCALS",1)
+END
+
+IF
+  HaveSpell(WIZARD_FLAME_ARROW)
+  Detect(NearestEnemyOfType([PC]))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),WIZARD_FLAME_ARROW)
+END
+
+IF
+  HaveSpell(WIZARD_MAGIC_MISSILE)
+  Detect(NearestEnemyOfType([PC]))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    Spell(LastSeenBy(Myself),WIZARD_MAGIC_MISSILE)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect(NearestEnemyOfType([PC]))
+  !GlobalTimerNotExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    ChangeClass(Myself,MAGE)
+    SetGlobalTimer("Cast","LOCALS",ONE_ROUND)
+    SpellNoDec(LastSeenBy(Myself),WIZARD_MELF_ACID_ARROW)
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  Detect([PC])
+  !GlobalTimerExpired("Cast","LOCALS")
+THEN
+  RESPONSE #100
+    AttackOneRound(LastSeenBy(Myself))
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+  !Detect(NearestEnemyOf(Myself))
+  CombatCounter(0)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,26703)  // ~Damn, where are they?~
+    ForceSpell(Myself,CLERIC_HEAL)
+    SetGlobal("BP_DragonLower","LOCALS",0)
+    SetGlobal("BP_DragonGreater","LOCALS",0)
+    SetGlobal("BP_DragonHaste","LOCALS",0)
+    SetGlobal("BP_DragonSilence","LOCALS",0)
+    SetGlobal("BP_DragonRemove","LOCALS",0)
+    Continue()
+END
+
+IF
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,44109)  // ~...<CHARNAME>? <CHARNAME>? ~
+    AttackOneRound(Player1)
+    AttackOneRound(Player1)
+END
+
+IF
+  Allegiance(Myself,NEUTRAL)
+  OR(5)
+    AttackedBy([ANYTHING],DEFAULT)
+    SpellCast([GOODCUTOFF],0)
+    SpellCastPriest([GOODCUTOFF],0)
+    SpellCastInnate([GOODCUTOFF],0)
+    Detect([GOODCUTOFF.0.0.0.0.SUMMONED])
+THEN
+  RESPONSE #100
+    DisplayString(Myself,21726)  // ~Are you trying to threaten me?~
+    Enemy()
+END
+
+IF
+  Global("BP_DragonInit","LOCALS",0)
+THEN
+  RESPONSE #100
+    ReallyForceSpell(Myself,DRAGON_STONE_SKIN)
+    ReallyForceSpell(Myself,WIZARD_HASTE)
+    EquipMostDamagingMelee()
+    SetGlobal("BP_DragonInit","LOCALS",1)
+END
+

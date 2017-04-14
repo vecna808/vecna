@@ -1,0 +1,373 @@
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+//            Improved Smarter Thaxll'ssillyia Script
+/////////////////////////////////////////////////////////////////////
+// Wes Weimer <weimer@cs.berkeley.edu>
+/////////////////////////////////////////////////////////////////////
+//
+// Goals:
+//	(1) Make Thax smarter (and thus harder to kill) ... without
+//	adding any new powers or changing any stats. 
+//	(2) Eliminate possible player cheese:
+//		(a) no sitting in cloudkills forever
+//		(b) no hacking at Mordy forever
+//	(3) "Time to perish, manling!" 
+//
+/////////////////////////////////////////////////////////////////////
+// Version History:
+//	v1   	Sun Nov 11 11:14:17  2001
+//		Project started.
+//      v2      Fri Nov 30 23:24:39  2001
+//              Use `SpellNoDec' instead of `ForceSpell' when possible.
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Discussion
+// 
+// See the Improved Smarter Firkraag patch. Thax is weaker than the
+// big F, however. Original Thax powers:
+//	death spell (once), stoneskin (once), dispel magic (once/rest)
+//	dragon fear (once/rest), wing buffer (at will), 
+//	shadow dragon breath (once/18), protection magic weapons (once)
+//	chaos (once), greater malison (once), chromatic orb (will)
+// Thax has INT 14, WIS 16. Let's use 'em!
+// 
+// Problems with the original:
+// (1) poor target selection (e.g., Mordy jail)
+// (2) poor casting order (chaos *then* greater malison?) 
+// (3) wastes Death Spell on first thing summoned
+// (4) subject to hit-sleep-run attacks, since spells never come back
+// (5) sits in one place, inviting traps
+//
+// Original script behaves inconsistently w/r/t the Wardstone
+// and summoned monsters: it "sees" the first summon and toasts it
+// but does not go after other ones. We'll assume that nothing
+// can be "seen" until we are angered.
+//
+// Unlike F, Thax has no particular reason to favor Player1. She
+// can still favor the Party over the summons, however. 
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Initialize our Juggernaut
+/////////////////////////////////////////////////////////////////////
+IF
+ Global("ThaxInit","LOCALS",0)
+THEN
+ RESPONSE #100
+  ForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("ThaxStone","GLOBAL",600) // can recast
+  SetGlobalTimer("SHADOWDRAGONBREATH","GLOBAL",18)
+  SetGlobalTimer("Cast","LOCALS",0)
+  EquipMostDamagingMelee() // use those claws!
+  SetGlobal("ThaxInit","LOCALS",1)
+  // waiting in out place invites the wardstone'd PCs to set traps
+END
+
+/////////////////////////////////////////////////////////////////////
+// Re-cast Stoneskin if we have been given some hours of rest
+/////////////////////////////////////////////////////////////////////
+IF
+  CheckStatLT(Myself,1,STONESKINS)
+  GlobalTimerExpired("ThaxStone","GLOBAL")
+THEN
+ RESPONSE #100
+  ForceSpell(Myself,DRAGON_STONE_SKIN)
+  SetGlobalTimer("ThaxStone","GLOBAL",600) // can recast
+  Continue()
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Meat Of The Fight 	(see the dragred.bcs for details)
+//	(1) Keep enemies away with buffets.
+//	(2) Nuke 'em with the breath weapon.
+//	(3) Cast the spells in a useful order.
+//	(4) If all else fails, melee. 
+/////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////////
+// Shadow Dragon Breath
+// Spell Range 10, Speed 4, Once Every 18
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("SHADOWDRAGONBREATH","GLOBAL")
+ Range(NearestEnemyOf(Myself),30)
+THEN
+ RESPONSE #100
+  SetGlobalTimer("SHADOWDRAGONBREATH","GLOBAL",18)
+  // "ReallyForce" allows us to take advantage of the full range of
+  // this spell (which exceeds conventional line of sight). Thax is
+  // at least 40' tall and should have no trouble seeing to the end
+  // of his cavern. 
+  ReallyForceSpell(NearestEnemyOf(Myself),SHADOW_DRAGON_BREATH)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Wing Buffet
+// Spell Range 30, Speed 1, Unlimited 
+// This is at the top of the list because we don't ever want to
+// get hit (if at all possible). Keep pushing them back. 
+/////////////////////////////////////////////////////////////////////
+IF
+ ActionListEmpty()
+ Range(NearestEnemyOf(Myself),30)
+ !GlobalTimerNotExpired("Buffet","LOCALS")
+THEN
+ RESPONSE #100
+  ForceSpell(NearestEnemyOf(Myself),DRAGON_WING_BUFFET)
+  SetGlobalTimer("Buffet","LOCALS",2)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Protection from Magic Weapons
+// Range Self, Speed 1, once/rest
+// This lasts for four rounds. We'll use it right away!
+/////////////////////////////////////////////////////////////////////
+IF
+ ActionListEmpty()
+ Allegiance(Myself,ENEMY)
+ Global("ThaxProt","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Myself,PROTECTION_MAGIC_WEAPON_NOEFF)
+  SetGlobal("ThaxProt","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Remove Magic
+// Spell Range 40, Speed 3, Once Per Rest
+// This is very important now that it works (the original script's
+// casting of this did nothing). Thax's high level means that it also
+// takes down most spell protections and stoneskins. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Detect(StrongestOf)
+ Global("ThaxRemove","LOCALS",0)
+ GlobalTimerExpired("Cast","LOCALS")
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(StrongestOf,WIZARD_DISPEL_MAGIC)
+  SetGlobal("ThaxRemove","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Death Spell
+// Range LOS, Speed 6, once/rest
+// Wait until we see a party member with < 8 hit dice. We could try
+// casting this on summons, but we'll always get faked out. The hope
+// is that the summons will be near the PCs. Since this doesn't 
+// involve a save, it can be a high priority. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(NearestEnemyOfType([PC]))
+ CheckStatLT(NearestEnemyOfType([PC]),9,LEVEL)
+ CheckStatLT(NearestEnemyOfType([PC]),9,LEVEL2)
+ CheckStatLT(NearestEnemyOfType([PC]),9,LEVEL3)
+THEN
+ RESPONSE #100
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(NearestEnemyOfType([PC]),WIZARD_DEATH_SPELL)
+  SetGlobal("ThaxDeath","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Greater Malison
+// Spell Range 50, Speed 4, Once Per Rest
+// Get this in before everything else that includes a saving throw
+// (except the buffet and the breath). 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(StrongestOf)
+ Global("ThaxGreater","LOCALS",0)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(StrongestOf,WIZARD_GREATER_MALISON)
+  SetGlobal("ThaxGreater","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Dragon Fear
+// Range 320, Speed 1, Once Per Rest
+// This involve saves, so we'll put it after Malison.  Fear is nice and
+// should come after Remove Magic. Still, anyone who forgot to bring Mazzy
+// or a Cavalier or somesuch along deserves what they get. We'll prey
+// on the weak here (hey, we're the Shadow Dragon), especially since
+// it's the buff fighters that tend to be immune to fear (innately
+// or by item). 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ Detect(WeakestOf)
+ Global("ThaxFear","LOCALS",0)
+THEN
+ RESPONSE #100
+  ReallyForceSpell(WeakestOf,DRAGON_FEAR)
+  SetGlobal("ThaxFear","LOCALS",1)
+  Continue()	// continue after innate actions
+END
+
+/////////////////////////////////////////////////////////////////////
+// Chaos
+// Range LOS, Speed 4, Once Per Rest
+// This involve saves, so we'll put it after Malison. Again, we'll
+// prey on the weak. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(WeakestOf)
+ Global("ThaxChaos","LOCALS",0)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(WeakestOf,WIZARD_CHAOS)
+  SetGlobal("ThaxChaos","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Chromatic Orb
+// Range 30, Speed 1, Unlimited
+// Now that CO will actually do something (it's weak at level 1), cast
+// it more often ... but only against things that can possibly fail
+// the +6 save. Thax can estimate this: how many times has X been level
+// drained, is X a dwarf, is X a mage, etc. Eventually our breath 
+// weapon should bring everyone in range. 
+/////////////////////////////////////////////////////////////////////
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(NearestEnemyOfType([PC]))
+ CheckStatGT(NearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(NearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(SecondNearestEnemyOfType([PC]))
+ CheckStatGT(SecondNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(SecondNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Detect(ThirdNearestEnemyOfType([PC]))
+ CheckStatGT(ThirdNearestEnemyOfType([PC]),6,SAVEVSSPELL)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(ThirdNearestEnemyOfType([PC]),WIZARD_CHROMATIC_ORB)
+END
+
+/////////////////////////////////////////////////////////////////////
+// Haste	(on self)
+// This can come last because we still haven't made any physical
+// attacks and Haste doesn't help spell casting. We don't need to
+// see any enemies to know that we should cast this. 
+/////////////////////////////////////////////////////////////////////
+IF
+ GlobalTimerExpired("Cast","LOCALS")
+ Allegiance(Myself,ENEMY)
+ Global("ThaxHaste","LOCALS",0)
+THEN
+ RESPONSE #100
+  ChangeClass(Myself,MAGE)
+  SetGlobalTimer("Cast","LOCALS",6)
+  SpellNoDec(Myself,WIZARD_HASTE)
+  SetGlobal("ThaxHaste","LOCALS",1)
+END
+
+/////////////////////////////////////////////////////////////////////
+// The Fight Ends (or we're all resting)
+// The original resting condition was !Detect([PC]), HPLT(Myself,50)
+// CombatCounter(0). Lazy scripting: the HPLT was apparently to guard
+// against repeated healings but it meant that a 75% health dragon
+// never got back his spell-like abilities. I'm happy to heal
+// even when it is useless: it'll make the players edgy. 
+/////////////////////////////////////////////////////////////////////
+IF
+ Allegiance(Myself,ENEMY)
+ !Detect(NearestEnemyOf(Myself))	// (*)
+ CombatCounter(0)			// (*)
+ Delay(9)
+ ActionListEmpty()
+THEN
+ RESPONSE #100
+  DisplayString(Myself,26703)		// "Damn, where are they?"
+  ForceSpell(Myself,CLERIC_HEAL)
+  SetGlobal("ThaxRemove","LOCALS",0)	// remove magic
+  SetGlobal("ThaxDeath","LOCALS",0)	// death spell
+  SetGlobal("ThaxGreater","LOCALS",0)	// greater malison
+  SetGlobal("ThaxFear","LOCALS",0)	// dragon fear
+  SetGlobal("ThaxChaos","LOCALS",0)	// chaos
+  SetGlobal("ThaxHaste","LOCALS",0)	// haste
+  SetGlobal("ThaxProt","LOCALS",0)	// pro magic weapons
+  StartCombatCounter()
+  Attack(WeakestOf)		// Chasey
+  Attack(WeakestOf)		// Chasey
+END
+
+/////////////////////////////////////////////////////////////////////
+// If we've gotten this far and combat is still going on, the 
+// players are probably lobbing cloudkills from a distance or somesuch.
+// Walk towards Player1 for a bit and see if that helps open up
+// one of our other favorite options. Walking toward 
+// NearestEnemyOfType([PC]) doesn't work. 
+/////////////////////////////////////////////////////////////////////
+IF
+ ActionListEmpty()
+ Allegiance(Myself,ENEMY)
+ !GlobalTimerNotExpired("Feast","LOCALS")
+THEN
+  RESPONSE #100
+    DisplayString(Myself,61745)	// I shall feast on your heart!
+    SetGlobalTimer("Feast","LOCALS",12)
+    Continue()
+END
+
+IF
+ ActionListEmpty()
+ Allegiance(Myself,ENEMY)
+THEN
+ RESPONSE #100
+  Attack(NearestEnemyOf(Myself))	// Chasey chasey
+END
+
+/////////////////////////////////////////////////////////////////////
+// How To Provoke A Dragon
+// Doing these things will make Thax angry. 
+/////////////////////////////////////////////////////////////////////
+IF
+ NumTimesTalkedTo(0)
+ OR(3)
+  !PartyHasItem("MISC6P")
+  AttackedBy([ANYONE],DEFAULT)
+  SpellCastOnMe([GOODCUTOFF],0)
+THEN
+ RESPONSE #100
+  StartDialogueNoSet([PC])
+  ChangeAIScript("shadra01",DEFAULT)	// drop "wtasight", it's bad
+  Enemy() // the dialogue calls Enemy(), but why take chances? 
+END
+

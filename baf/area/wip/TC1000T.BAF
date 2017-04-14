@@ -1,0 +1,16 @@
+IF
+  Clicked([0])
+  OpenState("Door01",TRUE)
+THEN
+  RESPONSE #100
+    DisplayString(Myself,~You can't go up these stairs until somebody repairs them.~)
+    SetGlobal("TCKnowStairsBroken","GLOBAL",1)
+END
+
+IF
+  Global("TCBeentoTC1200","GLOBAL",1)
+  OpenState("Door01",TRUE)
+THEN
+  RESPONSE #100
+    CloseDoor("Door01")
+END

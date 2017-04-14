@@ -1,0 +1,91 @@
+// wtasight
+// wtarsgt
+
+IF
+  General(Myself,UNDEAD)
+  !GlobalTimerNotExpired("UndeadPowers","LOCALS")
+  See(NearestEnemyOf(Myself))
+  Allegiance(Myself,ENEMY)
+  LevelGT(Myself,13) // greater mummy = 14
+THEN
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(Myself,WIZARD_WAIL_OF_THE_BANSHEE)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,CLERIC)
+    ForceSpell(LastSeenBy(Myself),CLERIC_FINGER_OF_DEATH)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_EMOTION_HOPELESSNESS)
+END
+
+IF
+  General(Myself,UNDEAD)
+  !GlobalTimerNotExpired("UndeadPowers","LOCALS")
+  See(NearestEnemyOf(Myself))
+  Allegiance(Myself,ENEMY)
+  LevelGT(Myself,9) // skeleton warrior = 10
+THEN
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_EMOTION_HOPELESSNESS)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_GREATER_MALISON)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,CLERIC)
+    ForceSpell(Myself,CLERIC_CLOAK_OF_FEAR)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_CONFUSION)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(Myself,WIZARD_GHOST_ARMOR)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+END
+
+IF
+  General(Myself,UNDEAD)
+  !GlobalTimerNotExpired("UndeadPowers","LOCALS")
+  See(NearestEnemyOf(Myself))
+  Allegiance(Myself,ENEMY)
+THEN
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_SPOOK)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_BLINDNESS)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_HORROR)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,MAGE)
+    ForceSpell(LastSeenBy(Myself),WIZARD_LARLOCH_MINOR_DRAIN)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,CLERIC)
+    ForceSpell(LastSeenBy(Myself),CLERIC_DOOM)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+    ChangeClass(Myself,CLERIC)
+    ForceSpell(LastSeenBy(Myself),CLERIC_HOLD_PERSON)
+  RESPONSE #100
+    SetGlobalTimer("UndeadPowers","LOCALS",18)
+END
+
