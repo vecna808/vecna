@@ -1,0 +1,41 @@
+AA0A /vedred_pc_nwn
+***
+                 SOUND
+ATTACK           AA0A_03 AA0A_04
+ATTACK           0 0
+AWAKE            ***
+AWAKE            0
+CAST             ***
+CAST             0
+CONJURE          ***
+CONJURE          0
+DAMAGE           AA0A_07 AA0A_08
+DAMAGE           0 0
+DIE              AA0A_09
+DIE              0
+HEAD_TURN        ***
+HEAD_TURN        0
+READY            ***
+READY            0
+SHOOT            AA0A_03 nosound
+SHOOT            0 0
+TWITCH           ***
+TWITCH           0
+WALK             ***
+WALK             0
+ATTACK_SLASH     AA0A_03 nosound
+ATTACK_SLASH     0 0
+ATTACK_BACKSLASH AA0A_04 nosound
+ATTACK_BACKSLASH 0 0
+ATTACK_JAB       AA0A_04 nosound
+ATTACK_JAB       0 0
+EMERGE           ***
+EMERGE           0
+HIDE             ***
+HIDE             0
+SLEEP            ***
+SLEEP            0
+Battle_Cry       AA0A_01a AA0A_01b
+Battle_Cry       0 0
+Selection        AA0A_02a AA0A_02b
+Selection        0 0

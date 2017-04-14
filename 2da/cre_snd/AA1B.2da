@@ -1,0 +1,41 @@
+µbq /marilith_iwd
+***
+                 SOUND
+ATTACK           AA1B_03a AA1B_04a
+ATTACK           0 0
+AWAKE            ***
+AWAKE            0
+CAST             ***
+CAST             0
+CONJURE          ***
+CONJURE          0
+DAMAGE           AA1B_07 AA1B_08
+DAMAGE           0 0
+DIE              AA1B_09a AA1B_09b
+DIE              0 0
+HEAD_TURN        ***
+HEAD_TURN        0
+READY            ***
+READY            0
+SHOOT            AA1B_05a nosound
+SHOOT            0 0
+TWITCH           ***
+TWITCH           0
+WALK             ***
+WALK             0
+ATTACK_SLASH     AA1B_03a AA1B_03b
+ATTACK_SLASH     0 0
+ATTACK_BACKSLASH AA1B_04a AA1B_04b
+ATTACK_BACKSLASH 0 0
+ATTACK_JAB       AA1B_05a AA1B_05b
+ATTACK_JAB       0 0
+EMERGE           ***
+EMERGE           0
+HIDE             ***
+HIDE             0
+SLEEP            ***
+SLEEP            0
+Battle_Cry       AA1B_01 AA1B_02
+Battle_Cry       0 0
+Selection        AA1B_05b AA1B_11a
+Selection        0 0

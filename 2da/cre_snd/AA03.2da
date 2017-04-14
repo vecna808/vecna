@@ -1,0 +1,41 @@
+AA03 /amel_pc_nwn
+***
+                 SOUND
+ATTACK           AA03_03 AA03_04
+ATTACK           0 0
+AWAKE            ***
+AWAKE            0
+CAST             ***
+CAST             0
+CONJURE          ***
+CONJURE          0
+DAMAGE           AA03_07 AA03_08
+DAMAGE           0 0
+DIE              AA03_09
+DIE              0
+HEAD_TURN        ***
+HEAD_TURN        0
+READY            ***
+READY            0
+SHOOT            AA03_03 nosound
+SHOOT            0 0
+TWITCH           ***
+TWITCH           0
+WALK             ***
+WALK             0
+ATTACK_SLASH     AA03_03 nosound
+ATTACK_SLASH     0 0
+ATTACK_BACKSLASH AA03_04 nosound
+ATTACK_BACKSLASH 0 0
+ATTACK_JAB       AA03_04 nosound
+ATTACK_JAB       0 0
+EMERGE           ***
+EMERGE           0
+HIDE             ***
+HIDE             0
+SLEEP            ***
+SLEEP            0
+Battle_Cry       AA03_01a AA03_01b
+Battle_Cry       0 0
+Selection        AA03_02a AA03_02b
+Selection        0 0

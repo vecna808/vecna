@@ -1,0 +1,41 @@
+AA08 /pit_fiend_nwn
+***
+                 SOUND
+ATTACK           AA08_03 AA08_04
+ATTACK           0 0
+AWAKE            ***
+AWAKE            0
+CAST             ***
+CAST             0
+CONJURE          ***
+CONJURE          0
+DAMAGE           AA08_07 AA08_08
+DAMAGE           0 0
+DIE              AA08_09
+DIE              0
+HEAD_TURN        ***
+HEAD_TURN        0
+READY            ***
+READY            0
+SHOOT            AA08_04
+SHOOT            0
+TWITCH           ***
+TWITCH           0
+WALK             ***
+WALK             0
+ATTACK_SLASH     AA08_03
+ATTACK_SLASH     0
+ATTACK_BACKSLASH AA08_03
+ATTACK_BACKSLASH 0
+ATTACK_JAB       AA08_04
+ATTACK_JAB       0
+EMERGE           ***
+EMERGE           0
+HIDE             ***
+HIDE             0
+SLEEP            ***
+SLEEP            0
+Battle_Cry       AA08_01a AA08_01b
+Battle_Cry       0 0
+Selection        AA08_02 nosound
+Selection        0 0

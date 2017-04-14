@@ -1,0 +1,41 @@
+AA06 /hamatula_nwn
+***
+                 SOUND
+ATTACK           AA06_03 AA06_04
+ATTACK           0 0
+AWAKE            ***
+AWAKE            0
+CAST             ***
+CAST             0
+CONJURE          ***
+CONJURE          0
+DAMAGE           AA06_07 AA06_08
+DAMAGE           0 0
+DIE              AA06_09
+DIE              0
+HEAD_TURN        ***
+HEAD_TURN        0
+READY            ***
+READY            0
+SHOOT            AA06_02b
+SHOOT            0
+TWITCH           ***
+TWITCH           0
+WALK             ***
+WALK             0
+ATTACK_SLASH     AA06_03 nosound
+ATTACK_SLASH     0 0
+ATTACK_BACKSLASH AA06_04 nosound
+ATTACK_BACKSLASH 0 0
+ATTACK_JAB       AA06_02b nosound
+ATTACK_JAB       0 0
+EMERGE           ***
+EMERGE           0
+HIDE             ***
+HIDE             0
+SLEEP            ***
+SLEEP            0
+Battle_Cry       AA06_01a AA06_01b
+Battle_Cry       0 0
+Selection        AA06_02a AA06_02b
+Selection        0 0
