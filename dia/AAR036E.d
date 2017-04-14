@@ -1,0 +1,6 @@
+BEGIN ~AAR036E~
+
+IF ~True()~ THEN BEGIN Talked
+SAY @1
+IF ~~ THEN EXIT
+END

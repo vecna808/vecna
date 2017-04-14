@@ -1,0 +1,19 @@
+BEGIN ~AACRE144~
+
+
+IF ~NumTimesTalkedTo(0)~ THEN BEGIN 0
+SAY @116
+IF ~~ THEN EXIT
+END
+
+
+IF ~NumTimesTalkedTo(1)~ THEN BEGIN 1
+SAY @117
+IF ~~ THEN EXIT
+END
+
+
+IF ~NumTimesTalkedTo(2)~ THEN BEGIN 2
+SAY @118
+IF ~~ THEN DO ~Shout(5) Enemy()~ EXIT
+END

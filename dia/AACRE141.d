@@ -1,0 +1,6 @@
+BEGIN ~AACRE141~
+
+IF ~True()~ THEN BEGIN Talked
+SAY @115
+IF ~~ THEN DO ~Enemy()~ EXIT
+END
