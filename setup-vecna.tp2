@@ -1,0 +1,3482 @@
+BACKUP ~vecna/backup~
+AUTHOR ~vecna808.@gmailcom~
+VERSION ~v16~ // version number
+README ~vecna/VecnaReadMe.txt~
+
+
+AUTO_TRA ~vecna/Language/%s~
+
+LANGUAGE 
+         ~English~
+         ~english~
+         ~vecna/Language/English/Setup.tra~
+
+
+
+
+BEGIN ~Vecna Artifacts~
+
+//Its an BG2ee only mod at the moment //////////////////////////////////////////////////////
+REQUIRE_PREDICATE GAME_IS ~bg2ee~ ~~
+
+// biff code
+
+//	MAKE_BIFF ~AA_area~ BEGIN
+//		~vecna/area~ ~.*\.are~
+//		~vecna/area~ ~.*\.bmp~
+//      ~vecna/area~ ~.*\.mos~
+//      ~vecna/area~ ~.*\.tis~
+//      ~vecna/area~ ~.*\.wed~
+//	END
+
+//	MAKE_BIFF ~AA_bam~ BEGIN
+//		~vecna/bam/area~ ~.*\.bam~
+//		~vecna/bam/area/MultiReferences~ ~.*\.bam~
+//      ~vecna/bam/item~ ~.*\.bam~
+//      ~vecna/bam/spell~ ~.*\.bam~
+//	END
+
+//	MAKE_BIFF ~AA_movi~ BEGIN
+//		~vecna/mve~ ~.*\.mve~
+//	END
+
+//	MAKE_BIFF ~AA_snd~ BEGIN
+//		~vecna/wav~ ~.*\.mve~
+//	END
+
+//	MAKE_BIFF ~AA_misc~ BEGIN
+//		~vecna/itm/NoDescription~ ~.*\.itm~
+//		~vecna/spl/cre~ ~.*\.spl~
+//      ~vecna/bmp~ ~.*\.bmp~
+//      ~vecna/vvc~ ~.*\.vvc~
+//      ~vecna/2da~ ~.*\.2da~
+//      ~vecna/eff~ ~.*\.eff~
+//      ~vecna/vvc~ ~.*\.vvc~
+//	END
+
+
+PRINT ~Biffing Creature Bams~
+PRINT ~Although this is a development build , these bams should never change~
+	MAKE_BIFF ~AA_cBAM~ BEGIN
+		~vecna/bam/crea~ ~.*\.bam~
+	END
+
+//PRINT ~Biffing Movies~
+//	MAKE_BIFF ~AA_mve~ BEGIN
+//		~vecna/mve~ ~.*\.mve~
+//	END
+
+
+// Copy code (Creature And area resources and graphics)
+
+// .............area...includes .wed .tis , relevant .bmp, and mos
+PRINT ~Copying over area files, this will take some time !!.~
+COPY_LARGE ~vecna/area~   ~override~
+
+//..........................................................bams
+PRINT ~Copying over new creature and effect bams, this might take time~
+COPY_LARGE ~vecna/bam/area~   ~override~
+COPY_LARGE ~vecna/bam/area/MultiReferences~   ~override~
+COPY_LARGE ~vecna/wbm~   ~override~
+COPY_LARGE ~vecna/bam/item~   ~override~
+COPY_LARGE ~vecna/bam/spell~   ~override~
+
+
+PRINT ~Copying over some other files~
+//..........items used by creatures, mainly nodrop immunities and claw weapons etc
+COPY ~vecna/itm/NoDescription/beholder~   ~override~
+COPY ~vecna/itm/NoDescription/cleric~   ~override~
+COPY ~vecna/itm/NoDescription/daemon~   ~override~
+COPY ~vecna/itm/NoDescription/dragon~   ~override~
+COPY ~vecna/itm/NoDescription/elemental~   ~override~
+COPY ~vecna/itm/NoDescription/fighter~   ~override~
+COPY ~vecna/itm/NoDescription/fighter_mu~   ~override~
+COPY ~vecna/itm/NoDescription/golem~   ~override~
+COPY ~vecna/itm/NoDescription/lich~   ~override~
+COPY ~vecna/itm/NoDescription/mage~   ~override~
+COPY ~vecna/itm/NoDescription/mindflayer~   ~override~
+COPY ~vecna/itm/NoDescription/misc~   ~override~
+COPY ~vecna/itm/NoDescription/planetars~   ~override~
+COPY ~vecna/itm/NoDescription/singular~   ~override~
+COPY ~vecna/itm/NoDescription/thief~   ~override~
+COPY ~vecna/itm/NoDescription/vampire~   ~override~
+
+//innate and other spells used by creatures, requiring no description
+COPY ~vecna/spl/cre~   ~override~
+
+//character and monster portraits
+COPY ~vecna/bmp~   ~override~
+
+//effect files
+COPY ~vecna/vvc~   ~override~
+
+//sounds
+PRINT ~Wave files also take a while~
+COPY_LARGE ~vecna/wav/are~   ~override~
+COPY_LARGE ~vecna/wav/cre~   ~override~
+
+//lv100 2da extensions
+COPY ~vecna/2da/lv100~   ~override~
+
+// xp uncap
+COPY ~vecna/2da/xp_uncap~   ~override~
+
+//creature sound 2das
+COPY ~vecna/2da/cre_snd~   ~override~
+
+// work bat files....................dev !!!!!!!!!!!!!
+COPY ~vecna/bat/dev_opperations~   ~override~
+
+// effect files, mainly used for spells
+COPY ~vecna/eff~   ~override~
+
+// inii files used for new animations.   BG2EE V2+ ONLY
+//COPY ~vecna/ini~   ~override~
+
+//pst worldmap
+COPY ~vecna/map/AAmapPST.WMP~ ~override~
+SAY 36 ~The Hive~
+SAY 264 ~The Hive~
+SAY 268 ~The Hive~
+SAY 504 ~The Hive~
+SAY 508 ~The Hive~
+SAY 744 ~Ragpicker's Square~
+SAY 748 ~Ragpicker's Square~
+SAY 984 ~Buried Village~
+SAY 988 ~Buried Village~
+SAY 1224 ~The Hive~
+SAY 1228 ~The Hive~
+SAY 1464 ~Alley of Dangerous Angles~
+SAY 1468 ~Alley of Dangerous Angles~
+SAY 1704 ~The Hive~
+SAY 1708 ~The Hive~
+SAY 1944 ~Lower Ward~
+SAY 1948 ~Lower Ward~
+SAY 2184 ~Clerk's Ward~
+SAY 2188 ~Clerk's Ward~
+SAY 2424 ~Alley of Lingering Sighs~
+SAY 2428 ~Alley of Lingering Sighs~
+SAY 2664 ~Modron Maze~
+SAY 2668 ~Modron Maze~
+SAY 2904 ~Player's Maze~
+SAY 2908 ~Player's Maze~
+SAY 3384 ~Outlands~
+SAY 3388 ~Outlands~
+SAY 3624 ~Ravel's Maze~
+SAY 3628 ~Ravel's Maze~
+SAY 3864 ~Curst~
+SAY 3868 ~Curst~
+SAY 4104 ~Curst~
+SAY 4108 ~Curst~
+SAY 4344 ~Curst Gone~
+SAY 4348 ~Curst Gone~
+SAY 4584 ~Carceri~
+SAY 4588 ~Carceri~
+SAY 4824 ~Fortress Entrance~
+SAY 4828 ~Fortress Entrance~
+COPY ~vecna/map/AAmapPST.BAM~ ~override~
+COPY ~vecna/map/AAmapPST.MOS~ ~override~
+
+//greyhawk worldmap
+COPY ~vecna/map/AAmapGRY.WMP~ ~override~
+
+SAY 0xe28 ~Alcaster Reborn~
+SAY 0xe2c ~Alcaster Reborn~
+SAY 0x6a8 ~Village of DeamonLore~
+SAY 0x6ac ~Village of DeamonLore~
+SAY 0x798 ~School of the Planes~
+SAY 0x79c ~School of the Planes~
+SAY 0x5b8 ~Village of Wild Blood~
+SAY 0x5bc ~Village of Wild Blood~
+SAY 0x108 ~Pardue North~
+SAY 0x10c ~Pardue North~
+SAY 0x978 ~Pardue South~
+SAY 0x97c ~Pardue South~
+SAY 0xb58 ~Pardue East~
+SAY 0xb5c ~Pardue East~
+SAY 0xc48 ~Spiral~
+SAY 0xc4c ~Spiral~
+SAY 0x1f8 ~Tenser's Vale~
+SAY 0x1fc ~Tenser's Vale~
+SAY 0xa68 ~Pardue West~
+SAY 0xa6c ~Pardue West~
+SAY 0x2e8 ~Black Elf Fort~
+SAY 0x2ec ~Black Elf Fort~
+SAY 0x3d8 ~Dagger Pass~
+SAY 0x3dc ~Dagger Pass~
+SAY 0x4c8 ~Outland Pass~
+SAY 0x4cc ~Outland Pass~
+SAY 0x888 ~Midland Traders Village~
+SAY 0x88c ~Midland Traders Village~
+SAY 0xd38 ~House of Lum~
+SAY 0xd3c ~House of Lum~
+COPY ~vecna/map/AAmapGRY.BAM~ ~override~
+COPY ~vecna/map/AAmapGRY.MOS~ ~override~
+
+// gtimes new refs are used for some of the scripts have stolen
+
+
+APPEND ~GTIMES.IDS~ ~6 ONE_ROUND~          UNLESS ~ONE_ROUND~
+APPEND ~GTIMES.IDS~ ~10 TWO_MINUTES~       UNLESS ~TWO_MINUTES~
+APPEND ~GTIMES.IDS~ ~12 TWO_ROUNDS~        UNLESS ~TWO_ROUNDS~
+APPEND ~GTIMES.IDS~ ~15 THREE_MINUTES~     UNLESS ~THREE_MINUTES~
+APPEND ~GTIMES.IDS~ ~18 THREE_ROUNDS~      UNLESS ~THREE_ROUNDS~
+APPEND ~GTIMES.IDS~ ~20 FOUR_MINUTES~      UNLESS ~FOUR_MINUTES~
+APPEND ~GTIMES.IDS~ ~24 FOUR_ROUNDS~       UNLESS ~FOUR_ROUNDS~
+APPEND ~GTIMES.IDS~ ~30 FIVE_ROUNDS~       UNLESS ~FIVE_ROUNDS~
+APPEND ~GTIMES.IDS~ ~35 SIX_MINUTES~       UNLESS ~SIX_MINUTES~
+APPEND ~GTIMES.IDS~ ~36 SIX_ROUNDS~        UNLESS ~SIX_ROUNDS~
+APPEND ~GTIMES.IDS~ ~42 SEVEN_ROUNDS~      UNLESS ~SEVEN_ROUNDS~
+APPEND ~GTIMES.IDS~ ~48 EIGHT_ROUNDS~      UNLESS ~EIGHT_ROUNDS~
+APPEND ~GTIMES.IDS~ ~54 NINE_ROUNDS~       UNLESS ~NINE_ROUNDS~
+APPEND ~GTIMES.IDS~ ~60 TEN_ROUNDS~        UNLESS ~TEN_ROUNDS~
+APPEND ~GTIMES.IDS~ ~60 ONE_TURN~          UNLESS ~ONE_TURN~
+APPEND ~GTIMES.IDS~ ~70 TWELVE_MINUTES~    UNLESS ~TWELVE_MINUTES~
+APPEND ~GTIMES.IDS~ ~90 EIGHTEEN_MINUTES~  UNLESS ~EIGHTEEN_MINUTES~
+APPEND ~GTIMES.IDS~ ~100 TWENTY_MINUTES~   UNLESS ~TWENTY_MINUTES~
+APPEND ~GTIMES.IDS~ ~120 TWO_TURNS~        UNLESS ~TWO_TURNS~
+APPEND ~GTIMES.IDS~ ~180 THREE_TURNS~      UNLESS ~THREE_TURNS~
+APPEND ~GTIMES.IDS~ ~240 FOUR_TURNS~       UNLESS ~FOUR_TURNS~
+APPEND ~GTIMES.IDS~ ~300 FIVE_TURNS~       UNLESS ~FIVE_TURNS~
+APPEND ~GTIMES.IDS~ ~300 ONE_HOUR~         UNLESS ~ONE_HOUR~
+APPEND ~GTIMES.IDS~ ~360 SIX_TURNS~        UNLESS ~SIX_TURNS~
+APPEND ~GTIMES.IDS~ ~420 SEVEN_TURNS~      UNLESS ~SEVEN_TURNS~
+APPEND ~GTIMES.IDS~ ~480 EIGHT_TURNS~      UNLESS ~EIGHT_TURNS~
+APPEND ~GTIMES.IDS~ ~540 NINE_TURNS~       UNLESS ~NINE_TURNS~
+APPEND ~GTIMES.IDS~ ~600 TEN_TURNS~        UNLESS ~TEN_TURNS~
+APPEND ~GTIMES.IDS~ ~600 TWO_HOURS~        UNLESS ~TWO_HOURS~
+APPEND ~GTIMES.IDS~ ~900 FIFTEEN_TURNS~    UNLESS ~FIFTEEN_TURNS~
+APPEND ~GTIMES.IDS~ ~900 THREE_HOURS~      UNLESS ~THREE_HOURS~
+APPEND ~GTIMES.IDS~ ~1200 FOUR_HOURS~      UNLESS ~FOUR_HOURS~
+APPEND ~GTIMES.IDS~ ~1500 FIVE_HOURS~      UNLESS ~FIVE_HOURS~
+APPEND ~GTIMES.IDS~ ~1800 SIX_HOURS~       UNLESS ~SIX_HOURS~
+APPEND ~GTIMES.IDS~ ~2100 SEVEN_HOURS~     UNLESS ~SEVEN_HOURS~
+APPEND ~GTIMES.IDS~ ~2400 EIGHT_HOURS~     UNLESS ~EIGHT_HOURS~
+APPEND ~GTIMES.IDS~ ~2700 NINE_HOURS~      UNLESS ~NINE_HOURS~
+APPEND ~GTIMES.IDS~ ~3000 TEN_HOURS~       UNLESS ~TEN_HOURS~
+APPEND ~GTIMES.IDS~ ~3300 ELEVEN_HOURS~    UNLESS ~ELEVEN_HOURS~
+APPEND ~GTIMES.IDS~ ~3600 TWELVE_HOURS~    UNLESS ~TWELVE_HOURS~
+
+// area info texts
+// hex offsets change with actors/entrances change, so all will have to be re done when areas finalised
+
+//..................... CTB AREAS
+
+ 
+  
+//COPY ~vecna/are/AAR910.ARE~ ~override~
+//  SAY 0x1a80 @1011 //valiant sign
+//  SAY 0x1b44 @1012 //charlies tavern
+//  SAY 0x1c08 @1013  // barred door
+//  SAY 0x1ccc @1014  //clock face
+//  SAY 0x669c @1015  //automap note 0
+//  SAY 0x66d0 @1016  //automap note 1
+//  SAY 0x6704 @1017  //automap note 2
+//
+//COPY ~vecna/are/AAR911.ARE~ ~override~
+//  SAY 0x5040 @1017 //automap note 0
+//  SAY 0x5074 @1018 //automap note 1
+//  SAY 0x3800 @1019 // door 3 unlock message
+//
+//COPY ~vecna/are/AAR913.ARE~ ~override~
+//  SAY 0x3f44 @1018  //automap note 0
+//  SAY 0x3f78 @1020 //automap note 1
+//  
+//COPY ~vecna/are/AAR935.ARE~ ~override~
+//  SAY 0x574 @1021 // charlies painting
+//
+//COPY ~vecna/are/AAR936.ARE~ ~override~
+//  SAY 0x354 @1022 // wall map
+//
+//COPY ~vecna/are/AAR937.ARE~ ~override~
+// SAY 0x1034 @1023 // door 0, unlock message
+//
+//COPY ~vecna/are/AAR938.ARE~ ~override~
+//  SAY 0xbd4 @1024 // third level stairs, info point text
+//
+//COPY ~vecna/are/AAR941.ARE~ ~override~
+//  SAY 0x794 @1025 // info ladder
+//
+//COPY ~vecna/are/AAR943.ARE~ ~override~
+//  SAY 0xb10 @1026 // door 4 , unlock mesage
+  
+
+  
+  
+  
+  
+//..................... PST AREAS
+  
+//COPY ~vecna/are/AAR100.ARE~ ~override~         
+//  SAY Trigger_Point_5 ~Vines with black leaves... The stems look extremely sharp.~ 
+//  SAY Trigger_Point_6 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_7 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_8 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_9 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_10 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_11 ~A huge monument... there is no name or plaque identifying what it is honoring.	2b74 h~
+//  SAY Trigger_Point_12 ~Mountains of trash are piled here... it looks like a big dumping ground for the city.~
+//  SAY Trigger_Point_13 ~Mountains of trash are piled here... it looks like a big dumping ground for the city.~
+//  SAY Trigger_Point_14 ~This gate leads back to the Mortuary area.~
+//  SAY Trigger_Point_15 ~Vines with black leaves... The stems look extremely sharp.~
+//  SAY Trigger_Point_16 ~Vines with black leaves... The stems look extremely sharp.~
+//  
+//  
+//COPY ~vecna/are/AAR101.ARE~ ~override~ 
+//  SAY Trigger_Point_6 ~~
+//  SAY Trigger_Point_7 ~~
+//  SAY Trigger_Point_8 ~~
+//  SAY Trigger_Point_9 ~~
+//  SAY Trigger_Point_10 ~~
+//  SAY Trigger_Point_11 ~~
+//  
+//  
+//COPY ~vecna/are/AAR105.ARE~ ~override~ 
+//  SAY Trigger_Point_2 ~~
+//  SAY Trigger_Point_3 ~~
+//  SAY Trigger_Point_4 ~~
+//  SAY Trigger_Point_5 ~~
+//  SAY Trigger_Point_6 ~~
+//  SAY Trigger_Point_7 ~~
+//  SAY Trigger_Point_8 ~~
+//  SAY Trigger_Point_9 ~~
+//  SAY Trigger_Point_10 ~~
+//  SAY Trigger_Point_11 ~~
+//  SAY Trigger_Point_12 ~~
+//  SAY Trigger_Point_13 ~~
+//  SAY Trigger_Point_14 ~~
+//  SAY Trigger_Point_15 ~~
+//  SAY Trigger_Point_16 ~~
+//  SAY Trigger_Point_17 ~~
+//  SAY Trigger_Point_18 ~~
+//  SAY Trigger_Point_19 ~~
+//  SAY Trigger_Point_20 ~~
+//  SAY Trigger_Point_21 ~~
+//  SAY Trigger_Point_22 ~~
+//
+//
+//COPY ~vecna/are/AAR108.ARE~ ~override~ 
+//  SAY Trigger_Point_3 ~~
+//  SAY Trigger_Point_4 ~~
+//  SAY Trigger_Point_5 ~~
+//  SAY Trigger_Point_6 ~~
+//  SAY Trigger_Point_7 ~~
+//  SAY Trigger_Point_8 ~~
+//  SAY Trigger_Point_9 ~~
+//  SAY Trigger_Point_10 ~~
+//  SAY Trigger_Point_11 ~~
+//  SAY Trigger_Point_12 ~~
+//  SAY Trigger_Point_13 ~~
+//  SAY Trigger_Point_14 ~~
+//  SAY Trigger_Point_15 ~~
+//  SAY Trigger_Point_16 ~~
+//  SAY Trigger_Point_17 ~~
+//  SAY Trigger_Point_18 ~~
+// 
+//COPY ~vecna/are/AAR109.ARE~ ~override~ 
+//  SAY Trigger_Point_5 ~~
+//  SAY Trigger_Point_6 ~~
+//  SAY Trigger_Point_7 ~~
+//  SAY Trigger_Point_8 ~~
+//  SAY Trigger_Point_9 ~~
+//  
+//COPY ~vecna/are/AAR200.ARE~ ~override~ 
+//  SAY Trigger_Point_8 ~~
+//  SAY Trigger_Point_9 ~~
+//  SAY Trigger_Point_10 ~~
+//  SAY Trigger_Point_11 ~~
+//  SAY Trigger_Point_12 ~~
+//  SAY Trigger_Point_13 ~~
+//  SAY Trigger_Point_14 ~~
+//  SAY Trigger_Point_15 ~~
+//  SAY Trigger_Point_16 ~~
+//  SAY Trigger_Point_17 ~~
+//  SAY Trigger_Point_18 ~~
+//  SAY Trigger_Point_19 ~~
+//  SAY Trigger_Point_20 ~~
+//  SAY Trigger_Point_21 ~~
+//  SAY Trigger_Point_22 ~~
+//  SAY Trigger_Point_23 ~~
+//  SAY Trigger_Point_24 ~~
+//  SAY Trigger_Point_25 ~~
+//  SAY Trigger_Point_26 ~~
+//  
+//COPY ~vecna/are/AAR201.ARE~ ~override~ 
+//  SAY Table 1 ~~ 
+//  SAY Table 2 ~~ 
+//  SAY Drape 1 ~~ 
+//  SAY Drape 2 ~~ 
+//  SAY Drape 3 ~~ 
+//  SAY Drape 4 ~~   
+//  SAY Drape 5 ~~ 
+//  SAY plaque 1 ~~ 
+//  SAY plaque 2 ~~
+//  SAY gate ~~ 
+//  SAY pipe ~~ 
+//  SAY plaque 3 ~~
+//  SAY tomb 1 ~~
+//  SAY tomb 2 ~~
+//  SAY plaque 4 ~~
+  
+  
+  
+
+  
+//..................... CA AREAS
+
+
+
+//COPY ~vecna/are/AAR631.ARE~ ~override~         
+//  SAY 0x180 ~This bed looks like it's been slept in recently.~ 
+//  SAY 0x244 ~This armor looks more ceremonial than practical.  It bears the colors of NeverWinter on the tabard.~ 
+//  SAY 0x308 ~This frightening-looking stove has a menacing air about it.  It seems to be daring you to stick your hand into its maw.~ 
+//  SAY 0x3cc ~This stove is the twin of the ugly one across the room, except there is more ash and soot covering its surface.~ 
+//  SAY 0x490 ~This pot looks clean, as if it was still being used.~ 
+//  SAY 0x6dc ~There is a fantastic view of the sea from these windows.~ 
+//  SAY 0x7a0 ~Various sea maps of the region and tide charts are littered across the table.  They look new.~ 
+//  SAY 0x1930 ~Exit to Outside~ 
+//  SAY 0x1964 ~Stairs Up~ 
+//
+//COPY ~vecna/are/AAR632.ARE~ ~override~         
+//  SAY 0x1234 ~This painting depicts the buccaneer, Letto, fighting barbarians on the deck of his ship.~ 
+//  SAY 0x12f8 ~This window looks like it was shattered long ago, and only a half-hearted attempt has been made to repair it.~ 
+//  SAY 0x2314 ~Stairs Down~
+//  SAY 0x2348 ~To Basement~
+//  
+//
+//COPY ~vecna/are/AAR634.ARE~ ~override~ 
+//  SAY 0x1518 ~This is a small shed filled with various tools.~ 
+//
+//COPY ~vecna/are/AAR635.ARE~ ~override~ 
+//  SAY 0x968 ~There isn't much variety here anymore at the bar.  You see Cormyrian Brandy and Knee-Cracker Cider amongst the bottles but most of them are of Golden Sands Brew.~ 
+//
+//COPY ~vecna/are/AAR636.ARE~ ~override~
+//  SAY 0x528 ~Short stacks of copper and silver pieces from local countries are organized on this counter.  The total value is less than 10 gold.~ 
+//
+//
+//COPY ~vecna/are/AAR642.ARE~ ~override~         
+//  SAY 0x244 ~Whatever potion was being made here is now ruined.~ 
+//  SAY 0x308 ~All of the books in the room seem to be about history, math, and past languages.~ 
+//
+//
+//COPY ~vecna/are/AAR648.ARE~ ~override~         
+//  SAY 0x244 ~You wouldn't mind splitting one of these kegs open and sampling some of the stock.~ 
+//  SAY 0x308 ~You wouldn't mind splitting one of these kegs open and sampling some of the stock.~ 
+//  SAY 0x3cc ~You wouldn't mind splitting one of these kegs open and sampling some of the stock.~ 
+//  SAY 0x490 ~A number of these crates are marked with a destination to Suderham.~ 
+//  SAY 0x554 ~These crates appear to contain iron rations, ten foot poles, and fifty foot coils of rope.~ 
+//  SAY 0x618 ~These solid wooden crates look like they are stuffed with weapons.~ 
+//  SAY 0x6dc ~This row of crates look like they have been sitting here for some time.  They bear the mark of Bremen, one of the Thay cities.~ 
+//  SAY 0x7a0 ~A number of these crates are marked with the Iron Throne Trading Coster Insignia.~ 
+//
+//COPY ~vecna/are/AAR652.ARE~ ~override~         
+//  SAY 0x354 ~The smell of the fresh bread makes you realize you haven't had a good meal in awhile.~ 
+//  SAY 0x418 ~The smell of the fresh bread makes you realize you haven't had a good meal in awhile.~ 
+//  SAY 0x4dc ~The smell of the fresh bread makes you realize you haven't had a good meal in awhile.~ 
+//  SAY 0x5a0 ~These sugar coated rolls make you very hungry.~ 
+//  SAY 0x664 ~These sugar coated rolls make you very hungry.~ 
+//
+//COPY ~vecna/are/AAR658.ARE~ ~override~         
+//  SAY 0x684 ~This is a health patch of ivy, growing indoors without any sunlight.~ 
+//  SAY 0x748 ~This is a health patch of ivy, growing indoors without any sunlight.~ 
+//
+//COPY ~vecna/are/AAR653.ARE~ ~override~         
+//  SAY 0x3a0 ~This cave-in looks like it happened recently.~ 
+//  SAY 0x464 ~This cave-in looks like it happened some time ago.  It looks like someone has been working at it with tools, but without much success.~ 
+//
+//
+//COPY ~vecna/are/AAR654.ARE~ ~override~
+//  SAY 0x3e24 ~You are awakened by the sound of the approaching Westgate Watch.~
+//
+//
+//COPY ~vecna/are/AAR663.ARE~ ~override~
+//  SAY 0x6398 ~You are awakened by the sound of the approaching Westgate Watch.~
+//  SAY 0x6460 ~White Hart Inn~
+//  SAY 0x6494 ~Rabbit in a Hat~
+//
+//COPY ~vecna/are/AAR665.ARE~ ~override~
+//  SAY 0x464 ~These stairs appear to end in the middle of the air.  You don't see a second floor to this home.~ 
+//
+//
+//COPY ~vecna/are/AAR678.ARE~ ~override~   
+//  SAY 0x354 ~These shelves are littered with containers holding various powders, liquids, shavings, and the like.  Most are unlabelled.~ 
+//  SAY 0x418 ~These shelves are littered with containers holding various powders, liquids, shavings, and the like.  Most are unlabelled.~ 
+//  SAY 0x4dc ~These shelves are littered with containers holding various powders, liquids, shavings, and the like.  Most are unlabelled.~ 
+//  SAY 0x5a0 ~These shelves are littered with containers holding various powders, liquids, shavings, and the like.  Most are unlabelled.~ 
+//  SAY 0x664 ~These shelves are littered with containers holding various powders, liquids, shavings, and the like.  Most are unlabelled.~ 
+//  SAY 0x728 ~This cabinet's shelves are littered with containers holding various powders, liquids, shavings, and the like.~ 
+//  SAY 0x7ec ~This cabinet's shelves are littered with containers holding various powders, liquids, shavings, and the like.~ 
+//  SAY 0x8b0 ~This cabinet's shelves are littered with containers holding various powders, liquids, shavings, and the like.~ 
+//  SAY 0x974 ~This low table is littered with containers holding various powders, liquids, shavings, and the like.  They are unlabelled, and you don't recognize any of the substances immediately.~ 
+//  SAY 0xa38 ~Scattered across the counter are myriad alchemist flasks, jugs, and beakers, most of them currently empty.~ 
+//
+//COPY ~vecna/are/AAR679.ARE~  ~override~         
+//  SAY 0x354 ~Despite their frightening appearance, the contents of this bubbling cauldron smell of clover and other sweet spices.~ 
+//  SAY 0x418 ~Salted rabbits and game birds hang here.~ 
+//  SAY 0x4dc ~Salted rabbits and game birds hang here.~ 
+//  SAY 0x5a0 ~This shallow pit is probably used to hold refuse.~ 
+//  SAY 0x664 ~This barrel holds a variety of hand weapons, all of them broken or rusted beyond usefulness.~ 
+//  SAY 0x728 ~These pots and urns contain a wide variety of crushed, powdered, minced or liquefied herbs, minerals, and sundry other substances.~ 
+//  SAY 0x7ec ~These pots and urns contain a wide variety of crushed, powdered, minced or liquefied herbs, minerals, and sundry other substances.~ 
+//  SAY 0x8b0 ~These pots and urns contain a wide variety of crushed, powdered, minced or liquefied herbs, minerals, and sundry other substances.~ 
+//  SAY 0x974 ~These pots and urns contain a wide variety of crushed, powdered, minced or liquefied herbs, minerals, and sundry other substances.~ 
+//  SAY 0xa38 ~These pots and urns contain a wide variety of crushed, powdered, minced or liquefied herbs, minerals, and sundry other substances.~ 
+//
+//
+//COPY ~vecna/are/AAR680.are~ ~override~         
+//  SAY 0x2d3c ~These casks contain moldy grain.~ 
+//  SAY 0x2e00 ~These barrels hold some meat that is beginning to spoil.~ 
+//  SAY 0x2ec4 ~The rat-like skull on this body has exploded from the inside.~ 
+//  SAY 0x2f88 ~The hooks on this device have been used recently - they're still bloody.~ 
+//  SAY 0x304c ~These casks contain fairly fresh water.~ 
+//  SAY 0x3110 ~Like most everything else down here, this war machine is non-functional.~ 
+//  SAY 0x31d4 ~This looks like a piece of old siege equipment.~ 
+//  SAY 0x3298 ~Though this old drilling device appears partially functional, closer inspection reveals its innards have been cannibalized for parts.~ 
+//  SAY 0x335c ~The deformity of the bones suggests that this was a were-rat who displeased its masters.~ 
+//  SAY 0x3420 ~This device appears to be a broken siege machine.~ 
+//  SAY 0x34e4 ~This body is fresh, despite the rat-bites covering the flesh.~ 
+//  SAY 0x35a8 ~At a guess, this is a torture device - you draw this inference from the pieces of flesh that hang from its hooks. Its use, however, is a mystery to you.~ 
+//  SAY 0x366c ~The dislocated joints on this body suggest that its owner did not die well.~ 
+//  SAY 0x3730 ~These racks were used to pin a victim down and then slowly pull him apart.~ 
+//  SAY 0x37f4 ~This is a dead Scepter. The progress of decay suggests it has been here for some time.~ 
+//  SAY 0x38b8 ~This is a dead Scepter. The progress of decay suggests it has been here for some time.~ 
+//  SAY 0x397c ~These stretchers were used to carry dead bodies. The bloodstains on them suggest they've been carrying *fresh* bodies recently.~ 
+//  SAY 0x3a40 ~The tables in this room have seen some hard use.~ 
+//  SAY 0x3b04 ~The tables in this room have seen some hard use.~ 
+//  SAY 0x3bc8 ~The tables in this room have seen some hard use.~ 
+//  SAY 0x3c8c ~The tables in this room have seen some hard use.~ 
+//
+//
+//COPY ~vecna/are/AAR685.ARE~ ~override~         
+//  SAY 0x308 ~This appears to be a ladder constructed from the bones of many creatures.~
+//  SAY 0x3cc ~This unusual window allows some light to filter into the room. It casts strange colored shadows across the walls and floor.~
+//  SAY 0x490 ~Whatever purpose these barrels once served, they are now just flotsom strewn around the room.~
+//
+//
+//
+//COPY ~vecna/are/AAR870.ARE~ ~override~         
+//  SAY 0x1a70 ~School of Wizardry~ // automap note 0
+//
+//COPY ~vecna/are/AAR872.ARE~ ~override~         
+//  SAY 0x5ec ~This hallway has collapsed.~ // hallway info
+//
+//COPY ~vecna/are/AAR873.ARE~ ~override~         
+//  SAY 0xe18 ~The sounds of large wings flapping awakens you.~ // rest encounters , first entry
+//
+//COPY ~vecna/are/AAR877.ARE~ ~override~         
+//  SAY 0x1344 ~This device seems to be processing some sort of viscous oil.~ // trigger point 4
+//  SAY 0x1408 ~This device seems to be processing some sort of viscous oil.~ // trigger point 5
+//  SAY 0x14cc ~This device seems to be processing some sort of viscous oil.~ // trigger point 6
+//  SAY 0x1590 ~This engraving appears to have been magical at one time.~ // trigger point 7
+//  SAY 0x1654 ~This stand is surrounded by the pieces of a shattered gem.~ // trigger point 8
+//  SAY 0x241c ~Ilhara's body lies here under glass.  The magic preserves her so well it looks like she was just buried.~ // trigger point 9
+//
+//COPY ~vecna/are/AAR880.ARE~ ~override~
+//  SAY 0xf8c ~You are awakened by the sound of barking kobolds.~ // rest encounters , first entry
+//  SAY 0xf90 ~You are awakened by the sound of grunting orcs.~ // rest encounters , second entry
+//
+//COPY ~vecna/are/AAR881.ARE~ ~override~
+//  SAY 0xde8 ~You are awakened by the ghostly moans of a Protector.~ // rest encounters , first entry
+//
+//COPY ~vecna/are/AAR882.ARE~ ~override~
+//  SAY 0x18c0 ~Someone, or something, has blocked these stairs.~ // hallway info
+//  SAY 0x3f0c ~You are awakened by the sound of grunting orcs.~ // rest encounters , first entry
+//  SAY 0x3f10 ~The harsh voices of bandits awakens you from your sleep.~ // rest encounters , second entry
+//
+//COPY ~vecna/are/AAR883.ARE~ ~override~ 
+//  SAY 0x17f4 ~This pit looks like it was used to discard waste.  It still smells terrible after all these years.~ // dumb waiter
+//  SAY 0x5f08 ~You are awakened by the sound of grunting orcs.~ // rest encounters , first entry
+//  SAY 0x5f0c ~The harsh voices of bandits awakens you from your sleep.~ // rest encounters , second entry
+//
+//COPY ~vecna/are/AAR884.ARE~ ~override~         
+//  SAY 0x320c ~This hallway has collapsed.~ 
+//  SAY 0x351c ~Written in blood is a warning to all that an orc tribe claims this area.~ // collapsed hallway info
+//  SAY 0x6824 ~You are awakened by the sound of barking kobolds.~ // rest encounters , first entry
+//  SAY 0x6828 ~You are awakened by the sound of grunting orcs.~ // rest encounters , second entry
+//  SAY 0x68ec ~Exit~ // automap note 0
+//  SAY 0x6920 ~To Tower Level~  // automap note 1
+//  SAY 0x6954 ~To Upper Level~ // automap note 2
+//  
+//COPY ~vecna/are/AAR709.ARE~ ~override~         
+//  SAY 0xd30 ~You see that this opens to the sea thus allowing small boats to enter and exit the cave.~ 
+//  SAY 0xeb8 ~These barrels contain brandy, wine, ale, and other spirits.~ 
+//
+//
+//
+//COPY ~vecna/are/AAR719.ARE~ ~override~         
+//  SAY 0x1f70 ~Underwater Entrance~ 
+//  SAY 0x1fa4 ~Exit~ 
+//  SAY 0x1fd8 ~Secret Entrance~ 
+//
+//
+//
+//COPY ~vecna/are/AAR725.ARE~ ~override~         
+//  SAY 0x1518 ~It looks like the gnolls have found where the wine and ale was stored.  Empty bottles are everywhere.~ 
+//
+//
+//
+//COPY ~vecna/are/AAR745.ARE~ ~override~
+//  SAY 0x1f0c ~This privy smells like it hasn't been cleaned in ages.~
+//  SAY 0x54d4 ~You are awakened by the sound of the approaching Westgate Watch.~
+//  SAY 0x559c ~The Soldier's Wife~
+//
+//COPY ~vecna/are/AAR763.ARE~ ~override~
+//  SAY 0x748  ~Various tools for torture are hung on this wall.  Some make your skin crawl and your stomach very upset.~
+//  SAY 0x2508 ~To Lower Level~
+//
+//COPY ~vecna/are/AAR764.ARE~ ~override~
+//  SAY 0x4ce8 ~To Upper Level~
+//
+//COPY ~vecna/are/AAR765.ARE~ ~override~
+//  SAY 0xbd4 ~This crypt is empty.~
+//  SAY 0xc98 ~This crypt is empty.~
+//  SAY 0xd5c ~This crypt is empty.~
+//  SAY 0xe20 ~This crypt is empty.~
+//  SAY 0xee4 ~This crypt is empty.~
+//  SAY 0xfa8 ~This crypt is empty.~
+//  SAY 0x106c ~This crypt is empty.~
+//
+//COPY ~vecna/are/AAR766.ARE~ ~override~ 
+//  SAY 0x3820 ~You are awaken by a terrible screeching sound.~
+//  SAY 0x3824 ~The stink of gnoll is heavy in the air.  You thank the gods that you woke in time and reach for your weapon.~
+//
+//
+//COPY ~vecna/are/AAR774.ARE~ ~override~         
+//  SAY 0xa5b4 ~The sound of heavy boots wakes you from your rest.~
+//
+//COPY ~vecna/are/AAR775.ARE~ ~override~         
+//  SAY 0xf04 ~Before its decay, this statue was a symbol of beauty and peace.~ 
+//
+//COPY ~vecna/are/AAR775.ARE~ ~override~         
+//  SAY 0xc20 ~This hole appears to open up into a cavern network far below.~ 
+//  SAY 0xce4 ~This hole appears to open up into a cavern network far below.~ 
+//  SAY 0xff4 ~This hole appears to open up into a cavern network far below.~ 
+//
+//
+//COPY ~vecna/are/AAR778.ARE~ ~override~         
+//  SAY 0x757c ~The auction house is now empty and you can see parts of the roof falling in.  It isn't safe to be in here.~ 
+
+  
+  
+//..................... IWD AREAS
+
+//.....................................................................................................NOT WORKING, COMMENTED OUT
+//COPY ~vecna/are/AAR521.ARE~           ~override~         
+//  SAY 0x3350 ~A once beautiful statue made by elven artisans.~ //statue 1 info point
+
+//COPY ~vecna/are/AAR523.ARE~           ~override~         
+//  SAY 0x2d68 ~These stairs look like they were purposely collapsed to prevent entry from the level below.~
+//
+//COPY ~vecna/are/AAR524.ARE~           ~override~         
+//  SAY 0x1984 ~A ruined performing stage.~
+//  SAY 0x1a48 ~A ruined bed in what was once the foreign quarters.~
+//  SAY 0x1b0c ~A ruined bed in what was once the foreign quarters.~
+//  SAY 0x1bd0 ~A ruined bed in what was once the foreign quarters.~
+//  SAY 0x1c94 ~A ruined bed in what was once the foreign quarters.~
+//  SAY 0x1d58 ~A table in what used to be a fest hall.~
+//  SAY 0x1e1c ~A table in what used to be a fest hall.~
+//  SAY 0x1ee0 ~A table in what used to be a fest hall.~
+//  SAY 0x1fa4 ~A table in what used to be a fest hall.~
+//  SAY 0x2068 ~A table in what used to be a fest hall.~
+//  SAY 0x212c ~A table in what used to be a fest hall.~
+//  SAY 0x21f0 ~Table in the destroyed commons.~
+//  SAY 0x22b4 ~Table in the destroyed commons.~
+//  SAY 0x2378 ~Table in the destroyed commons.~
+//  SAY 0x243c ~Table in the destroyed commons.~
+//  SAY 0x2500 ~Table in the destroyed commons.~
+//  SAY 0x25c4 ~Table in the destroyed commons.~
+//  SAY 0x2688 ~Table in the destroyed commons.~
+//  SAY 0x274c ~This lift has been beyond use and repair for many decades.~
+//
+//COPY ~vecna/are/AAR525.ARE~           ~override~         
+//  SAY 0x354 ~These stairs have been collapsed, preventing anyone from entering the rest of this tower.~
+//  SAY 0x418 ~This level seems to have been torn asunder, but parts of it still remain suspended by some sort of magic.~
+//  SAY 0x4dc ~This level seems to have been torn asunder, but parts of it still remain suspended by some sort of magic.~
+//  SAY 0x5a0 ~This level seems to have been torn asunder, but parts of it still remain suspended by some sort of magic.~
+//
+//
+//COPY ~vecna/are/AAR529.ARE~           ~override~         
+//  SAY 0x418 ~This garden has been well taken care of, regardless of its harsh living environment.~
+//  SAY 0x4dc ~This statue once represented an elven god but now stands in ruin and decay.~
+//  SAY 0x5a0 ~This statue once represented an elven god but now stands in ruin and decay.~
+//  SAY 0x664 ~This statue once represented an elven god but now stands in ruin and decay.~
+//  SAY 0x728 ~This statue once represented an elven god but now stands in ruin and decay.~
+//  SAY 0x7ec ~This statue once represented an elven god but now stands in ruin and decay.~
+//
+//COPY ~vecna/are/AAR530.ARE~           ~override~         
+//  SAY 0xfc8 ~This slab was once a beautiful, ornate, stone table.~
+//
+//COPY ~vecna/are/AAR532.ARE~           ~override~         
+//  SAY 0x8a4 ~This bed was used to treat the sick and wounded in this room.~
+//  SAY 0x968 ~This bed was used to treat the sick and wounded in this room.~
+//  
+//COPY ~vecna/are/AAR532.ARE~           ~override~         
+//  SAY 0x1408 ~A map with miniatures simulating a battle in some land.~
+//  SAY 0x14cc ~A map showing sea routes and islands near Evermeet.~
+//
+//COPY ~vecna/are/AAR536.ARE~           ~override~
+//	SAY 0x354 ~A simple stone bench that has withstood decay through time.~
+//	SAY 0x418 ~A simple stone bench that has withstood decay through time.~
+//	SAY 0x4dc ~Before its decay, this statue was a symbol of beauty and peace.~
+//
+//COPY ~vecna/are/AAR538.ARE~           ~override~
+//	SAY 0x11e8 ~The top of these stairs have been barricaded, preventing entrance from this way.~
+//
+
+  
+//  
+//  
+//EXAMPLE music and worlmap installation... from classic adventures
+//PRINT ~Installing new music~
+//MKDIR ~music/B5~
+//MKDIR ~music/B6~
+//MKDIR ~music/Civic~
+//MKDIR ~music/MxKachi~
+//MKDIR ~music/Smol~
+//MKDIR ~music/Tav6~
+//MKDIR ~music/MxPort~
+//MKDIR ~music/MXHaunt~
+//COPY ~Classics051/music/B5~          ~music/B5~
+//COPY ~Classics051/music/B6~          ~music/B6~
+//COPY ~Classics051/music/MxKachi~     ~music/MxKachi~
+//COPY ~Classics051/music/Civic~       ~music/Civic~
+//COPY ~Classics051/music/Smol~        ~music/Smol~
+//COPY ~Classics051/music/Tav6~        ~music/Tav6~
+//COPY ~Classics051/music/MxPort~      ~music/MxPort~
+//COPY ~Classics051/music/MxHaunt~     ~music/MxHaunt~
+//COPY ~Classics051/music/B5.mus~      ~music/B5.mus~
+//COPY ~Classics051/music/B6.mus~      ~music/B6.mus~
+//COPY ~Classics051/music/MxKachi.mus~ ~music/MxKachi.mus~
+//COPY ~Classics051/music/Civic.mus~   ~music/Civic.mus~
+//COPY ~Classics051/music/SMOL.mus~    ~music/SMOL.mus~
+//COPY ~Classics051/music/Tav6.mus~    ~music/Tav6.mus~
+//COPY ~Classics051/music/MxPort.mus~  ~music/MxPort.mus~
+//COPY ~Classics051/music/MxHaunt.mus~ ~music/MxHaunt.mus~
+
+// ADD AREAS TO 2DA FOR WEATHER AND STUFF
+
+
+APPEND ~MASTAREA.2DA~
+~AAR000  value
+AAR002  value
+AAR003  value
+AAR005  value
+AAR006  value
+AAR007  value
+AAR008  value
+AAR009  value
+AAR010  value
+AAR012  value
+AAR013  value
+AAR014  value
+AAR018  value
+AAR028  value
+AAR029  value
+AAR030  value
+AAR031  value
+AAR032  value
+AAR037  value
+AAR039  value
+AAR040  value
+AAR041  value
+AAR042  value
+AAR043  value
+AAR044  value
+AAR045  value
+AAR046  value
+AAR047  value
+AAR048  value
+AAR049  value
+AAR050  value~
+UNLESS ~AR000~
+
+// add new animations refs
+APPEND ~ANIMATE.IDS~
+~0xe240 IC_ANIMATED_PLATE
+0xe241 IC_ANIMATED_PLATE_2
+0xe242 IC_ANIMATED_PLATE_3
+0xe243 NWN_AMEL
+0xe244 NWN_SUCCUBUS
+0xe245 NWN_BEBILITH
+0xe246 NWN_HAMATULA
+0xe247 NWN_OSYLUTH
+0xe248 NWN_PIT_FIEND
+0xe249 NWN_SCARECROW
+0xe24A NWN_VEDRED
+0xe24B IC_ELEMENTAL_EARTH
+0xe24C IC_ELEMENTAL_FIRE
+0xe24D IC_ELEMENTAL_WATER
+0xe24E IC_GIANT_FIRE
+0xe24F IC_GIANT_FROST
+0xe250 IC_GOLEM_IRON
+0xe251 IC_VERBEEG
+0xe252 IC_HARPY
+0xe253 IC_REMORHAZ
+0xe254 IC_TROLL_SCRAG
+0xe255 IC_SEER
+0xe256 IC_BELHIFET
+0xe257 IC_BELHIFET_PRIEST
+0xe25B IC_UMBER_HULK_VODYANOI
+0xe25C IC_DRAGON_WHITE
+0xe25E IC_WIGHT_BARROW
+0xe260 IC_MARILITH
+0xe268 IC2_CHIMERA
+0xe269 IC2_HALFDRAGON_BLACK
+0xe26A IC2_HALFDRAGON_RED
+0xe26B IC2_DARKTREE
+0xe26C IC2_ELEMENTAL_WATER_SMALL
+0xe26D IC2_FEYR_GREATER
+0xe26E IC2_FEYR
+0xe26F IC2_GIANT_FOMORIAN
+0xe274 IC2_HOOK_HORROR
+0xe275 IC2_ISAIR
+0xe276 IC2_LEMURE
+0xe277 IC2_MADAE
+0xe278 IC2_MALARITE
+0xe27C IC2_SHENRICAL
+0xe282 IC2_DRIDER_FEMALE
+0xe283 IC2_DRIDER_MALE
+0xe288 IC2_ABISHAI_WHITE
+0xe28E PST_ANNAH
+0xe28F PST_GIANT_SKELETON_CONSTRUCT
+0xe290 PST_BAURIAUR
+0xe291 PST_TUSCAMPA
+0xe292 PST_FHJULL
+0xe293 PST_ABISHAI_GREEN
+0xe294 PST_ABISHAI_RED
+0xe295 PST_GRONK
+0xe296 PST_GOLEM
+0xe297 PST_SOHMIEN
+0xe298 PST_TRICHA
+0xe299 PST_NUPPERIBO
+0xe29A PST_GRILLIG
+0xe29B PST_SHADOW
+0xe29C PST_GREATER_SHADOW
+0xe29D PST_TRUE_SHADOW
+0xe29E PST_THOKOLA
+0xe29F PST_TROCOPOTACA
+0xe2A0 PST_TRELON
+0xe2A1 PST_TRIAS
+0xe2A2 PST_NIGHT_HAG
+0xe2A3 PST_GENRELETH
+0xe2A4 PST_ABISHAI_WHITE
+0xe2A5 PST_ADVOCATE
+0xe2A6 PST_CURST_GUARD
+0xe2A7 PST_COLLECTOR
+0xe2A8 PST_CORNUGON
+0xe2A9 PST_DABUS
+0xe2AA PST_DHALL
+0xe2AB PST_EBB_CREAKKNESS
+0xe2AC PST_FELL
+0xe2AD PST_FALL_FROM_GRACE
+0xe2AE PST_GODSMAN_GUARD
+0xe2AF PST_HARMONIUM
+0xe2B0 PST_IGNUS
+0xe2B2 PST_LOW_THREAT_CONSTRUCT
+0xe2B3 PST_LADY_OF_PAIN
+0xe2B4 PST_LOTHAR
+0xe2B5 PST_MODRON
+0xe2B6 PST_MERCYKILLER
+0xe2B7 PST_MORTE
+0xe2B8 PST_PHAROD
+0xe2B9 PST_TRIGIT
+0xe2BA PST_TRANSCENDANT_ONE
+0xe2BB PST_HEAD
+0xe2BC PST_LESSER_VARGOUILLE
+0xe2BD PST_WERERAT
+0xe2BE PST_LARVAL_WORM
+0xe2C0 PST_GLABREZU
+0xe2C2 PST_DEIONARRA
+0xe2C3 PST_LEMURE
+0xe2C8 PST_DAKKON
+0xe2CF PST_HIGH_THREAT_CONSTRUCT
+0xe2DC PST_NOMB
+0xe2DE PST_ZOMBIE
+0xe2E3 PST_GITHZERAI
+0xe2E8 PST_VHALIOR
+0xe2E9 PST_COAXMETAL
+0xe2EA AA_ADAMANT_BEETLE
+0xe2EB AA_CYCLOPS
+0xe2ED AA_ICE_GOLEM~
+
+APPEND ~EXTANIM.2DA~
+~57920 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AA00 NONE 0 0 NONE
+57921 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AA01 NONE 0 0 NONE
+57922 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AA02 NONE 0 0 NONE
+57923 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AA03 NONE 0 0 NONE
+57924 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA04 NONE 0 0 NONE
+57925 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA05 NONE 0 0 NONE
+57926 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA06 NONE 0 0 NONE
+57927 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA07 NONE 0 0 NONE
+57928 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA08 NONE 0 0 NONE
+57929 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA09 NONE 0 0 NONE
+57931 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AA0A NONE 0 0 NONE
+57931 0 1 1 0 0 0 29 0 0 NONE NONE NONE 8 4 AA0B NONE 0 0 NONE
+57932 0 1 1 0 0 0 29 0 0 NONE NONE NONE 8 4 AA0C NONE 0 0 NONE
+57933 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 4 AA0D NONE 0 0 NONE
+57934 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AAOE NONE 0 0 NONE
+57935 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA0F NONE 0 0 NONE
+57936 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 4 AA10 NONE 0 0 NONE
+57937 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA11 NONE 0 0 NONE
+57938 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA12 NONE 0 0 NONE
+57939 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA13 NONE 0 0 NONE
+57940 0 1 1 0 0 0 54 0 0 NONE NONE NONE 8 3 AA14 NONE 0 0 NONE
+57941 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA15 NONE 0 0 NONE
+57942 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA16 NONE 0 0 NONE
+57943 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA17 NONE 0 0 NONE
+57947 0 1 1 0 0 0 54 0 0 NONE NONE NONE 8 4 AA18 NONE 0 0 NONE
+57948 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA19 NONE 0 0 NONE
+57950 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 3 AA1A NONE 0 0 NONE
+57952 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA1B NONE 0 0 NONE
+57960 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA1C NONE 0 0 NONE
+57961 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA1D NONE 0 0 NONE
+57962 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA1E NONE 0 0 NONE
+57963 0 1 1 0 0 0 41 0 0 NONE NONE NONE 8 5 AA1F NONE 0 0 NONE
+57964 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 3 AA20 NONE 0 0 NONE
+57965 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA21 NONE 0 0 NONE
+57966 0 1 1 0 0 0 60 0 0 NONE NONE NONE 8 5 AA22 NONE 0 0 NONE
+57967 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA23 NONE 0 0 NONE
+57972 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA24 NONE 0 0 NONE
+57973 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA25 NONE 0 0 NONE
+57974 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA26 NONE 0 0 NONE
+57975 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA27 NONE 0 0 NONE
+57976 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA28 NONE 0 0 NONE
+57980 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA29 NONE 0 0 NONE
+57986 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA2A NONE 0 0 NONE
+57987 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA2B NONE 0 0 NONE
+57992 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA2C NONE 0 0 NONE
+57998 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA2D NONE 0 0 NONE
+57999 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA2E NONE 0 0 NONE
+58000 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA2F NONE 0 0 NONE
+58001 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA30 NONE 0 0 NONE
+58002 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA31 NONE 0 0 NONE
+58003 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA32 NONE 0 0 NONE
+58004 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA33 NONE 0 0 NONE
+58005 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA34 NONE 0 0 NONE
+58006 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA35 NONE 0 0 NONE
+58007 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA36 NONE 0 0 NONE
+58008 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA37 NONE 0 0 NONE
+58009 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA38 NONE 0 0 NONE
+58010 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA39 NONE 0 0 NONE
+58011 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA3A NONE 0 0 NONE
+58012 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA3B NONE 0 0 NONE
+58013 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA3C NONE 0 0 NONE
+58014 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 AA3D NONE 0 0 NONE
+58015 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 AA3E NONE 0 0 NONE
+58016 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA3F NONE 0 0 NONE
+58017 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA40 NONE 0 0 NONE
+58018 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA41 NONE 0 0 NONE
+58019 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA42 NONE 0 0 NONE
+58020 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA43 NONE 0 0 NONE
+58021 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA44 NONE 0 0 NONE
+58022 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA45 NONE 0 0 NONE
+58023 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA46 NONE 0 0 NONE
+58024 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA47 NONE 0 0 NONE
+58025 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA48 NONE 0 0 NONE
+58026 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA49 NONE 0 0 NONE
+58027 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4A NONE 0 0 NONE
+58028 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4B NONE 0 0 NONE
+58029 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4C NONE 0 0 NONE
+58030 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4D NONE 0 0 NONE
+58031 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4E NONE 0 0 NONE
+58032 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA4F NONE 0 0 NONE
+58034 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA50 NONE 0 0 NONE
+58035 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA51 NONE 0 0 NONE
+58036 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA52 NONE 0 0 NONE
+58037 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA53 NONE 0 0 NONE
+58038 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA54 NONE 0 0 NONE
+58039 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA55 NONE 0 0 NONE
+58040 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA56 NONE 0 0 NONE
+58041 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA57 NONE 0 0 NONE
+58042 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA58 NONE 0 0 NONE
+58043 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA59 NONE 0 0 NONE
+58044 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5A NONE 0 0 NONE
+58045 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5B NONE 0 0 NONE
+58046 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5C NONE 0 0 NONE
+58048 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5D NONE 0 0 NONE
+58050 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5E NONE 0 0 NONE
+58051 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA5F NONE 0 0 NONE
+58056 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA60 NONE 0 0 NONE
+58063 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA61 NONE 0 0 NONE
+58076 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA62 NONE 0 0 NONE
+58078 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA63 NONE 0 0 NONE
+58083 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA64 NONE 0 0 NONE
+58088 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA65 NONE 0 0 NONE
+58089 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 AA66 NONE 0 0 NONE
+58090 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA67 NONE 0 0 NONE
+58092 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA69 NONE 0 0 NONE
+58093 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 AA6A NONE 0 0 NONE~
+
+// OLD LISTING, MAINLY FOR REFERENCE
+
+//APPEND ~EXTANIM.2DA~
+//~57920 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 MANI NONE 0 0 NONE
+//57921 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 MAN2 NONE 0 0 NONE
+//57922 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 MAN3 NONE 0 0 NONE
+//57923 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 AMEL NONE 0 0 NONE
+//57924 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 SUCC NONE 0 0 NONE
+//57925 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 BEBL NONE 0 0 NONE
+//57926 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 HAMA NONE 0 0 NONE
+//57927 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 OSYL NONE 0 0 NONE
+//57928 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 PITF NONE 0 0 NONE
+//57929 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 SCAR NONE 0 0 NONE
+//57931 0 1 1 0 0 0 30 0 0 NONE NONE NONE 8 3 VEDR NONE 0 0 NONE
+//57931 0 1 1 0 0 0 29 0 0 NONE NONE NONE 8 4 MELE NONE 0 0 NONE
+//57932 0 1 1 0 0 0 29 0 0 NONE NONE NONE 8 4 MELF NONE 0 0 NONE
+//57933 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 4 MELW NONE 0 0 NONE
+//57934 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MGFI NONE 0 0 NONE
+//57935 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MGFR NONE 0 0 NONE
+//57936 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 4 MGIR NONE 0 0 NONE
+//57937 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 MGVE NONE 0 0 NONE
+//57938 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MHAR NONE 0 0 NONE
+//57939 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 MREM NONE 0 0 NONE
+//57940 0 1 1 0 0 0 54 0 0 NONE NONE NONE 8 3 MSCR NONE 0 0 NONE
+//57941 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MSEE NONE 0 0 NONE
+//57942 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MBE1 NONE 0 0 NONE
+//57943 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MBE2 NONE 0 0 NONE
+//57947 0 1 1 0 0 0 54 0 0 NONE NONE NONE 8 4 MUM2 NONE 0 0 NONE
+//57948 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MWDR NONE 0 0 NONE
+//57950 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 3 MWI4 NONE 0 0 NONE
+//57952 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MARI NONE 0 0 NONE
+//57960 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 MCHI NONE 0 0 NONE
+//57961 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 MDH1 NONE 0 0 NONE
+//57962 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 MDH2 NONE 0 0 NONE
+//57963 0 1 1 0 0 0 41 0 0 NONE NONE NONE 8 5 MDTR NONE 0 0 NONE
+//57964 0 1 1 0 0 0 0 0 0 NONE NONE NONE 8 3 MEW2 NONE 0 0 NONE
+//57965 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MFE2 NONE 0 0 NONE
+//57966 0 1 1 0 0 0 60 0 0 NONE NONE NONE 8 5 MFEY NONE 0 0 NONE
+//57967 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 MGFO NONE 0 0 NONE
+//57972 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 MHOH NONE 0 0 NONE
+//57973 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MISA NONE 0 0 NONE
+//57974 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MLEM NONE 0 0 NONE
+//57975 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MMAD NONE 0 0 NONE
+//57976 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MMAL NONE 0 0 NONE
+//57980 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MSHE NONE 0 0 NONE
+//57986 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 MDRF NONE 0 0 NONE
+//57987 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 10 MDRM NONE 0 0 NONE
+//57992 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MABW NONE 0 0 NONE
+//57998 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 ANNB NONE 0 0 NONE
+//57999 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 ARMB NONE 0 0 NONE
+//58000 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 BAUB NONE 0 0 NONE
+//58001 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 CAMB NONE 0 0 NONE
+//58002 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 FHJB NONE 0 0 NONE
+//58003 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GABB NONE 0 0 NONE
+//58004 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 RABB NONE 0 0 NONE
+//58005 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GRKB NONE 0 0 NONE
+//58006 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GSTB NONE 0 0 NONE
+//58007 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 HRSB NONE 0 0 NONE
+//58008 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 JBRB NONE 0 0 NONE
+//58009 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 NPRB NONE 0 0 NONE
+//58010 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GRIB NONE 0 0 NONE
+//58011 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 SM1B NONE 0 0 NONE
+//58012 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 SM2B NONE 0 0 NONE
+//58013 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 SM3B NONE 0 0 NONE
+//58014 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 4 THKB NONE 0 0 NONE
+//58015 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 5 TRCB NONE 0 0 NONE
+//58016 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 TREB NONE 0 0 NONE
+//58017 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 TRSB NONE 0 0 NONE
+//58018 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 ACAB NONE 0 0 NONE
+//58019 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GARB NONE 0 0 NONE
+//58020 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 ABSB NONE 0 0 NONE
+//58021 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 ADVB NONE 0 0 NONE
+//58022 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 CGDB NONE 0 0 NONE
+//58023 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 COLB NONE 0 0 NONE
+//58024 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 CORB NONE 0 0 NONE
+//58025 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 DABB NONE 0 0 NONE
+//58026 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 DHLB NONE 0 0 NONE
+//58027 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 EBBB NONE 0 0 NONE
+//58028 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 FELB NONE 0 0 NONE
+//58029 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 FFGB NONE 0 0 NONE
+//58030 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GDGB NONE 0 0 NONE
+//58031 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 HARB NONE 0 0 NONE
+//58032 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 IGYB NONE 0 0 NONE
+//58034 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 LKMB NONE 0 0 NONE
+//58035 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 LOPB NONE 0 0 NONE
+//58036 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 LTHB NONE 0 0 NONE
+//58037 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MDRB NONE 0 0 NONE
+//58038 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MKLB NONE 0 0 NONE
+//58039 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 MRTB NONE 0 0 NONE
+//58040 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 PHDB NONE 0 0 NONE
+//58041 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 TGTB NONE 0 0 NONE
+//58042 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 TRZB NONE 0 0 NONE
+//58043 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 UHDB NONE 0 0 NONE
+//58044 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 VGYB NONE 0 0 NONE
+//58045 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 WRMB NONE 0 0 NONE
+//58046 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 WURB NONE 0 0 NONE
+//58048 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 GLAB NONE 0 0 NONE
+//58050 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 DEIB NONE 0 0 NONE
+//58051 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 LEMB NONE 0 0 NONE
+//58056 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 DKKB NONE 0 0 NONE
+//58063 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 HKMB NONE 0 0 NONE
+//58076 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 NOMB NONE 0 0 NONE
+//58078 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 NOZB NONE 0 0 NONE
+//58083 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 SPTB NONE 0 0 NONE
+//58088 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 VHAB NONE 0 0 NONE
+//58089 0 1 1 0 0 0 47 0 0 NONE NONE NONE 8 3 WIZB NONE 0 0 NONE~
+
+APPEND ~EXTSPEED.2DA~
+~57934	8
+57935	8
+57938	15
+57939	9
+57940	8
+57941	1
+57942	8
+57948	8
+57960	13
+57965	9
+57966	9
+57972	9
+57986	9
+57987	9
+58008	15
+58013	7
+58015	7
+58016	9
+58019	7~
+
+
+//teleport spell
+////////////////////
+
+COPY_EXISTING ~AR0302.are~ ~override~
+              ~AR0305.are~ ~override~
+              ~AR0306.are~ ~override~
+              ~AR0412.are~ ~override~
+              ~AR0509.are~ ~override~
+              ~AR1005.are~ ~override~
+              ~AR1010.are~ ~override~
+              ~AR1201.are~ ~override~
+              ~AR1203.are~ ~override~
+              ~AR3003.are~ ~override~
+              ~AR5501.are~ ~override~
+              ~AR5502.are~ ~override~
+  PATCH_IF (SOURCE_SIZE > 0x11b) THEN BEGIN // protects against invalid files
+    READ_ASCII 0x94 "script"
+    PATCH_IF (("" STRING_COMPARE_CASE "%script%" = 0) OR ("None" STRING_COMPARE_CASE "%script%" = 0)) BEGIN
+      WRITE_EVALUATED_ASCII 0x94 ~%SOURCE_RES%~
+    END
+  END
+  BUT_ONLY_IF_IT_CHANGES
+
+EXTEND_TOP ~AR0020.bcs~  ~Vecna/baf/add/AR0020.baf~
+EXTEND_TOP ~AR0202.bcs~  ~Vecna/baf/add/AR0202.baf~
+EXTEND_TOP ~AR0203.bcs~  ~Vecna/baf/add/AR0203.baf~
+EXTEND_TOP ~AR0204.bcs~  ~Vecna/baf/add/AR0204.baf~
+EXTEND_TOP ~AR0205.bcs~  ~Vecna/baf/add/AR0205.baf~
+EXTEND_TOP ~AR0300.bcs~  ~Vecna/baf/add/AR0300.baf~
+EXTEND_TOP ~AR0307.bcs~  ~Vecna/baf/add/AR0307.baf~
+EXTEND_TOP ~AR0308.bcs~  ~Vecna/baf/add/AR0308.baf~
+EXTEND_TOP ~AR0311.bcs~  ~Vecna/baf/add/AR0311.baf~
+EXTEND_TOP ~AR0313.bcs~  ~Vecna/baf/add/AR0313.baf~
+EXTEND_TOP ~AR0328.bcs~  ~Vecna/baf/add/AR0328.baf~
+EXTEND_TOP ~AR0329.bcs~  ~Vecna/baf/add/AR0329.baf~
+EXTEND_TOP ~AR0205.bcs~  ~Vecna/baf/add/AR0205.baf~
+EXTEND_TOP ~AR0334.bcs~  ~Vecna/baf/add/AR0334.baf~
+EXTEND_TOP ~AR0400.bcs~  ~Vecna/baf/add/AR0400.baf~
+EXTEND_TOP ~AR0402.bcs~  ~Vecna/baf/add/AR0402.baf~
+EXTEND_TOP ~AR0404.bcs~  ~Vecna/baf/add/AR0404.baf~
+EXTEND_TOP ~AR0405.bcs~  ~Vecna/baf/add/AR0405.baf~
+EXTEND_TOP ~AR0406.bcs~  ~Vecna/baf/add/AR0406.baf~
+EXTEND_TOP ~AR0410.bcs~  ~Vecna/baf/add/AR0410.baf~
+EXTEND_TOP ~AR0411.bcs~  ~Vecna/baf/add/AR0411.baf~
+EXTEND_TOP ~AR0413.bcs~  ~Vecna/baf/add/AR0413.baf~
+EXTEND_TOP ~AR0500.bcs~  ~Vecna/baf/add/AR0500.baf~
+EXTEND_TOP ~AR0510.bcs~  ~Vecna/baf/add/AR0510.baf~
+EXTEND_TOP ~AR0512.bcs~  ~Vecna/baf/add/AR0512.baf~
+EXTEND_TOP ~AR0607.bcs~  ~Vecna/baf/add/AR0607.baf~
+EXTEND_TOP ~AR0700.bcs~  ~Vecna/baf/add/AR0700.baf~
+EXTEND_TOP ~AR0701.bcs~  ~Vecna/baf/add/AR0701.baf~
+EXTEND_TOP ~AR0702.bcs~  ~Vecna/baf/add/AR0702.baf~
+EXTEND_TOP ~AR0334.bcs~  ~Vecna/baf/add/AR0334.baf~
+EXTEND_TOP ~AR0704.bcs~  ~Vecna/baf/add/AR0704.baf~
+EXTEND_TOP ~AR0705.bcs~  ~Vecna/baf/add/AR0705.baf~
+EXTEND_TOP ~AR0709.bcs~  ~Vecna/baf/add/AR0709.baf~
+EXTEND_TOP ~AR0800.bcs~  ~Vecna/baf/add/AR0800.baf~
+EXTEND_TOP ~AR0801.bcs~  ~Vecna/baf/add/AR0801.baf~
+EXTEND_TOP ~AR0803.bcs~  ~Vecna/baf/add/AR0803.baf~
+EXTEND_TOP ~AR0900.bcs~  ~Vecna/baf/add/AR0900.baf~
+EXTEND_TOP ~AR0901.bcs~  ~Vecna/baf/add/AR0901.baf~
+EXTEND_TOP ~AR0902.bcs~  ~Vecna/baf/add/AR0902.baf~
+EXTEND_TOP ~AR0903.bcs~  ~Vecna/baf/add/AR0903.baf~
+EXTEND_TOP ~AR0904.bcs~  ~Vecna/baf/add/AR0904.baf~
+EXTEND_TOP ~AR1000.bcs~  ~Vecna/baf/add/AR1000.baf~
+EXTEND_TOP ~AR1002.bcs~  ~Vecna/baf/add/AR1002.baf~
+EXTEND_TOP ~AR1003.bcs~  ~Vecna/baf/add/AR1003.baf~
+EXTEND_TOP ~AR1006.bcs~  ~Vecna/baf/add/AR1006.baf~
+EXTEND_TOP ~AR1100.bcs~  ~Vecna/baf/add/AR1100.baf~
+EXTEND_TOP ~AR1102.bcs~  ~Vecna/baf/add/AR1102.baf~
+EXTEND_TOP ~AR1104.bcs~  ~Vecna/baf/add/AR1104.baf~
+EXTEND_TOP ~AR1105.bcs~  ~Vecna/baf/add/AR1105.baf~
+EXTEND_TOP ~AR1200.bcs~  ~Vecna/baf/add/AR1200.baf~
+EXTEND_TOP ~AR1202.bcs~  ~Vecna/baf/add/AR1202.baf~
+EXTEND_TOP ~AR1204.bcs~  ~Vecna/baf/add/AR1204.baf~
+EXTEND_TOP ~AR1300.bcs~  ~Vecna/baf/add/AR1300.baf~
+EXTEND_TOP ~AR1302.bcs~  ~Vecna/baf/add/AR1302.baf~
+EXTEND_TOP ~AR1303.bcs~  ~Vecna/baf/add/AR1303.baf~
+EXTEND_TOP ~AR1401.bcs~  ~Vecna/baf/add/AR1401.baf~
+EXTEND_TOP ~AR1402.bcs~  ~Vecna/baf/add/AR1402.baf~
+EXTEND_TOP ~AR1404.bcs~  ~Vecna/baf/add/AR1404.baf~
+EXTEND_TOP ~AR1600.bcs~  ~Vecna/baf/add/AR1600.baf~
+EXTEND_TOP ~AR1602.bcs~  ~Vecna/baf/add/AR1602.baf~
+EXTEND_TOP ~AR1611.bcs~  ~Vecna/baf/add/AR1611.baf~
+EXTEND_TOP ~AR1700.bcs~  ~Vecna/baf/add/AR1700.baf~
+EXTEND_TOP ~AR1800.bcs~  ~Vecna/baf/add/AR1800.baf~
+EXTEND_TOP ~AR1900.bcs~  ~Vecna/baf/add/AR1900.baf~
+EXTEND_TOP ~AR1901.bcs~  ~Vecna/baf/add/AR1901.baf~
+EXTEND_TOP ~AR2000.bcs~  ~Vecna/baf/add/AR2000.baf~
+EXTEND_TOP ~AR2002.bcs~  ~Vecna/baf/add/AR2002.baf~
+EXTEND_TOP ~AR2007.bcs~  ~Vecna/baf/add/AR2007.baf~
+EXTEND_TOP ~AR2008.bcs~  ~Vecna/baf/add/AR2008.baf~
+EXTEND_TOP ~AR2010.bcs~  ~Vecna/baf/add/AR2010.baf~
+EXTEND_TOP ~AR2100.bcs~  ~Vecna/baf/add/AR2100.baf~
+EXTEND_TOP ~AR2200.bcs~  ~Vecna/baf/add/AR2200.baf~
+EXTEND_TOP ~AR2201.bcs~  ~Vecna/baf/add/AR2201.baf~
+EXTEND_TOP ~AR2202.bcs~  ~Vecna/baf/add/AR2202.baf~
+EXTEND_TOP ~AR2300.bcs~  ~Vecna/baf/add/AR2300.baf~
+EXTEND_TOP ~AR2400.bcs~  ~Vecna/baf/add/AR2400.baf~
+EXTEND_TOP ~AR2402.bcs~  ~Vecna/baf/add/AR2402.baf~
+EXTEND_TOP ~AR2500.bcs~  ~Vecna/baf/add/AR2500.baf~
+EXTEND_TOP ~AR2600.bcs~  ~Vecna/baf/add/AR2600.baf~
+EXTEND_TOP ~AR2800.bcs~  ~Vecna/baf/add/AR2800.baf~
+EXTEND_TOP ~AR2801.bcs~  ~Vecna/baf/add/AR2801.baf~
+EXTEND_TOP ~AR2802.bcs~  ~Vecna/baf/add/AR2802.baf~
+EXTEND_TOP ~AR0609.bcs~  ~Vecna/baf/add/AR0609.baf~
+EXTEND_TOP ~AR0302.bcs~  ~Vecna/baf/add/AR0302.baf~
+EXTEND_TOP ~AR0305.bcs~  ~Vecna/baf/add/AR0305.baf~
+EXTEND_TOP ~AR0306.bcs~  ~Vecna/baf/add/AR0306.baf~
+EXTEND_TOP ~AR0319.bcs~  ~Vecna/baf/add/AR0319.baf~
+EXTEND_TOP ~AR0408.bcs~  ~Vecna/baf/add/AR0408.baf~
+EXTEND_TOP ~AR0412.bcs~  ~Vecna/baf/add/AR0412.baf~
+EXTEND_TOP ~AR0509.bcs~  ~Vecna/baf/add/AR0509.baf~
+EXTEND_TOP ~AR0513.bcs~  ~Vecna/baf/add/AR0513.baf~
+EXTEND_TOP ~AR0703.bcs~  ~Vecna/baf/add/AR0703.baf~
+EXTEND_TOP ~AR0706.bcs~  ~Vecna/baf/add/AR0706.baf~
+EXTEND_TOP ~AR1005.bcs~  ~Vecna/baf/add/AR1005.baf~
+EXTEND_TOP ~AR1010.bcs~  ~Vecna/baf/add/AR1010.baf~
+EXTEND_TOP ~AR1201.bcs~  ~Vecna/baf/add/AR1201.baf~
+EXTEND_TOP ~AR1203.bcs~  ~Vecna/baf/add/AR1203.baf~
+EXTEND_TOP ~AR2101.bcs~  ~Vecna/baf/add/AR2101.baf~
+EXTEND_TOP ~AR3000.bcs~  ~Vecna/baf/add/AR3000.baf~
+EXTEND_TOP ~AR3001.bcs~  ~Vecna/baf/add/AR3001.baf~
+EXTEND_TOP ~AR3015.bcs~  ~Vecna/baf/add/AR3015.baf~
+EXTEND_TOP ~AR3016.bcs~  ~Vecna/baf/add/AR3016.baf~
+EXTEND_TOP ~AR3017.bcs~  ~Vecna/baf/add/AR3017.baf~
+EXTEND_TOP ~AR3019.bcs~  ~Vecna/baf/add/AR3019.baf~
+EXTEND_TOP ~AR3020.bcs~  ~Vecna/baf/add/AR3020.baf~
+EXTEND_TOP ~AR5200.bcs~  ~Vecna/baf/add/AR5200.baf~
+EXTEND_TOP ~AR5201.bcs~  ~Vecna/baf/add/AR5201.baf~
+EXTEND_TOP ~AR5202.bcs~  ~Vecna/baf/add/AR5202.baf~
+EXTEND_TOP ~AR5203.bcs~  ~Vecna/baf/add/AR5203.baf~
+EXTEND_TOP ~AR0204.bcs~  ~Vecna/baf/add/AR0204.baf~
+EXTEND_TOP ~AR5500.bcs~  ~Vecna/baf/add/AR5500.baf~
+EXTEND_TOP ~AR5504.bcs~  ~Vecna/baf/add/AR5504.baf~
+EXTEND_TOP ~AR5509.bcs~  ~Vecna/baf/add/AR5509.baf~
+EXTEND_TOP ~AR6000.bcs~  ~Vecna/baf/add/AR6000.baf~
+EXTEND_TOP ~AR6003.bcs~  ~Vecna/baf/add/AR6003.baf~
+EXTEND_TOP ~AR6004.bcs~  ~Vecna/baf/add/AR6004.baf~
+EXTEND_TOP ~AR6005.bcs~  ~Vecna/baf/add/AR6005.baf~
+EXTEND_TOP ~AR6100.bcs~  ~Vecna/baf/add/AR6100.baf~
+EXTEND_TOP ~AR6101.bcs~  ~Vecna/baf/add/AR6101.baf~
+EXTEND_TOP ~AR6104.bcs~  ~Vecna/baf/add/AR6104.baf~
+EXTEND_TOP ~AR6106.bcs~  ~Vecna/baf/add/AR6106.baf~
+EXTEND_TOP ~AR6108.bcs~  ~Vecna/baf/add/AR6108.baf~
+EXTEND_TOP ~AR6400.bcs~  ~Vecna/baf/add/AR6400.baf~
+EXTEND_TOP ~AR3003.bcs~  ~Vecna/baf/add/AR3003.baf~
+EXTEND_TOP ~AR5204.bcs~  ~Vecna/baf/add/AR5204.baf~
+EXTEND_TOP ~AR5501.bcs~  ~Vecna/baf/add/AR5501.baf~
+EXTEND_TOP ~AR5502.bcs~  ~Vecna/baf/add/AR5502.baf~
+EXTEND_TOP ~AR6300.bcs~  ~Vecna/baf/add/AR6300.baf~
+
+
+
+
+APPEND ~Spell.ids~ ~2730 WIZARD_TELEPORT~ UNLESS ~2730 WIZARD_TELEPORT~
+
+
+
+
+// Add Plot Items and descriptions
+
+//NAME1.. is General name
+//NAME2.. is identified name
+//UNIDENTIFIED_DESC...General Description
+//DESC ..... Identified Description
+
+
+
+// Book, standard model of the planes
+COPY ~vecna/itm/AAITM001.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @57
+  SAY UNIDENTIFIED_DESC @59
+//Book ,we need hastur
+COPY ~vecna/itm/AAITM002.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @60
+  SAY UNIDENTIFIED_DESC @62
+//plot item, helms letter
+COPY ~vecna/itm/AAITM003.ITM~ ~override~
+  SAY NAME1 @9064
+  SAY NAME2 @63
+  SAY UNIDENTIFIED_DESC @65
+//one third of wardstone
+COPY ~vecna/itm/AAITM004.ITM~ ~override~
+  SAY NAME1 @9065
+  SAY NAME2 @94
+  SAY UNIDENTIFIED_DESC @9066
+  SAY DESC @97
+//one third of wardstone
+COPY ~vecna/itm/AAITM005.ITM~ ~override~
+  SAY NAME1 @9065
+  SAY NAME2 @94
+  SAY UNIDENTIFIED_DESC @9066
+  SAY DESC @97
+//one third of wardstone
+COPY ~vecna/itm/AAITM006.ITM~ ~override~
+  SAY NAME1 @9065
+  SAY NAME2 @94
+  SAY UNIDENTIFIED_DESC @9066
+  SAY DESC @97
+//complete wardstone
+COPY ~vecna/itm/AAITM007.ITM~ ~override~
+  SAY NAME1 @9065
+  SAY NAME2 @98
+  SAY UNIDENTIFIED_DESC @9066
+  SAY DESC @101
+  
+  
+  
+//Book, etheral plane
+COPY ~vecna/itm/AAITM008.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @295
+  SAY UNIDENTIFIED_DESC @297
+//Book, inner planes
+COPY ~vecna/itm/AAITM009.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @298
+  SAY UNIDENTIFIED_DESC @300
+//Book, astral plane
+COPY ~vecna/itm/AAITM010.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @301
+  SAY UNIDENTIFIED_DESC @303
+//Book, river styx
+COPY ~vecna/itm/AAITM011.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @304
+  SAY UNIDENTIFIED_DESC @306
+//Book, river oceanous
+COPY ~vecna/itm/AAITM012.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @307
+  SAY UNIDENTIFIED_DESC @309
+//Book, nirvarna
+COPY ~vecna/itm/AAITM013.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @310
+  SAY UNIDENTIFIED_DESC @312
+//Book, twin paradises
+COPY ~vecna/itm/AAITM014.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @313
+  SAY UNIDENTIFIED_DESC @315
+//Book, elysium
+COPY ~vecna/itm/AAITM015.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @316
+  SAY UNIDENTIFIED_DESC @318
+//Book, happy hunting grounds
+COPY ~vecna/itm/AAITM016.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @319
+  SAY UNIDENTIFIED_DESC @321
+//Book, olympus
+COPY ~vecna/itm/AAITM017.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @322
+  SAY UNIDENTIFIED_DESC @324
+//Book, vecna, the standard story
+COPY ~vecna/itm/AAITM018.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @325
+  SAY UNIDENTIFIED_DESC @327
+//Book vecna , true story
+COPY ~vecna/itm/AAITM019.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @328
+  SAY UNIDENTIFIED_DESC @330
+//Hand written note lum, note on the planes
+COPY ~vecna/itm/AAITM020.ITM~ ~override~
+  SAY NAME1 @9067
+  SAY NAME2 @331
+  SAY UNIDENTIFIED_DESC @333
+//Hand written note, gods by cuthbert
+COPY ~vecna/itm/AAITM021.ITM~ ~override~
+  SAY NAME1 @9067
+  SAY NAME2 @334
+  SAY UNIDENTIFIED_DESC @336
+//Book, true story of rhinn and qwill
+COPY ~vecna/itm/AAITM022.ITM~ ~override~
+  SAY NAME1 @9025
+  SAY NAME2 @337
+  SAY UNIDENTIFIED_DESC @339
+// spare, proberbly true story of the creation of the universe
+//COPY ~vecna/itm/AAITM023.ITM~ ~override~
+//  SAY NAME2 @340
+//  SAY NAME1 @341
+//  SAY UNIDENTIFIED_DESC @342
+
+  
+//twisted rune master key
+COPY ~vecna/itm/AAITM024.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @418
+  SAY DESC @418
+// loloth lab complex container key
+COPY ~vecna/itm/AAITM025.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @419
+  SAY DESC @419
+// loloth lab complex container key
+COPY ~vecna/itm/AAITM026.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @420
+  SAY DESC @420
+//part of twisted rune key
+COPY ~vecna/itm/AAITM027.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @421
+  SAY DESC @421
+//part of twisted rune key
+COPY ~vecna/itm/AAITM028.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @422
+  SAY DESC @422
+//complete twisted rune key
+COPY ~vecna/itm/AAITM029.ITM~ ~override~
+  SAY NAME1 @594
+  SAY NAME2 @594
+  SAY UNIDENTIFIED_DESC @595
+  SAY DESC @595
+//door key
+COPY ~vecna/itm/AAITM030.ITM~ ~override~
+  SAY NAME1 @9023
+  SAY NAME2 @9023
+  SAY UNIDENTIFIED_DESC @596
+  SAY DESC @596
+// scroll of emense power
+COPY ~vecna/itm/AAITM031.ITM~ ~override~
+  SAY NAME1 @601 // dseliberate, unique
+  SAY NAME2 @601 
+  SAY UNIDENTIFIED_DESC @602 // dseliberate, unique
+  SAY DESC @602
+
+// Add Treasure Items and descriptions
+//ring of holyness II
+COPY ~vecna/itm/AAITM101.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @110
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @112
+//reign of virtue ring
+COPY ~vecna/itm/AAITM102.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @114
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @115
+//ring of averon
+COPY ~vecna/itm/AAITM103.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @117
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @118
+//******AAITM104, book of the dead, under spells  
+//Long sword, Volcano blade
+COPY ~vecna/itm/AAITM105.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @125
+  SAY UNIDENTIFIED_DESC @127 // deliberate, unidentified desc is unique in this case
+  SAY DESC @128
+//experimental exo-armor
+COPY ~vecna/itm/AAITM106.ITM~ ~override~
+  SAY NAME1 @128 // deliberate, unique
+  SAY NAME2 @129
+  SAY UNIDENTIFIED_DESC @130 // deliberate, unidentified desc is unique in this case
+  SAY DESC @131
+//drow chain +5 , does not decay in sunlight
+COPY ~vecna/itm/AAITM107.ITM~ ~override~
+  SAY NAME1 @9028
+  SAY NAME2 @133
+  SAY UNIDENTIFIED_DESC @9068
+  SAY DESC @135
+//drow full plate +5 , does not decay in sunlight
+COPY ~vecna/itm/AAITM108.ITM~ ~override~
+  SAY NAME1 @9029
+  SAY NAME2 @137
+  SAY UNIDENTIFIED_DESC @9031
+  SAY DESC @139
+//Robe of mysteria
+COPY ~vecna/itm/AAITM109.ITM~ ~override~
+  SAY NAME1 @9030
+  SAY NAME2 @141
+  SAY UNIDENTIFIED_DESC @9004
+  SAY DESC @143
+//tome of true strike
+COPY ~vecna/itm/AAITM110.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @146
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @147
+//tome of magic resistance
+COPY ~vecna/itm/AAITM111.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @148
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @149
+//tome of regeneration
+COPY ~vecna/itm/AAITM112.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @150
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @151
+//tome of resistance .. cold
+COPY ~vecna/itm/AAITM113.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @152
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @153
+//tome of resistance .. fire
+COPY ~vecna/itm/AAITM114.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @154
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @155
+//tome of resistance .. acid
+COPY ~vecna/itm/AAITM115.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @156
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @157
+//tome of resistance .. electricity
+COPY ~vecna/itm/AAITM116.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @158
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @159
+//tome of long life
+COPY ~vecna/itm/AAITM117.ITM~ ~override~
+  SAY NAME1 @9005
+  SAY NAME2 @160
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @161
+// thurdacs full plate,lcarmor.spl missing
+COPY ~vecna/itm/AAITM118.ITM~ ~override~
+  SAY NAME1 @9031
+  SAY NAME2 @165
+  SAY UNIDENTIFIED_DESC @9007
+  SAY DESC @167
+  
+//staff of magus,
+COPY ~vecna/itm/AAITM119.ITM~ ~override~
+  SAY NAME1 @9032
+  SAY NAME2 @169
+  SAY UNIDENTIFIED_DESC @9001
+  SAY DESC @171
+//staff of magus invisible spell creature		
+COPY ~vecna/cre/AAITM119.CRE~ ~override~ 
+	SAY NAME1 @8400
+	SAY NAME2 @8400
+	
+//kulgoraths throwing axe
+COPY ~vecna/itm/AAITM120.ITM~ ~override~
+  SAY NAME1 @9033
+  SAY NAME2 @606
+  SAY UNIDENTIFIED_DESC @9034
+  SAY DESC @608
+//amulate of total freedom
+COPY ~vecna/itm/AAITM121.ITM~ ~override~
+  SAY NAME1 @9035
+  SAY NAME2 @610
+  SAY UNIDENTIFIED_DESC @9013
+  SAY DESC @612
+//arch mage battle robe
+COPY ~vecna/itm/AAITM122.ITM~ ~override~
+  SAY NAME1 @9030
+  SAY NAME2 @614
+  SAY UNIDENTIFIED_DESC @9004
+  SAY DESC @616
+//the giants prize
+COPY ~vecna/itm/AAITM123.ITM~ ~override~
+  SAY NAME1 @9037
+  SAY NAME2 @618
+  SAY UNIDENTIFIED_DESC @9038
+  SAY DESC @620
+  
+//mezicans enchaned abode
+COPY ~vecna/itm/AAITM124.ITM~ ~override~
+  SAY NAME1 @9039
+  SAY NAME2 @622
+  SAY UNIDENTIFIED_DESC @9019
+  SAY DESC @624
+//enchanted abode invisible spell creature	
+COPY ~vecna/cre/AAITM124.CRE~ ~override~ 
+	SAY NAME1 @702
+	SAY NAME2 @702
+	
+//long bow +4 defender
+COPY ~vecna/itm/AAITM125.ITM~ ~override~
+  SAY NAME1 @9040
+  SAY NAME2 @626
+  SAY UNIDENTIFIED_DESC @9041
+  SAY DESC @628
+//gloves of the master thief
+COPY ~vecna/itm/AAITM126.ITM~ ~override~
+  SAY NAME1 @9042
+  SAY NAME2 @630
+  SAY UNIDENTIFIED_DESC @9043
+  SAY DESC @632
+//incadarn elven chain
+COPY ~vecna/itm/AAITM127.ITM~ ~override~
+  SAY NAME1 @9028
+  SAY NAME2 @634
+  SAY UNIDENTIFIED_DESC @9044
+  SAY DESC @636
+//ring of elemental mastery
+COPY ~vecna/itm/AAITM128.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @638
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @640
+//staff of elemental mastery
+COPY ~vecna/itm/AAITM129.ITM~ ~override~
+  SAY NAME1 @9032
+  SAY NAME2 @642
+  SAY UNIDENTIFIED_DESC @9001
+  SAY DESC @644
+//moonblade lomg sword .... NEEDS WORK
+COPY ~vecna/itm/AAITM130.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @646
+  SAY UNIDENTIFIED_DESC @9010
+  SAY DESC @648
+//massive great axe of flame
+COPY ~vecna/itm/AAITM131.ITM~ ~override~
+  SAY NAME1 @9045
+  SAY NAME2 @650
+  SAY UNIDENTIFIED_DESC @9046
+  SAY DESC @652
+//furcito, long sword
+COPY ~vecna/itm/AAITM132.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @654
+  SAY UNIDENTIFIED_DESC @9010
+  SAY DESC @656
+//book of the roses ...... nEEDS WORK
+COPY ~vecna/itm/AAITM133.ITM~ ~override~
+  SAY NAME1 @9026
+  SAY NAME2 @658
+  SAY UNIDENTIFIED_DESC @9006
+  SAY DESC @660
+//long sword, hunger sword
+COPY ~vecna/itm/AAITM134.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @662
+  SAY UNIDENTIFIED_DESC @9021
+  SAY DESC @664
+//zela the ghost sword
+COPY ~vecna/itm/AAITM135.ITM~ ~override~
+  SAY NAME1 @665 // deliberate, unique
+  SAY NAME2 @666
+  SAY UNIDENTIFIED_DESC @667 // deliberate, unique
+  SAY DESC @668
+//leirels storm armor
+COPY ~vecna/itm/AAITM136.ITM~ ~override~
+  SAY NAME1 @9031
+  SAY NAME2 @670
+  SAY UNIDENTIFIED_DESC @9007
+  SAY DESC @672
+//full plate msil+5
+COPY ~vecna/itm/AAITM137.ITM~ ~override~
+  SAY NAME1 @9031
+  SAY NAME2 @674
+  SAY UNIDENTIFIED_DESC @9007
+  SAY DESC @9007
+//vallients rapier
+COPY ~vecna/itm/AAITM138.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @678
+  SAY UNIDENTIFIED_DESC @9021
+  SAY DESC @680
+//helm of thieving
+COPY ~vecna/itm/AAITM139.ITM~ ~override~
+  SAY NAME1 @9047
+  SAY NAME2 @682
+  SAY UNIDENTIFIED_DESC @9048
+  SAY DESC @684
+//green dragon sword long
+COPY ~vecna/itm/AAITM140.ITM~ ~override~
+  SAY NAME1 @9027
+  SAY NAME2 @686
+  SAY UNIDENTIFIED_DESC @9021
+  SAY DESC @688
+  
+  
+  
+  
+ //check bams from here 
+//bastard sword of power
+COPY ~vecna/itm/AAITM141.ITM~ ~override~
+  SAY NAME1 @9049
+  SAY NAME2 @179
+  SAY UNIDENTIFIED_DESC @9008
+  SAY DESC @9008
+//love of black bess , mace
+COPY ~vecna/itm/AAITM142.ITM~ ~override~
+  SAY NAME1 @9050
+  SAY NAME2 @183
+  SAY UNIDENTIFIED_DESC @9003
+  SAY DESC @185
+//diamond arrow
+COPY ~vecna/itm/AAITM143.ITM~ ~override~
+  SAY NAME1 @9051
+  SAY NAME2 @187
+  SAY UNIDENTIFIED_DESC @9052
+  SAY DESC @189
+//blade of good and evil, 2 handed
+COPY ~vecna/itm/AAITM144.ITM~ ~override~
+  SAY NAME1 @9037
+  SAY NAME2 @191
+  SAY UNIDENTIFIED_DESC @9009
+  SAY DESC @193
+//holy symbol of loloth, amulate
+COPY ~vecna/itm/AAITM145.ITM~ ~override~
+  SAY NAME1 @9035
+  SAY NAME2 @195
+  SAY UNIDENTIFIED_DESC @9012
+  SAY DESC @197
+//amulate of the arch wizard
+COPY ~vecna/itm/AAITM146.ITM~ ~override~
+  SAY NAME1 @9035
+  SAY NAME2 @199
+  SAY UNIDENTIFIED_DESC @9013
+  SAY DESC @201
+//staff of the eyes
+COPY ~vecna/itm/AAITM147.ITM~ ~override~
+  SAY NAME1 @9032
+  SAY NAME2 @203
+  SAY UNIDENTIFIED_DESC @9001
+  SAY DESC @205
+//ice neclace of ultin
+COPY ~vecna/itm/AAITM149.ITM~ ~override~
+  SAY NAME1 @9036
+  SAY NAME2 @207
+  SAY UNIDENTIFIED_DESC @9012
+  SAY DESC @209
+//blast scepter
+COPY ~vecna/itm/AAITM148.ITM~ ~override~
+  SAY NAME1 @9052
+  SAY NAME2 @211
+  SAY UNIDENTIFIED_DESC @9014
+  SAY DESC @213
+//armor of the frost
+COPY ~vecna/itm/AAITM152.ITM~ ~override~
+  SAY NAME1 @9031
+  SAY NAME2 @227
+  SAY UNIDENTIFIED_DESC @9007
+  SAY DESC @229
+//katana of power
+COPY ~vecna/itm/AAITM153.ITM~ ~override~
+  SAY NAME1 @9053
+  SAY NAME2 @351
+  SAY UNIDENTIFIED_DESC @9015
+  SAY DESC @353
+//boots of skill
+COPY ~vecna/itm/AAITM154.ITM~ ~override~
+  SAY NAME1 @9054
+  SAY NAME2 @239
+  SAY UNIDENTIFIED_DESC @9016
+  SAY DESC @241
+//armor of darkness +4
+COPY ~vecna/itm/AAITM155.ITM~ ~override~
+  SAY NAME1 @9031
+  SAY NAME2 @243
+  SAY UNIDENTIFIED_DESC @9007
+  SAY DESC @245
+//helm of quickness
+COPY ~vecna/itm/AAITM156.ITM~ ~override~
+  SAY NAME1 @9055
+  SAY NAME2 @247
+  SAY UNIDENTIFIED_DESC @9017
+  SAY DESC @249
+//helm of iron mind
+COPY ~vecna/itm/AAITM157.ITM~ ~override~
+  SAY NAME1 @9047
+  SAY NAME2 @250
+  SAY UNIDENTIFIED_DESC @9017
+  SAY DESC @251
+//halbert , the wind +5
+COPY ~vecna/itm/AAITM158.ITM~ ~override~
+  SAY NAME1 @9056
+  SAY NAME2 @253
+  SAY UNIDENTIFIED_DESC @9018
+  SAY DESC @255
+//leather armor of freedom
+COPY ~vecna/itm/AAITM159.ITM~ ~override~
+  SAY NAME1 @9057
+  SAY NAME2 @355
+  SAY UNIDENTIFIED_DESC @9002
+  SAY DESC @357
+//mace +3 life stealer
+COPY ~vecna/itm/AAITM160.ITM~ ~override~
+  SAY NAME1 @9058
+  SAY NAME2 @257
+  SAY UNIDENTIFIED_DESC @9003
+  SAY DESC @259
+//elixier of life
+COPY ~vecna/itm/AAITM161.ITM~ ~override~
+  SAY NAME1 @9039
+  SAY NAME2 @261
+  SAY UNIDENTIFIED_DESC @9019
+  SAY DESC @263
+//ring of vigor
+COPY ~vecna/itm/AAITM162.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @265
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @267
+// protection robe
+COPY ~vecna/itm/AAITM163.ITM~ ~override~
+  SAY NAME1 @9030
+  SAY NAME2 @269
+  SAY UNIDENTIFIED_DESC @9004
+  SAY DESC @271
+//the marauder of soals, scimitar
+COPY ~vecna/itm/AAITM164.ITM~ ~override~
+  SAY NAME1 @9059
+  SAY NAME2 @359
+  SAY UNIDENTIFIED_DESC @9010
+  SAY DESC @361
+//shivas spear +3
+COPY ~vecna/itm/AAITM165.ITM~ ~override~
+  SAY NAME1 @9060
+  SAY NAME2 @273
+  SAY UNIDENTIFIED_DESC @9011
+  SAY DESC @275
+//the summoner +3. 2 handed sword
+COPY ~vecna/itm/AAITM166.ITM~ ~override~
+  SAY NAME1 @9037
+  SAY NAME2 @363
+  SAY UNIDENTIFIED_DESC @9009
+  SAY DESC @365
+//shorrt sword of cretainty
+COPY ~vecna/itm/AAITM167.ITM~ ~override~
+  SAY NAME1 @9061
+  SAY NAME2 @277
+  SAY UNIDENTIFIED_DESC @9020
+  SAY DESC @279
+//wand of orcus
+COPY ~vecna/itm/AAITM168.ITM~ ~override~
+  SAY NAME1 @373 // deliberate unique
+  SAY NAME2 @374
+  SAY UNIDENTIFIED_DESC @375 // deliberate unique
+  SAY DESC @376
+//ice cristals from itm 149
+COPY ~vecna/itm/AAITM169.ITM~ ~override~
+  SAY NAME1 @700
+  SAY NAME2 @701
+  SAY UNIDENTIFIED_DESC @702
+  SAY DESC @703
+// ring of plane travel
+COPY ~vecna/itm/AAITM170.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @68
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @70
+//ring of recall
+COPY ~vecna/itm/AAITM171.ITM~ ~override~
+  SAY NAME1 @9024
+  SAY NAME2 @103
+  SAY UNIDENTIFIED_DESC @9000
+  SAY DESC @105
+
+//AAITM172....eye of vecna, in spells section under the relevant spells  
+//AAITM173....hand of vecna, in spells section under the relevant spells  
+  
+// Add spells and descriptions
+
+// test spell continer used for testing eff and effects
+COPY ~vecna/spl/AATEST.SPL~ ~override~
+ SAY NAME1 @604
+// test spell scroll
+COPY ~vecna/itm/AATEST.ITM~ ~override~
+  SAY NAME1 @604
+  SAY NAME2 @604
+  SAY DESC @604
+
+ 
+
+
+
+// Add treasure spells, items spell and creatures grouped here for ease of reading
+
+
+// summon blue dragon
+COPY ~vecna/spl/AASPL01.SPL~ ~override~
+      SAY NAME1 @174
+      SAY UNIDENTIFIED_DESC @175
+// summon blue dragon scroll
+COPY ~vecna/itm/AASPL01.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @174
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @175
+//summon blue dragon, trhe dragon summoned
+COPY ~vecna/cre/AASPL01.CRE~ ~override~ 
+	SAY NAME1 @8401
+	SAY NAME2 @8401
+
+	
+//whirlwind of steel
+COPY ~vecna/spl/AASPL02.SPL~ ~override~
+     SAY NAME1 @172
+     SAY UNIDENTIFIED_DESC @173
+//whirlwind of steel scroll
+COPY ~vecna/itm/AASPL02.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @172
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @173
+// whirlwind of steel, summoned vreature
+COPY ~vecna/cre/AASPL02.CRE~ ~override~ 
+	SAY NAME1 @8400
+	SAY NAME2 @8400	 
+	
+
+//karsurs crimson flames ... icon a ( scroll ) needs doing
+COPY ~vecna/spl/AASPL03.SPL~ ~override~
+      SAY NAME1 @176
+      SAY UNIDENTIFIED_DESC @177
+//karsurs crimson flames SCROLL
+COPY ~vecna/itm/AASPL03.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @176
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @177
+
+//life warping
+COPY ~vecna/spl/AASPL04.SPL~ ~override~
+      SAY NAME1 @367
+      SAY UNIDENTIFIED_DESC @368
+//scroll of life warping
+COPY ~vecna/itm/AASPL04.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @367
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @368
+  
+// molecular disjoitment
+COPY ~vecna/spl/AASPL05.SPL~ ~override~
+      SAY NAME1 @369
+      SAY UNIDENTIFIED_DESC @370
+// molecular disjointment scroll
+COPY ~vecna/itm/AASPL05.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @369
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @370
+  
+//teleport spell
+COPY ~vecna/spl/AASPL06.spl~ ~override~
+      SAY NAME1 @691
+      SAY UNIDENTIFIED_DESC @692
+//teleport invisible creature to trigger script and dialog
+COPY ~Vecna/cre/AASPL06.CRE~ ~override~
+      SAY NAME1 @691
+      SAY NAME2 @691
+//teleport spell scroll
+COPY ~Vecna/itm/AASPL06.itm~ ~override~
+	  SAY NAME1 @9022
+      SAY NAME2 @691
+	  SAY UNIDENTIFIED_DESC @9062
+      SAY DESC  @692
+  
+//alzuths rune of utter negativity
+COPY ~vecna/spl/AASPL07.SPL~ ~override~
+      SAY NAME1 @397
+      SAY UNIDENTIFIED_DESC @398
+//alzuths rune of utter negativity scroll	  
+COPY ~Vecna/itm/AASPL07.itm~ ~override~
+	  SAY NAME1 @9022
+      SAY NAME2 @397
+	  SAY UNIDENTIFIED_DESC @9062
+      SAY DESC  @398	  
+	  
+	  
+//requiem of alesium
+COPY ~vecna/spl/AASPL08.SPL~ ~override~
+      SAY NAME1 @399
+      SAY UNIDENTIFIED_DESC @400
+//requiem of alesium scroll	  
+COPY ~Vecna/itm/AASPL08.itm~ ~override~
+	  SAY NAME1 @9022
+      SAY NAME2 @399
+	  SAY UNIDENTIFIED_DESC @9062
+      SAY DESC  @400	
+	  
+// teledras pocket army
+COPY ~vecna/spl/AASPL09.SPL~ ~override~
+      SAY NAME1 @401
+      SAY UNIDENTIFIED_DESC @402
+// teledras pocket army scroll
+COPY ~Vecna/itm/AASPL09.itm~ ~override~
+	  SAY NAME1 @9022
+      SAY NAME2 @401
+	  SAY UNIDENTIFIED_DESC @9062
+      SAY DESC  @402
+//teledras pocket army summoned fighter	type 1
+COPY ~vecna/cre/AASPL09A.cre~ ~override~ 
+	SAY NAME1 @8402
+	SAY NAME2 @8402
+//teledras pocket army summoned fighter	type 2
+COPY ~vecna/cre/AASPL09B.cre~ ~override~ 
+	SAY NAME1 @8402
+	SAY NAME2 @8402
+//teledras pocket army summoned fighter type 3
+COPY ~vecna/cre/AASPL09C.cre~ ~override~ 
+	SAY NAME1 @8402
+	SAY NAME2 @8402
+	
+//summon undead host, innate abbility granted by book of the dead
+COPY ~vecna/spl/AASPL10.SPL~ ~override~
+      SAY NAME1 @123
+      SAY UNIDENTIFIED_DESC @123
+// most powerful of the summoned host of undead, a greater bone golem 
+COPY ~vecna/cre/AASPL10.CRE~ ~override~ 
+	SAY NAME1 @8403
+	SAY NAME2 @8403
+//book of the dead	
+COPY ~vecna/itm/AAITM104.ITM~ ~override~
+  SAY NAME1 @9026
+  SAY NAME2 @120
+  SAY UNIDENTIFIED_DESC @9063
+  SAY DESC @122
+
+//dimension door
+COPY ~vecna/spl/AASPL11.SPL~ ~override~
+      SAY NAME1 @107
+      SAY UNIDENTIFIED_DESC @108
+//dimension door scroll
+COPY ~vecna/itm/AASPL11.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @107
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @108
+  
+// plane shift
+COPY ~vecna/spl/AASPL12.spl~ ~override~
+      SAY NAME1 @1021
+	  SAY DESC @1022
+//plane shift scroll
+COPY ~vecna/itm/AASPL12.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @1021
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @1022
+//plane shift summoned invisible creature
+COPY ~vecna/cre/AASPL12.CRE~ ~override~ 
+	SAY NAME1 @8400
+	SAY NAME2 @8400
+	
+//word of recall	
+// note no scroll, use only from ring of recall at the moment !!!
+COPY ~vecna/spl/AASPL13.spl~ ~override~
+      SAY NAME1 @703
+      SAY UNIDENTIFIED_DESC @704
+//recall invisible creature
+COPY ~vecna/cre/AASPL13.CRE~ ~override~ 
+	SAY NAME1 @8400
+	SAY NAME2 @8400
+
+//astral map
+COPY ~vecna/spl/AASPL14.spl~ ~override~
+      SAY NAME1 @1023
+      SAY UNIDENTIFIED_DESC @1024
+// astral map spell creature
+COPY ~vecna/cre/AASPL14.CRE~ ~override~ 
+	SAY NAME1 @8400
+	SAY NAME2 @8400
+//astral map scroll
+COPY ~vecna/itm/AASPL14.ITM~ ~override~
+  SAY NAME1 @9022
+  SAY NAME2 @1023
+  SAY UNIDENTIFIED_DESC @9062
+  SAY DESC @1024
+  
+//vecna's spellS
+//vecnas eviceration
+COPY ~vecna/spl/AASPL15.SPL~ ~override~
+      SAY NAME1 @436
+      SAY UNIDENTIFIED_DESC @437
+//vecnas eviceration scroll	  
+COPY ~vecna/itm/AASPL15.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @436
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @437
+	  
+//vecnas star portal
+COPY ~vecna/spl/AASPL16.SPL~ ~override~
+      SAY NAME1 @459
+      SAY UNIDENTIFIED_DESC @460
+//vecnas star portal scroll
+COPY ~vecna/itm/AASPL16.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @459
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @460
+	  
+//vecnas Pull Down Sky Rock
+COPY ~vecna/spl/AASPL17.SPL~ ~override~
+      SAY NAME1 @461
+      SAY UNIDENTIFIED_DESC @462	  
+//vecnas Pull Down Sky Rock scroll
+COPY ~vecna/itm/AASPL17.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @461
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @462
+	  
+// vecnas final summons	  
+COPY ~vecna/spl/AASPL18.SPL~ ~override~
+      SAY NAME1 @689
+      SAY UNIDENTIFIED_DESC @690	  
+//final summons scroll
+COPY ~vecna/itm/AASPL18.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @689
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @690
+
+//innate spell abbilities of eye of vecna
+//gaze of rhinn
+COPY ~vecna/spl/AASPL19.SPL~ ~override~
+ SAY NAME1 @1013
+//true sight
+COPY ~vecna/spl/AASPL20.SPL~ ~override~
+ SAY NAME1 @1012
+//farvovyance
+COPY ~vecna/spl/AASPL21.SPL~ ~override~
+ SAY NAME1 @1014
+// eye of vecna
+COPY ~vecna/itm/AAITM172.ITM~ ~override~
+  SAY NAME1 @5 // deliberate, unique
+  SAY NAME2 @6
+  SAY UNIDENTIFIED_DESC @7 // deliberate, unique
+  SAY DESC @8
+
+//innate spell abbilities of hand of vecna
+
+// summon thralls..Elemental
+COPY ~vecna/spl/AASPL22.SPL~ ~override~
+ SAY NAME1 @1015
+// Air elemental prince
+COPY ~vecna/cre/AASPL22A.CRE~ ~override~ 
+	SAY NAME1 @8507
+	SAY NAME2 @8507
+// Earth elemental prince
+COPY ~vecna/cre/AASPL22B.CRE~ ~override~ 
+	SAY NAME1 @8508
+	SAY NAME2 @8508
+// fire elemental prince
+COPY ~vecna/cre/AASPL22C.CRE~ ~override~ 
+	SAY NAME1 @8509
+	SAY NAME2 @8509
+	
+// summon thralls..Demon
+COPY ~vecna/spl/AASPL23.SPL~ ~override~
+ SAY NAME1 @1016
+// fallen planatar
+COPY ~vecna/cre/AASPL23A.CRE~ ~override~ 
+	SAY NAME1 @8500
+	SAY NAME2 @8500
+// Balrog prince
+COPY ~vecna/cre/AASPL23B.CRE~ ~override~ 
+	SAY NAME1 @8501
+	SAY NAME2 @8501
+// Balor Prince
+COPY ~vecna/cre/AASPL23C.CRE~ ~override~ 
+	SAY NAME1 @8502
+	SAY NAME2 @8502
+ 
+// summon thralls .. Undead
+COPY ~vecna/spl/AASPL24.SPL~ ~override~
+ SAY NAME1 @1017
+//vampiric mind flayer
+COPY ~vecna/cre/AASPL24A.CRE~ ~override~ 
+	SAY NAME1 @8510
+	SAY NAME2 @8510
+//fallen deva
+COPY ~vecna/cre/AASPL24B.CRE~ ~override~ 
+	SAY NAME1 @8503
+	SAY NAME2 @8503
+//greater lich
+COPY ~vecna/cre/AASPL24C.CRE~ ~override~ 
+	SAY NAME1 @8504
+	SAY NAME2 @8504
+
+// summon thralls , monsters
+COPY ~vecna/spl/AASPL25.SPL~ ~override~
+ SAY NAME1 @1018
+//tanari prince
+COPY ~vecna/cre/AASPL25A.CRE~ ~override~ 
+	SAY NAME1 @8505
+	SAY NAME2 @8505
+//elder orb
+COPY ~vecna/cre/AASPL25B.CRE~ ~override~ 
+	SAY NAME1 @8506
+	SAY NAME2 @8506
+//Diamond golem
+COPY ~vecna/cre/AASPL25C.CRE~ ~override~ 
+	SAY NAME1 @8511
+	SAY NAME2 @8511
+ 
+//teleport near
+COPY ~vecna/spl/AASPL26.SPL~ ~override~
+ SAY NAME1 @1019
+ 
+// teleport far
+COPY ~vecna/spl/AASPL27.SPL~ ~override~
+ SAY NAME1 @1020
+ 
+//hand of vecna
+COPY ~vecna/itm/AAITM173.ITM~ ~override~
+  SAY NAME1 @1 // deliberate, unique
+  SAY NAME2 @2
+  SAY UNIDENTIFIED_DESC @3 // deliberate, unique
+  SAY DESC @4
+  
+  
+  
+// classic adventures SPWI821.SPL
+//Soul of Kalan-Zhar
+COPY ~vecna/spl/AASPL28.SPL~ ~override~
+  SAY NAME1 @727 
+  SAY UNIDENTIFIED_DESC @728
+//Soul of Kalan-Zhar scroll
+COPY ~vecna/itm/AASPL28.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @727
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @728
+
+// classic adventures SPWI824.SPL
+//Mind Blank
+COPY ~vecna/spl/AASPL29.SPL~ ~override~    
+  SAY NAME1 @729
+  SAY UNIDENTIFIED_DESC @730
+//Mind Blank scroll
+COPY ~vecna/itm/AASPL29.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @729
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @730
+	  
+// classic adventures SPWI829.SPL
+//Infernal Combustion Enigma
+COPY ~vecna/spl/AASPL30.SPL~ ~override~    
+  SAY NAME1 @731 
+  SAY UNIDENTIFIED_DESC @732
+//Infernal Combustion Enigma, scroll
+COPY ~vecna/itm/AASPL30.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @731
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @732
+  
+// classic adventures SPWI832
+//Thunder Bolt
+COPY ~vecna/spl/AASPL31.SPL~ ~override~     
+  SAY NAME1 @733 
+  SAY UNIDENTIFIED_DESC @734
+//Thunder bolt scroll
+COPY ~vecna/itm/AASPL31.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @733
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @734
+  
+// classic adventures SPWI901
+//Arc of Death
+COPY ~vecna/spl/AASPL32.SPL~ ~override~  
+  SAY NAME1 @735 
+  SAY UNIDENTIFIED_DESC @736
+//Arc of death. scroll
+COPY ~vecna/itm/AASPL32.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @735
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @736
+
+// classic adventures SPWI974
+//Arcane Runes
+COPY ~vecna/spl/AASPL33.SPL~ ~override~       
+  SAY NAME1 @737
+  SAY UNIDENTIFIED_DESC @738
+  SAY 0x27e @739
+  SAY 0x2ae @740
+  SAY 0x2de @741
+  SAY 0x30e @742
+  SAY 0x33e @743
+  SAY 0x36e @744
+  SAY 0x39e @745
+  SAY 0x3ce @746
+  SAY 0x3fe @747
+  SAY 0x42e @748
+//Arc of death. scroll
+COPY ~vecna/itm/AASPL33.ITM~ ~override~
+      SAY NAME1 @9022
+      SAY NAME2 @737
+      SAY UNIDENTIFIED_DESC @9062
+      SAY DESC @738
+
+
+ACTION_IF NOT FILE_EXISTS ~override/AAPHNIX.spl~
+THEN BEGIN
+COPY ~vecna/spl/AAPHNIX.spl~ ~override~
+      SAY NAME1 @603
+      SAY UNIDENTIFIED_DESC @603
+END
+
+
+
+
+
+
+// Add Encounter creatures and names
+
+	
+// beholders
+
+COPY ~vecna/cre/AACREb00.CRE~ ~override~ 
+	SAY NAME1 @8000
+	SAY NAME2 @8000
+
+COPY ~vecna/cre/AACREb01.CRE~ ~override~ 
+	SAY NAME1 @8001
+	SAY NAME2 @8001
+
+COPY ~vecna/cre/AACREb02.CRE~ ~override~ 
+	SAY NAME1 @8002
+	SAY NAME2 @8002
+	
+COPY ~vecna/cre/AACREb03.CRE~ ~override~ 
+	SAY NAME1 @8003
+	SAY NAME2 @8003
+
+COPY ~vecna/cre/AACREb04.CRE~ ~override~ 
+	SAY NAME1 @8004
+	SAY NAME2 @8004
+
+COPY ~vecna/cre/AACREb05.CRE~ ~override~ 
+	SAY NAME1 @8005
+	SAY NAME2 @8005
+
+COPY ~vecna/cre/AACREb06.CRE~ ~override~ 
+	SAY NAME1 @8006
+	SAY NAME2 @8006
+
+COPY ~vecna/cre/AACREb07.CRE~ ~override~ 
+	SAY NAME1 @8007
+	SAY NAME2 @8007
+	
+COPY ~vecna/cre/AACREb08.CRE~ ~override~ 
+	SAY NAME1 @8008
+	SAY NAME2 @8008
+
+COPY ~vecna/cre/AACREb09.CRE~ ~override~ 
+	SAY NAME1 @8009
+	SAY NAME2 @8009
+
+
+
+// clerics	
+	
+COPY ~vecna/cre/AACREcl0.CRE~ ~override~ 
+	SAY NAME1 @8020
+	SAY NAME2 @8020
+
+COPY ~vecna/cre/AACREcl1.CRE~ ~override~ 
+	SAY NAME1 @8021
+	SAY NAME2 @8021
+
+COPY ~vecna/cre/AACREcl2.CRE~ ~override~ 
+	SAY NAME1 @8022
+	SAY NAME2 @8022
+
+COPY ~vecna/cre/AACREcl3.CRE~ ~override~ 
+	SAY NAME1 @8023
+	SAY NAME2 @8023
+
+	
+	
+// dragons	
+	
+COPY ~vecna/cre/AACREd00.CRE~ ~override~ 
+	SAY NAME1 @8030
+	SAY NAME2 @8030
+
+COPY ~vecna/cre/AACREd01.CRE~ ~override~ 
+	SAY NAME1 @8031
+	SAY NAME2 @8031
+
+COPY ~vecna/cre/AACREd02.CRE~ ~override~ 
+	SAY NAME1 @8032
+	SAY NAME2 @8032
+
+COPY ~vecna/cre/AACREd03.CRE~ ~override~ 
+	SAY NAME1 @8033
+	SAY NAME2 @8033
+
+COPY ~vecna/cre/AACREd04.CRE~ ~override~ 
+	SAY NAME1 @8034
+	SAY NAME2 @8034
+
+COPY ~vecna/cre/AACREd05.CRE~ ~override~ 
+	SAY NAME1 @8035
+	SAY NAME2 @8035
+
+COPY ~vecna/cre/AACREd06.CRE~ ~override~ 
+	SAY NAME1 @8036
+	SAY NAME2 @8036
+
+COPY ~vecna/cre/AACREd07.CRE~ ~override~ 
+	SAY NAME1 @8037
+	SAY NAME2 @8037
+
+COPY ~vecna/cre/AACREd08.CRE~ ~override~ 
+	SAY NAME1 @8038
+	SAY NAME2 @8038
+
+COPY ~vecna/cre/AACREd09.CRE~ ~override~ 
+	SAY NAME1 @8039
+	SAY NAME2 @8039
+
+COPY ~vecna/cre/AACREd10.CRE~ ~override~ 
+	SAY NAME1 @8040
+	SAY NAME2 @8040
+
+COPY ~vecna/cre/AACREd11.CRE~ ~override~ 
+	SAY NAME1 @8041
+	SAY NAME2 @8041
+
+COPY ~vecna/cre/AACREd12.CRE~ ~override~ 
+	SAY NAME1 @8042
+	SAY NAME2 @8042
+
+COPY ~vecna/cre/AACREd13.CRE~ ~override~ 
+	SAY NAME1 @8043
+	SAY NAME2 @8043
+
+COPY ~vecna/cre/AACREd14.CRE~ ~override~ 
+	SAY NAME1 @8044
+	SAY NAME2 @8044
+
+COPY ~vecna/cre/AACREd15.CRE~ ~override~ 
+	SAY NAME1 @8045
+	SAY NAME2 @8045
+
+COPY ~vecna/cre/AACREd16.CRE~ ~override~ 
+	SAY NAME1 @8046
+	SAY NAME2 @8046
+
+COPY ~vecna/cre/AACREd17.CRE~ ~override~ 
+	SAY NAME1 @8047
+	SAY NAME2 @8047
+
+COPY ~vecna/cre/AACREd18.CRE~ ~override~ 
+	SAY NAME1 @8048
+	SAY NAME2 @8048
+
+COPY ~vecna/cre/AACREd19.CRE~ ~override~ 
+	SAY NAME1 @8049
+	SAY NAME2 @8049
+
+COPY ~vecna/cre/AACREd20.CRE~ ~override~ 
+	SAY NAME1 @8050
+	SAY NAME2 @8050
+
+COPY ~vecna/cre/AACREd21.CRE~ ~override~ 
+	SAY NAME1 @8051
+	SAY NAME2 @8051
+
+COPY ~vecna/cre/AACREd22.CRE~ ~override~ 
+	SAY NAME1 @8052
+	SAY NAME2 @8052
+	
+// elementals	
+	
+COPY ~vecna/cre/AACREel0.CRE~ ~override~ 
+	SAY NAME1 @8060
+	SAY NAME2 @8060
+
+COPY ~vecna/cre/AACREel1.CRE~ ~override~ 
+	SAY NAME1 @8061
+	SAY NAME2 @8061
+
+COPY ~vecna/cre/AACREel2.CRE~ ~override~ 
+	SAY NAME1 @8062
+	SAY NAME2 @8062
+	
+COPY ~vecna/cre/AACREel3.CRE~ ~override~ 
+	SAY NAME1 @8063
+	SAY NAME2 @8063
+
+	
+// fighters	
+	
+COPY ~vecna/cre/AACREf00.CRE~ ~override~ 
+	SAY NAME1 @8070
+	SAY NAME2 @8070
+
+COPY ~vecna/cre/AACREf01.CRE~ ~override~ 
+	SAY NAME1 @8071
+	SAY NAME2 @8071
+
+COPY ~vecna/cre/AACREf02.CRE~ ~override~ 
+	SAY NAME1 @8072
+	SAY NAME2 @8072
+
+COPY ~vecna/cre/AACREf03.CRE~ ~override~ 
+	SAY NAME1 @8073
+	SAY NAME2 @8073
+
+COPY ~vecna/cre/AACREf04.CRE~ ~override~ 
+	SAY NAME1 @8074
+	SAY NAME2 @8074
+
+COPY ~vecna/cre/AACREf05.CRE~ ~override~ 
+	SAY NAME1 @8075
+	SAY NAME2 @8075
+
+COPY ~vecna/cre/AACREf06.CRE~ ~override~ 
+	SAY NAME1 @8076
+	SAY NAME2 @8076
+
+	
+// fighter mages
+COPY ~vecna/cre/AACREfm0.CRE~ ~override~ 
+	SAY NAME1 @8090
+	SAY NAME2 @8090
+
+COPY ~vecna/cre/AACREfm1.CRE~ ~override~ 
+	SAY NAME1 @8091
+	SAY NAME2 @8091
+
+	
+// golems
+
+COPY ~vecna/cre/AACREg00.CRE~ ~override~ 
+	SAY NAME1 @8100
+	SAY NAME2 @8100
+
+COPY ~vecna/cre/AACREg01.CRE~ ~override~ 
+	SAY NAME1 @8101
+	SAY NAME2 @8101
+
+COPY ~vecna/cre/AACREg02.CRE~ ~override~ 
+	SAY NAME1 @8102
+	SAY NAME2 @8102
+
+COPY ~vecna/cre/AACREg03.CRE~ ~override~ 
+	SAY NAME1 @8103
+	SAY NAME2 @8103
+
+COPY ~vecna/cre/AACREg04.CRE~ ~override~ 
+	SAY NAME1 @8104
+	SAY NAME2 @8104
+
+COPY ~vecna/cre/AACREg05.CRE~ ~override~ 
+	SAY NAME1 @8105
+	SAY NAME2 @8105
+
+COPY ~vecna/cre/AACREg06.CRE~ ~override~ 
+	SAY NAME1 @8106
+	SAY NAME2 @8106
+
+COPY ~vecna/cre/AACREg07.CRE~ ~override~ 
+	SAY NAME1 @8107
+	SAY NAME2 @8107
+
+COPY ~vecna/cre/AACREg08.CRE~ ~override~ 
+	SAY NAME1 @8108
+	SAY NAME2 @8108
+
+COPY ~vecna/cre/AACREg09.CRE~ ~override~ 
+	SAY NAME1 @8109
+	SAY NAME2 @8109
+
+COPY ~vecna/cre/AACREg10.CRE~ ~override~ 
+	SAY NAME1 @8110
+	SAY NAME2 @8110
+	
+COPY ~vecna/cre/AACREg11.CRE~ ~override~ 
+	SAY NAME1 @8111
+	SAY NAME2 @8111
+	
+COPY ~vecna/cre/AACREg12.CRE~ ~override~ 
+	SAY NAME1 @8112
+	SAY NAME2 @8112
+	
+COPY ~vecna/cre/AACREg13.CRE~ ~override~ 
+	SAY NAME1 @8113
+	SAY NAME2 @8113
+	
+COPY ~vecna/cre/AACREg14.CRE~ ~override~ 
+	SAY NAME1 @8114
+	SAY NAME2 @8114
+	
+COPY ~vecna/cre/AACREg15.CRE~ ~override~ 
+	SAY NAME1 @8115
+	SAY NAME2 @8115
+	
+
+// liches
+
+COPY ~vecna/cre/AACREl00.CRE~ ~override~ 
+	SAY NAME1 @8120
+	SAY NAME2 @8120
+
+COPY ~vecna/cre/AACREl01.CRE~ ~override~ 
+	SAY NAME1 @8121
+	SAY NAME2 @8121
+
+COPY ~vecna/cre/AACREl02.CRE~ ~override~ 
+	SAY NAME1 @8122
+	SAY NAME2 @8122
+
+COPY ~vecna/cre/AACREl03.CRE~ ~override~ 
+	SAY NAME1 @8123
+	SAY NAME2 @8123
+
+COPY ~vecna/cre/AACREl04.CRE~ ~override~ 
+	SAY NAME1 @8124
+	SAY NAME2 @8124
+
+COPY ~vecna/cre/AACREl05.CRE~ ~override~ 
+	SAY NAME1 @8125
+	SAY NAME2 @8125
+
+COPY ~vecna/cre/AACREl06.CRE~ ~override~ 
+	SAY NAME1 @8126
+	SAY NAME2 @8126
+
+COPY ~vecna/cre/AACREl07.CRE~ ~override~ 
+	SAY NAME1 @8127
+	SAY NAME2 @8127
+
+COPY ~vecna/cre/AACREl08.CRE~ ~override~ 
+	SAY NAME1 @8128
+	SAY NAME2 @8128
+
+COPY ~vecna/cre/AACREl09.CRE~ ~override~ 
+	SAY NAME1 @8129
+	SAY NAME2 @8129
+
+COPY ~vecna/cre/AACREl10.CRE~ ~override~ 
+	SAY NAME1 @8130
+	SAY NAME2 @8130
+
+COPY ~vecna/cre/AACREl11.CRE~ ~override~ 
+	SAY NAME1 @8131
+	SAY NAME2 @8131
+
+COPY ~vecna/cre/AACREl12.CRE~ ~override~ 
+	SAY NAME1 @8132
+	SAY NAME2 @8132
+	
+// illithids, mind flayers
+
+
+COPY ~vecna/cre/AACREil0.CRE~ ~override~ 
+	SAY NAME1 @8140
+	SAY NAME2 @8140
+	
+COPY ~vecna/cre/AACREil1.CRE~ ~override~ 
+	SAY NAME1 @8141
+	SAY NAME2 @8141
+
+COPY ~vecna/cre/AACREil2.CRE~ ~override~ 
+	SAY NAME1 @8142
+	SAY NAME2 @8142
+
+COPY ~vecna/cre/AACREil3.CRE~ ~override~ 
+	SAY NAME1 @8143
+	SAY NAME2 @8143
+
+COPY ~vecna/cre/AACREil4.CRE~ ~override~ 
+	SAY NAME1 @8144
+	SAY NAME2 @8144
+
+// magic users	
+
+COPY ~vecna/cre/AACREm00.CRE~ ~override~ 
+	SAY NAME1 @8150
+	SAY NAME2 @8150
+
+COPY ~vecna/cre/AACREm01.CRE~ ~override~ 
+	SAY NAME1 @8151
+	SAY NAME2 @8152
+	
+COPY ~vecna/cre/AACREm02.CRE~ ~override~ 
+	SAY NAME1 @8152
+	SAY NAME2 @8152
+
+COPY ~vecna/cre/AACREm03.CRE~ ~override~ 
+	SAY NAME1 @8153
+	SAY NAME2 @8153
+	
+COPY ~vecna/cre/AACREm04.CRE~ ~override~ 
+	SAY NAME1 @8154
+	SAY NAME2 @8154
+	
+COPY ~vecna/cre/AACREm05.CRE~ ~override~ 
+	SAY NAME1 @8155
+	SAY NAME2 @8155
+	
+COPY ~vecna/cre/AACREm06.CRE~ ~override~ 
+	SAY NAME1 @8156
+	SAY NAME2 @8156
+	
+COPY ~vecna/cre/AACREm07.CRE~ ~override~ 
+	SAY NAME1 @8157
+	SAY NAME2 @8157
+	
+COPY ~vecna/cre/AACREm08.CRE~ ~override~ 
+	SAY NAME1 @8158
+	SAY NAME2 @8158
+	
+COPY ~vecna/cre/AACREm09.CRE~ ~override~ 
+	SAY NAME1 @8159
+	SAY NAME2 @8159
+	
+COPY ~vecna/cre/AACREm10.CRE~ ~override~ 
+	SAY NAME1 @8160
+	SAY NAME2 @8160
+	
+COPY ~vecna/cre/AACREm11.CRE~ ~override~ 
+	SAY NAME1 @8161
+	SAY NAME2 @8161
+	
+COPY ~vecna/cre/AACREm12.CRE~ ~override~ 
+	SAY NAME1 @8162
+	SAY NAME2 @8162
+	
+COPY ~vecna/cre/AACREm13.CRE~ ~override~ 
+	SAY NAME1 @8163
+	SAY NAME2 @8163
+	
+COPY ~vecna/cre/AACREm14.CRE~ ~override~ 
+	SAY NAME1 @8164
+	SAY NAME2 @8164
+	
+COPY ~vecna/cre/AACREm15.CRE~ ~override~ 
+	SAY NAME1 @8165
+	SAY NAME2 @8165
+	
+COPY ~vecna/cre/AACREm16.CRE~ ~override~ 
+	SAY NAME1 @8166
+	SAY NAME2 @8166
+		
+COPY ~vecna/cre/AACREm17.CRE~ ~override~ 
+	SAY NAME1 @8167
+	SAY NAME2 @8167
+
+
+	
+// solars and planatars
+	
+	
+COPY ~vecna/cre/AACREp00.CRE~ ~override~ 
+	SAY NAME1 @8170
+	SAY NAME2 @8170
+
+COPY ~vecna/cre/AACREp01.CRE~ ~override~ 
+	SAY NAME1 @8171
+	SAY NAME2 @8171
+	
+COPY ~vecna/cre/AACREp02.CRE~ ~override~ 
+	SAY NAME1 @8172
+	SAY NAME2 @8172
+	
+COPY ~vecna/cre/AACREp03.CRE~ ~override~ 
+	SAY NAME1 @8173
+	SAY NAME2 @8173
+
+	
+// Singular actors
+
+COPY ~vecna/cre/AACREs00.CRE~ ~override~ 
+	SAY NAME1 @8290
+	SAY NAME2 @8290
+
+COPY ~vecna/cre/AACREs01.CRE~ ~override~ 
+	SAY NAME1 @8291
+	SAY NAME2 @8291
+
+COPY ~vecna/cre/AACREs02.CRE~ ~override~ 
+	SAY NAME1 @8292
+	SAY NAME2 @8292
+
+COPY ~vecna/cre/AACREs03.CRE~ ~override~ 
+	SAY NAME1 @8293
+	SAY NAME2 @8293
+
+COPY ~vecna/cre/AACREs04.CRE~ ~override~ 
+	SAY NAME1 @8294
+	SAY NAME2 @8294
+
+COPY ~vecna/cre/AACREs05.CRE~ ~override~ 
+	SAY NAME1 @8295
+	SAY NAME2 @8295
+
+COPY ~vecna/cre/AACREs06.CRE~ ~override~ 
+	SAY NAME1 @8296
+	SAY NAME2 @8296
+
+COPY ~vecna/cre/AACREs07.CRE~ ~override~ 
+	SAY NAME1 @8297
+	SAY NAME2 @8297
+
+COPY ~vecna/cre/AACREs08.CRE~ ~override~ 
+	SAY NAME1 @8298
+	SAY NAME2 @8298
+
+COPY ~vecna/cre/AACREs09.CRE~ ~override~ 
+	SAY NAME1 @8299
+	SAY NAME2 @8299
+
+COPY ~vecna/cre/AACREs10.CRE~ ~override~ 
+	SAY NAME1 @8230
+	SAY NAME2 @8230
+
+COPY ~vecna/cre/AACREs11.CRE~ ~override~ 
+	SAY NAME1 @8231
+	SAY NAME2 @8231
+
+COPY ~vecna/cre/AACREs12.CRE~ ~override~ 
+	SAY NAME1 @8232
+	SAY NAME2 @8232
+
+COPY ~vecna/cre/AACREs13.CRE~ ~override~ 
+	SAY NAME1 @8233
+	SAY NAME2 @8233
+
+COPY ~vecna/cre/AACREs14.CRE~ ~override~ 
+	SAY NAME1 @8234
+	SAY NAME2 @8234
+
+COPY ~vecna/cre/AACREs15.CRE~ ~override~ 
+	SAY NAME1 @8235
+	SAY NAME2 @8235
+
+COPY ~vecna/cre/AACREs16.CRE~ ~override~ 
+	SAY NAME1 @8236
+	SAY NAME2 @8236
+
+COPY ~vecna/cre/AACREs17.CRE~ ~override~ 
+	SAY NAME1 @8237
+	SAY NAME2 @8237
+
+COPY ~vecna/cre/AACREs18.CRE~ ~override~ 
+	SAY NAME1 @8238
+	SAY NAME2 @8238
+
+COPY ~vecna/cre/AACREs19.CRE~ ~override~ 
+	SAY NAME1 @8239
+	SAY NAME2 @8239
+
+COPY ~vecna/cre/AACREs30.CRE~ ~override~ 
+	SAY NAME1 @8240
+	SAY NAME2 @8240
+
+COPY ~vecna/cre/AACREs31.CRE~ ~override~ 
+	SAY NAME1 @8241
+	SAY NAME2 @8241
+
+COPY ~vecna/cre/AACREs32.CRE~ ~override~ 
+	SAY NAME1 @8242
+	SAY NAME2 @8242
+
+COPY ~vecna/cre/AACREs33.CRE~ ~override~ 
+	SAY NAME1 @8243
+	SAY NAME2 @8243
+
+COPY ~vecna/cre/AACREs34.CRE~ ~override~ 
+	SAY NAME1 @8244
+	SAY NAME2 @8244
+
+
+
+
+// theves and assasins
+
+COPY ~vecna/cre/AACREth0.CRE~ ~override~ 
+	SAY NAME1 @8200
+	SAY NAME2 @8200
+	
+COPY ~vecna/cre/AACREth1.CRE~ ~override~ 
+	SAY NAME1 @8201
+	SAY NAME2 @8201
+
+	
+// deamons and devils
+	
+COPY ~vecna/cre/AACREz00.CRE~ ~override~ 
+	SAY NAME1 @8210
+	SAY NAME2 @8210
+		
+COPY ~vecna/cre/AACREz01.CRE~ ~override~ 
+	SAY NAME1 @8211
+	SAY NAME2 @8211
+	
+COPY ~vecna/cre/AACREz02.CRE~ ~override~ 
+	SAY NAME1 @8212
+	SAY NAME2 @8212
+	
+COPY ~vecna/cre/AACREz03.CRE~ ~override~ 
+	SAY NAME1 @8213
+	SAY NAME2 @8213
+	
+COPY ~vecna/cre/AACREz04.CRE~ ~override~ 
+	SAY NAME1 @8214
+	SAY NAME2 @8214
+	
+COPY ~vecna/cre/AACREz05.CRE~ ~override~ 
+	SAY NAME1 @8215
+	SAY NAME2 @8215
+	
+COPY ~vecna/cre/AACREz06.CRE~ ~override~ 
+	SAY NAME1 @8216
+	SAY NAME2 @8216
+	
+COPY ~vecna/cre/AACREz07.CRE~ ~override~ 
+	SAY NAME1 @8217
+	SAY NAME2 @8217
+	
+COPY ~vecna/cre/AACREz08.CRE~ ~override~ 
+	SAY NAME1 @8218
+	SAY NAME2 @8218
+	
+COPY ~vecna/cre/AACREz09.CRE~ ~override~ 
+	SAY NAME1 @8219
+	SAY NAME2 @8219
+	
+COPY ~vecna/cre/AACREz10.CRE~ ~override~ 
+	SAY NAME1 @8220
+	SAY NAME2 @8220
+	
+COPY ~vecna/cre/AACREz11.CRE~ ~override~ 
+	SAY NAME1 @8221
+	SAY NAME2 @8221
+	
+COPY ~vecna/cre/AACREz12.CRE~ ~override~ 
+	SAY NAME1 @8222
+	SAY NAME2 @8222
+	
+COPY ~vecna/cre/AACREz13.CRE~ ~override~ 
+	SAY NAME1 @8223
+	SAY NAME2 @8223
+	
+COPY ~vecna/cre/AACREz14.CRE~ ~override~ 
+	SAY NAME1 @8224
+	SAY NAME2 @8224
+	
+COPY ~vecna/cre/AACREz15.CRE~ ~override~ 
+	SAY NAME1 @8225
+	SAY NAME2 @8225
+	
+COPY ~vecna/cre/AACREz16.CRE~ ~override~ 
+	SAY NAME1 @8226
+	SAY NAME2 @8226
+	
+COPY ~vecna/cre/AACREz17.CRE~ ~override~ 
+	SAY NAME1 @8227
+	SAY NAME2 @8227
+	
+COPY ~vecna/cre/AACREz18.CRE~ ~override~ 
+	SAY NAME1 @8228
+	SAY NAME2 @8228
+	
+COPY ~vecna/cre/AACREz19.CRE~ ~override~ 
+	SAY NAME1 @8229
+	SAY NAME2 @8229
+	
+COPY ~vecna/cre/AACREz20.CRE~ ~override~ 
+	SAY NAME1 @8230
+	SAY NAME2 @8230
+	
+COPY ~vecna/cre/AACREz21.CRE~ ~override~ 
+	SAY NAME1 @8231
+	SAY NAME2 @8231
+	
+COPY ~vecna/cre/AACREz22.CRE~ ~override~ 
+	SAY NAME1 @8232
+	SAY NAME2 @8232
+	
+COPY ~vecna/cre/AACREz23.CRE~ ~override~ 
+	SAY NAME1 @8233
+	SAY NAME2 @8233
+	
+COPY ~vecna/cre/AACREz24.CRE~ ~override~ 
+	SAY NAME1 @8234
+	SAY NAME2 @8234
+	
+COPY ~vecna/cre/AACREz25.CRE~ ~override~ 
+	SAY NAME1 @8235
+	SAY NAME2 @8235
+	
+COPY ~vecna/cre/AACREz26.CRE~ ~override~ 
+	SAY NAME1 @8236
+	SAY NAME2 @8236
+	
+COPY ~vecna/cre/AACREz27.CRE~ ~override~ 
+	SAY NAME1 @8237
+	SAY NAME2 @8237
+	
+COPY ~vecna/cre/AACREz28.CRE~ ~override~ 
+	SAY NAME1 @8238
+	SAY NAME2 @8238
+	
+COPY ~vecna/cre/AACREz29.CRE~ ~override~ 
+	SAY NAME1 @8239
+	SAY NAME2 @8239
+	
+COPY ~vecna/cre/AACREz30.CRE~ ~override~ 
+	SAY NAME1 @8240
+	SAY NAME2 @8240
+	
+COPY ~vecna/cre/AACREz31.CRE~ ~override~ 
+	SAY NAME1 @8241
+	SAY NAME2 @8241
+	
+COPY ~vecna/cre/AACREz32.CRE~ ~override~ 
+	SAY NAME1 @8242
+	SAY NAME2 @8242
+	
+COPY ~vecna/cre/AACREz33.CRE~ ~override~ 
+	SAY NAME1 @8243
+	SAY NAME2 @8243
+	
+COPY ~vecna/cre/AACREz34.CRE~ ~override~ 
+	SAY NAME1 @8244
+	SAY NAME2 @8244
+	
+COPY ~vecna/cre/AACREz35.CRE~ ~override~ 
+	SAY NAME1 @8245
+	SAY NAME2 @8245
+	
+COPY ~vecna/cre/AACREz36.CRE~ ~override~ 
+	SAY NAME1 @8246
+	SAY NAME2 @8246
+	
+COPY ~vecna/cre/AACREz37.CRE~ ~override~ 
+	SAY NAME1 @8247
+	SAY NAME2 @8247
+	
+COPY ~vecna/cre/AACREz38.CRE~ ~override~ 
+	SAY NAME1 @8248
+	SAY NAME2 @8248
+	
+COPY ~vecna/cre/AACREz39.CRE~ ~override~ 
+	SAY NAME1 @8249
+	SAY NAME2 @8249
+	
+COPY ~vecna/cre/AACREz40.CRE~ ~override~ 
+	SAY NAME1 @8250
+	SAY NAME2 @8250
+	
+COPY ~vecna/cre/AACREz41.CRE~ ~override~ 
+	SAY NAME1 @8251
+	SAY NAME2 @8251
+	
+COPY ~vecna/cre/AACREz42.CRE~ ~override~ 
+	SAY NAME1 @8252
+	SAY NAME2 @8252
+	
+COPY ~vecna/cre/AACREz43.CRE~ ~override~ 
+	SAY NAME1 @8253
+	SAY NAME2 @8253
+	
+COPY ~vecna/cre/AACREz44.CRE~ ~override~ 
+	SAY NAME1 @8254
+	SAY NAME2 @8254
+	
+COPY ~vecna/cre/AACREz45.CRE~ ~override~ 
+	SAY NAME1 @8255
+	SAY NAME2 @8255
+	
+COPY ~vecna/cre/AACREz46.CRE~ ~override~ 
+	SAY NAME1 @8256
+	SAY NAME2 @8256
+	
+COPY ~vecna/cre/AACREz47.CRE~ ~override~ 
+	SAY NAME1 @8257
+	SAY NAME2 @8257
+	
+COPY ~vecna/cre/AACREz48.CRE~ ~override~ 
+	SAY NAME1 @8258
+	SAY NAME2 @8258
+	
+COPY ~vecna/cre/AACREz49.CRE~ ~override~ 
+	SAY NAME1 @8259
+	SAY NAME2 @8259
+	
+COPY ~vecna/cre/AACREz50.CRE~ ~override~ 
+	SAY NAME1 @8260
+	SAY NAME2 @8260
+
+COPY ~vecna/cre/AACREz51.CRE~ ~override~ 
+	SAY NAME1 @8261
+	SAY NAME2 @8261
+
+	
+
+// dead bodies
+
+COPY ~vecna/cre/AACREdb0.CRE~ ~override~ 
+	SAY NAME1 @8280
+	SAY NAME2 @8280	
+
+COPY ~vecna/cre/AACREdb1.CRE~ ~override~ 
+	SAY NAME1 @8281
+	SAY NAME2 @8281	
+
+COPY ~vecna/cre/AACREdb2.CRE~ ~override~ 
+	SAY NAME1 @8282
+	SAY NAME2 @8282	
+
+COPY ~vecna/cre/AACREdb3.CRE~ ~override~ 
+	SAY NAME1 @8283
+	SAY NAME2 @8283	
+
+COPY ~vecna/cre/AACREdb4.CRE~ ~override~ 
+	SAY NAME1 @8284
+	SAY NAME2 @8284	
+
+COPY ~vecna/cre/AACREdb5.CRE~ ~override~ 
+	SAY NAME1 @8285
+	SAY NAME2 @8285	
+	
+	
+// misc monster races
+
+COPY ~vecna/cre/AACREx00.CRE~ ~override~ 
+	SAY NAME1 @8290
+	SAY NAME2 @8290	
+
+COPY ~vecna/cre/AACREx01.CRE~ ~override~ 
+	SAY NAME1 @8291
+	SAY NAME2 @8291	
+
+COPY ~vecna/cre/AACREx02.CRE~ ~override~ 
+	SAY NAME1 @8292
+	SAY NAME2 @8292	
+
+COPY ~vecna/cre/AACREx03.CRE~ ~override~ 
+	SAY NAME1 @8293
+	SAY NAME2 @8293	
+
+COPY ~vecna/cre/AACREx04.CRE~ ~override~ 
+	SAY NAME1 @8294
+	SAY NAME2 @8294	
+
+COPY ~vecna/cre/AACREx05.CRE~ ~override~ 
+	SAY NAME1 @8295
+	SAY NAME2 @8295	
+
+COPY ~vecna/cre/AACREx06.CRE~ ~override~ 
+	SAY NAME1 @8296
+	SAY NAME2 @8296	
+
+COPY ~vecna/cre/AACREx07.CRE~ ~override~ 
+	SAY NAME1 @8297
+	SAY NAME2 @8297	
+
+COPY ~vecna/cre/AACREx08.CRE~ ~override~ 
+	SAY NAME1 @8298
+	SAY NAME2 @8298	
+
+COPY ~vecna/cre/AACREx09.CRE~ ~override~ 
+	SAY NAME1 @8299
+	SAY NAME2 @8299	
+
+COPY ~vecna/cre/AACREx10.CRE~ ~override~ 
+	SAY NAME1 @8300
+	SAY NAME2 @8300	
+
+COPY ~vecna/cre/AACREx11.CRE~ ~override~ 
+	SAY NAME1 @8301
+	SAY NAME2 @8301	
+
+COPY ~vecna/cre/AACREx12.CRE~ ~override~ 
+	SAY NAME1 @8302
+	SAY NAME2 @8302
+
+COPY ~vecna/cre/AACREx13.CRE~ ~override~ 
+	SAY NAME1 @8303
+	SAY NAME2 @8303	
+
+COPY ~vecna/cre/AACREx14.CRE~ ~override~ 
+	SAY NAME1 @8304
+	SAY NAME2 @8304
+
+COPY ~vecna/cre/AACREx15.CRE~ ~override~ 
+	SAY NAME1 @8305
+	SAY NAME2 @8305
+
+COPY ~vecna/cre/AACREx16.CRE~ ~override~ 
+	SAY NAME1 @8306
+	SAY NAME2 @8306
+
+COPY ~vecna/cre/AACREx17.CRE~ ~override~ 
+	SAY NAME1 @8307
+	SAY NAME2 @8307	
+
+COPY ~vecna/cre/AACREx18.CRE~ ~override~ 
+	SAY NAME1 @8308
+	SAY NAME2 @8308	
+
+COPY ~vecna/cre/AACREx19.CRE~ ~override~ 
+	SAY NAME1 @8309
+	SAY NAME2 @8309
+	
+COPY ~vecna/cre/AACREx20.CRE~ ~override~ 
+	SAY NAME1 @8310
+	SAY NAME2 @8310
+	
+COPY ~vecna/cre/AACREx21.CRE~ ~override~ 
+	SAY NAME1 @8311
+	SAY NAME2 @8311
+	
+COPY ~vecna/cre/AACREx22.CRE~ ~override~ 
+	SAY NAME1 @8312
+	SAY NAME2 @8312
+	
+COPY ~vecna/cre/AACREx23.CRE~ ~override~ 
+	SAY NAME1 @8313
+	SAY NAME2 @8313
+	
+COPY ~vecna/cre/AACREx24.CRE~ ~override~ 
+	SAY NAME1 @8314
+	SAY NAME2 @8314
+	
+COPY ~vecna/cre/AACREx25.CRE~ ~override~ 
+	SAY NAME1 @8315
+	SAY NAME2 @8315
+	
+COPY ~vecna/cre/AACREx26.CRE~ ~override~ 
+	SAY NAME1 @8316
+	SAY NAME2 @8316
+	
+COPY ~vecna/cre/AACREx27.CRE~ ~override~ 
+	SAY NAME1 @8317
+	SAY NAME2 @8317
+	
+COPY ~vecna/cre/AACREx28.CRE~ ~override~ 
+	SAY NAME1 @8318
+	SAY NAME2 @8318
+	
+COPY ~vecna/cre/AACREx29.CRE~ ~override~ 
+	SAY NAME1 @8319
+	SAY NAME2 @8319
+	
+COPY ~vecna/cre/AACREx30.CRE~ ~override~ 
+	SAY NAME1 @8320
+	SAY NAME2 @8320
+	
+COPY ~vecna/cre/AACREx31.CRE~ ~override~ 
+	SAY NAME1 @8321
+	SAY NAME2 @8321
+	
+COPY ~vecna/cre/AACREx32.CRE~ ~override~ 
+	SAY NAME1 @8322
+	SAY NAME2 @8322
+	
+COPY ~vecna/cre/AACREx33.CRE~ ~override~ 
+	SAY NAME1 @8323
+	SAY NAME2 @8323
+	
+COPY ~vecna/cre/AACREx34.CRE~ ~override~ 
+	SAY NAME1 @8324
+	SAY NAME2 @8324
+	
+COPY ~vecna/cre/AACREx35.CRE~ ~override~ 
+	SAY NAME1 @8325
+	SAY NAME2 @8325
+	
+COPY ~vecna/cre/AACREx36.CRE~ ~override~ 
+	SAY NAME1 @8326
+	SAY NAME2 @8326
+	
+COPY ~vecna/cre/AACREx37.CRE~ ~override~ 
+	SAY NAME1 @8327
+	SAY NAME2 @8327
+	
+COPY ~vecna/cre/AACREx38.CRE~ ~override~ 
+	SAY NAME1 @8328
+	SAY NAME2 @8328
+	
+COPY ~vecna/cre/AACREx39.CRE~ ~override~ 
+	SAY NAME1 @8329
+	SAY NAME2 @8329
+	
+COPY ~vecna/cre/AACREx40.CRE~ ~override~ 
+	SAY NAME1 @8330
+	SAY NAME2 @8330
+	
+COPY ~vecna/cre/AACREx41.CRE~ ~override~ 
+	SAY NAME1 @8331
+	SAY NAME2 @8331
+	
+COPY ~vecna/cre/AACREx42.CRE~ ~override~ 
+	SAY NAME1 @8332
+	SAY NAME2 @8332
+	
+COPY ~vecna/cre/AACREx43.CRE~ ~override~ 
+	SAY NAME1 @8333
+	SAY NAME2 @8333
+	
+COPY ~vecna/cre/AACREx44.CRE~ ~override~ 
+	SAY NAME1 @8334
+	SAY NAME2 @8334
+	
+COPY ~vecna/cre/AACREx45.CRE~ ~override~ 
+	SAY NAME1 @8335
+	SAY NAME2 @8335
+	
+COPY ~vecna/cre/AACREx46.CRE~ ~override~ 
+	SAY NAME1 @8336
+	SAY NAME2 @8336
+	
+COPY ~vecna/cre/AACREx47.CRE~ ~override~ 
+	SAY NAME1 @8337
+	SAY NAME2 @8337
+	
+COPY ~vecna/cre/AACREx48.CRE~ ~override~ 
+	SAY NAME1 @8338
+	SAY NAME2 @8338
+	
+COPY ~vecna/cre/AACREx49.CRE~ ~override~ 
+	SAY NAME1 @8339
+	SAY NAME2 @8339
+	
+COPY ~vecna/cre/AACREx50.CRE~ ~override~ 
+	SAY NAME1 @8340
+	SAY NAME2 @8340
+	
+COPY ~vecna/cre/AACREx51.CRE~ ~override~ 
+	SAY NAME1 @8341
+	SAY NAME2 @8341
+	
+COPY ~vecna/cre/AACREx52.CRE~ ~override~ 
+	SAY NAME1 @8342
+	SAY NAME2 @8342
+	
+COPY ~vecna/cre/AACREx53.CRE~ ~override~ 
+	SAY NAME1 @8343
+	SAY NAME2 @8343
+	
+COPY ~vecna/cre/AACREx54.CRE~ ~override~ 
+	SAY NAME1 @8344
+	SAY NAME2 @8344
+	
+COPY ~vecna/cre/AACREx55.CRE~ ~override~ 
+	SAY NAME1 @8345
+	SAY NAME2 @8345
+	
+COPY ~vecna/cre/AACREx56.CRE~ ~override~ 
+	SAY NAME1 @8346
+	SAY NAME2 @8346
+
+
+// Add planeshift spell and manual of the planes to shops
+
+
+//COPY_EXISTING ~SHOP08.STO~ ~override~
+//ADD_STORE_ITEM "AAPLSHFT" #1 #1 #1 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM001" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM016" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM011" #1 #0 #0 ~IDENTIFIED~ #1
+//
+//
+//COPY_EXISTING ~ribald.sto~ ~override~
+//ADD_STORE_ITEM "AAPLSHFT" #1 #1 #1 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAPLRING" #1 #2 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM008" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM009" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM010" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM011" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM012" #1 #0 #0 ~IDENTIFIED~ #1
+//ADD_STORE_ITEM "AAITM013" #1 #0 #0 ~IDENTIFIED~ #1
+
+
+// Add hint items to existing creatures
+
+
+//COPY_EXISTING ~HLLAYEN.CRE~ ~override/HLLAYEN.CRE~
+//  ADD_CRE_ITEM ~AARERING~ #2 #2 #0 ~IDENTIFIED~ ~INV5 INV6~
+//
+//COPY_EXISTING ~HLSHANG.CRE~ ~override/HLSHANG.CRE~
+//  ADD_CRE_ITEM ~AARERING~ #2 #2 #0 ~IDENTIFIED~ ~INV6 INV7~
+//
+//COPY_EXISTING ~HLREVAN.CRE~ ~override/HLREVAN.CRE~
+//  ADD_CRE_ITEM ~AARERING~ #2 #2 #0 ~IDENTIFIED~ ~INV6 INV7~
+//
+//COPY_EXISTING ~HLSHYR.CRE~ ~override/HLSHYR.CRE~
+//  ADD_CRE_ITEM ~AARERING~ #2 #2 #0 ~IDENTIFIED~ ~INV6 INV7~
+
+
+
+// Compile Dialogs
+
+
+COMPILE ~vecna/Dia~
+
+
+
+// Compile scripts
+
+
+COMPILE ~vecna/baf/area~
+COMPILE ~vecna/baf/area/trap~
+COMPILE ~vecna/baf/beholder~
+COMPILE ~vecna/baf/cleric~
+COMPILE ~vecna/baf/daemon~
+COMPILE ~vecna/baf/dragon~
+COMPILE ~vecna/baf/elemental~
+COMPILE ~vecna/baf/fighter~
+COMPILE ~vecna/baf/fighter_mu~
+COMPILE ~vecna/baf/golem~
+COMPILE ~vecna/baf/lich~
+COMPILE ~vecna/baf/character~
+COMPILE ~vecna/baf/mage~
+COMPILE ~vecna/baf/mindflayer~
+COMPILE ~vecna/baf/planetars~
+COMPILE ~vecna/baf/thief~
+COMPILE ~vecna/baf/singular~
+COMPILE ~vecna/baf/misc~
+COMPILE ~vecna/baf/spell~
+COMPILE ~vecna/baf/vampire~
+
+//COMPILE ~vecna/baf/system~
+
+
+
+
