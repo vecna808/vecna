@@ -115,8 +115,8 @@ PRINT ~Wave files also take a while~
 COPY_LARGE ~vecna/wav/are~   ~override~
 COPY_LARGE ~vecna/wav/cre~   ~override~
 
-//lv100 2da extensions
-COPY ~vecna/2da/lv100~   ~override~
+//lv99 2da extensions
+COPY ~vecna/2da/lv99~   ~override~
 
 // xp uncap
 COPY ~vecna/2da/xp_uncap~   ~override~
@@ -132,86 +132,6 @@ COPY ~vecna/eff~   ~override~
 
 // inii files used for new animations.   BG2EE V2+ ONLY
 //COPY ~vecna/ini~   ~override~
-
-//pst worldmap
-COPY ~vecna/map/AAmapPST.WMP~ ~override~
-SAY 36 ~The Hive~
-SAY 264 ~The Hive~
-SAY 268 ~The Hive~
-SAY 504 ~The Hive~
-SAY 508 ~The Hive~
-SAY 744 ~Ragpicker's Square~
-SAY 748 ~Ragpicker's Square~
-SAY 984 ~Buried Village~
-SAY 988 ~Buried Village~
-SAY 1224 ~The Hive~
-SAY 1228 ~The Hive~
-SAY 1464 ~Alley of Dangerous Angles~
-SAY 1468 ~Alley of Dangerous Angles~
-SAY 1704 ~The Hive~
-SAY 1708 ~The Hive~
-SAY 1944 ~Lower Ward~
-SAY 1948 ~Lower Ward~
-SAY 2184 ~Clerk's Ward~
-SAY 2188 ~Clerk's Ward~
-SAY 2424 ~Alley of Lingering Sighs~
-SAY 2428 ~Alley of Lingering Sighs~
-SAY 2664 ~Modron Maze~
-SAY 2668 ~Modron Maze~
-SAY 2904 ~Player's Maze~
-SAY 2908 ~Player's Maze~
-SAY 3384 ~Outlands~
-SAY 3388 ~Outlands~
-SAY 3624 ~Ravel's Maze~
-SAY 3628 ~Ravel's Maze~
-SAY 3864 ~Curst~
-SAY 3868 ~Curst~
-SAY 4104 ~Curst~
-SAY 4108 ~Curst~
-SAY 4344 ~Curst Gone~
-SAY 4348 ~Curst Gone~
-SAY 4584 ~Carceri~
-SAY 4588 ~Carceri~
-SAY 4824 ~Fortress Entrance~
-SAY 4828 ~Fortress Entrance~
-COPY ~vecna/map/AAmapPST.BAM~ ~override~
-COPY ~vecna/map/AAmapPST.MOS~ ~override~
-
-//greyhawk worldmap
-COPY ~vecna/map/AAmapGRY.WMP~ ~override~
-
-SAY 0xe28 ~Alcaster Reborn~
-SAY 0xe2c ~Alcaster Reborn~
-SAY 0x6a8 ~Village of DeamonLore~
-SAY 0x6ac ~Village of DeamonLore~
-SAY 0x798 ~School of the Planes~
-SAY 0x79c ~School of the Planes~
-SAY 0x5b8 ~Village of Wild Blood~
-SAY 0x5bc ~Village of Wild Blood~
-SAY 0x108 ~Pardue North~
-SAY 0x10c ~Pardue North~
-SAY 0x978 ~Pardue South~
-SAY 0x97c ~Pardue South~
-SAY 0xb58 ~Pardue East~
-SAY 0xb5c ~Pardue East~
-SAY 0xc48 ~Spiral~
-SAY 0xc4c ~Spiral~
-SAY 0x1f8 ~Tenser's Vale~
-SAY 0x1fc ~Tenser's Vale~
-SAY 0xa68 ~Pardue West~
-SAY 0xa6c ~Pardue West~
-SAY 0x2e8 ~Black Elf Fort~
-SAY 0x2ec ~Black Elf Fort~
-SAY 0x3d8 ~Dagger Pass~
-SAY 0x3dc ~Dagger Pass~
-SAY 0x4c8 ~Outland Pass~
-SAY 0x4cc ~Outland Pass~
-SAY 0x888 ~Midland Traders Village~
-SAY 0x88c ~Midland Traders Village~
-SAY 0xd38 ~House of Lum~
-SAY 0xd3c ~House of Lum~
-COPY ~vecna/map/AAmapGRY.BAM~ ~override~
-COPY ~vecna/map/AAmapGRY.MOS~ ~override~
 
 // gtimes new refs are used for some of the scripts have stolen
 
@@ -722,6 +642,131 @@ APPEND ~GTIMES.IDS~ ~3600 TWELVE_HOURS~    UNLESS ~TWELVE_HOURS~
 //COPY ~vecna/are/AAR538.ARE~           ~override~
 //	SAY 0x11e8 ~The top of these stairs have been barricaded, preventing entrance from this way.~
 //
+
+//greyhawk worldmap
+COPY ~vecna/map/AAmapGRY.WMP~ ~override~
+SAY 0x24 ~Greyhawk Empire of Luz~
+SAY 0x108 ~Dorakaa ( SE )~
+SAY 0x10c ~Dorakaa ( SE )~
+SAY 0x1f8 ~Dead Vale~
+SAY 0x1fc ~Dead Vale~
+SAY 0x798 ~School of the Planes~
+SAY 0x79c ~School of the Planes~
+SAY 0x2e8 ~House of Rary~
+SAY 0x2ec ~House of Rary~
+SAY 0x3d8 ~House of Drawmij~
+SAY 0x3dc ~House of Drawmij~
+SAY 0x4c8 ~Howling Hills Pass~
+SAY 0x4cc ~Howling Hills Pass~
+SAY 0x5b8 ~The Sword Barrows~
+SAY 0x5bc ~The Sword Barrows~
+SAY 0x6a8 ~Howldale~
+SAY 0x6ac ~Howldale~
+SAY 0x798 ~Raven Roost~
+SAY 0x79c ~Raven Roost~
+SAY 0x888 ~Dorakaa ( SW )~
+SAY 0x88c ~Dorakaa ( SW )~
+SAY 0x978 ~Dorakaa ( NE )~
+SAY 0x97c ~Dorakaa ( NE )~
+SAY 0xa68 ~Dorakaa ( NW )~
+SAY 0xa6c ~Dorakaa ( NW )~
+SAY 0xb58 ~Black Elf~
+SAY 0xb5c ~Black Elf~
+SAY 0xc48 ~School of Mordenkain~
+SAY 0xc4c ~School of Mordenkain~
+SAY 0xd38 ~Bigby College~
+SAY 0xd3c ~Bigby College~
+SAY 0xe28 ~Salt~
+SAY 0xe2c ~Salt~
+SAY 0xf18 ~Fish Field~
+SAY 0xf1c ~Fish Field~
+SAY 0x1008 ~Homlet~
+SAY 0x100c ~Homlet~
+SAY 0x10f8 ~Temple of Elemental Evil~
+SAY 0x10fc ~Temple of Elemental Evil~
+SAY 0x11e8 ~Field of Dread~
+SAY 0x11ec ~Field of Dread~
+SAY 0x12d8 ~Vale of Woe~
+SAY 0x12dc ~Vale of Woe~
+SAY 0x13c8 ~Lich brambles~
+SAY 0x13cc ~Lich brambles~
+COPY ~vecna/map/AAmapALL.BAM~ ~override~
+COPY ~vecna/map/AAmapGRY.MOS~ ~override~
+
+//pst worldmap
+COPY ~vecna/map/AAmapPST.WMP~ ~override~
+SAY 0x24  ~The Outer Planes of Oerth~
+SAY 0x108 ~The Hive~
+SAY 0x10c ~The Hive~
+SAY 0x1f8 ~The Hive~
+SAY 0x1fc ~The Hive~
+SAY 0x2e8 ~Ragpicker's Square~
+SAY 0x2ec ~Ragpicker's Square~
+SAY 0x3d8 ~Buried Village~
+SAY 0x3dc ~Buried Village~
+SAY 0x4c8 ~The Hive~
+SAY 0x4cc ~The Hive~
+SAY 0x5b8 ~Alley of Dangerous Angles~
+SAY 0x5bc ~Alley of Dangerous Angles~
+SAY 0x6a8 ~The Hive~
+SAY 0x6ac ~The Hive~
+SAY 0x798 ~Lower Ward~
+SAY 0x79c ~Lower Ward~
+SAY 0x888 ~Clerk's Ward~
+SAY 0x88c ~Clerk's Ward~
+SAY 0x978 ~Alley of Lingering Sighs~
+SAY 0x97c ~Alley of Lingering Sighs~
+SAY 0xa68 ~Modron Maze~
+SAY 0xa6c ~Modron Maze~
+SAY 0xb58 ~Player's Maze~
+SAY 0xb5c ~Player's Maze~
+SAY 0xc48 ~Pillar of Skulls~
+SAY 0xc4c ~Pillar of Skulls~
+SAY 0xd38 ~Outlands~
+SAY 0xd3c ~Outlands~
+SAY 0xe28 ~Ravel's Maze~
+SAY 0xe2c ~Ravel's Maze~
+SAY 0xf18 ~Curst~
+SAY 0xf1c ~Curst~
+SAY 0x1008 ~Curst~
+SAY 0x100c ~Curst~
+SAY 0x10f8 ~Curst Gone~
+SAY 0x10fc ~Curst Gone~
+SAY 0x11e8 ~Carceri~
+SAY 0x11ec ~Carceri~
+SAY 0x12d8 ~Fortress Entrance~
+SAY 0x12dc ~Fortress Entrance~
+SAY 0x13c8 ~Gorge Of Slaughter~
+SAY 0x13cc ~Gorge Of Slaughter~
+SAY 0x14b8 ~Serpents Coil~
+SAY 0x14bc ~Serpents Coil~
+SAY 0x15a8 ~Malsheem~
+SAY 0x15ac ~Malsheem~
+SAY 0x1698 ~Hook Fissure~
+SAY 0x169c ~Hook Fissure~
+SAY 0x1788 ~Stone Devil~
+SAY 0x178c ~Stone Devil~
+SAY 0x1878 ~The Sluce~
+SAY 0x187c ~The Sluce~
+SAY 0x1968 ~Broken Wall~
+SAY 0x196c ~Broken Wall~
+SAY 0x1a58 ~Thoth's Pin~
+SAY 0x1a5c ~Thoth's Pin~
+SAY 0x1b48 ~Dagda~
+SAY 0x1b4c ~Dagda~
+SAY 0x1c38 ~Vale of Otiluke~
+SAY 0x1c3c ~Vale of Otiluke~
+SAY 0x1d28 ~Tir Na Og~
+SAY 0x1d2c ~Tir Na Og~
+SAY 0x1e18 ~Dumathion~
+SAY 0x1e1c ~Dumathion~
+SAY 0x1f08 ~Leomund's Secret Academy~
+SAY 0x1f0c ~Leomund's Secret Academy~
+SAY 0x1ff8 ~Tower of Lum~
+SAY 0x1ffc ~Tower of Lum~
+SAY 0x20e8 ~House of Tenser~
+SAY 0x20ec ~House of Tenser~
+COPY ~vecna/map/AAmapPST.MOS~ ~override~
 
   
 //  

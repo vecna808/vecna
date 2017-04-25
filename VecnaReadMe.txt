@@ -21,10 +21,16 @@ The events of Die Vecna Die exposed the 5 who created the multiverse.
 After the Chaos in Sigil caused by Vecna's arrival, possesion of the Godsmens's guild house, and subsiquent removal by a party of lucky amateures from Oerth.
 It was the lady of pain who spoke words from the first tounge and reformed the multiverse to what we see now.
 
-Lady of pain AKA Pheonix AKA Fire Bird One..... Creator number 1
+The Lady of pain AKA Pheonix AKA Fire Bird One..... Creator number 1
 
-But let us not forget who put vecna up to all this cosmic mischief, the one who taught Vecna portions of the first tounge, 
+But let us not forget who put vecna up to all this cosmic mischief, the one who taught Vecna portions of the first tounge, the one who helped Vecna bend the very fabric of reality and escape the shadow realm.
 
 The Serpent AKA Lord Ballor AKA Pallol One Eye..... Creator number 2
 
-The very lucky bunch of rank amatures 
+The lucky bunch of rank amatures that evicted Vecna from Sigil did so because they held an item that somehow negated part of his power, ( the hand ) what they did not notice is that that same item negated part of the 
+lady of pain's power, and the eye that Vecna posessed was the very thing allowing him to stay in Sigil and resist the lady.
+The hand and eye ( incorrectly called the hand and eye of Vecna, since he was just the latest of a long line of owners ) belong to 
+
+Rhin AKA Android 13 AKA End of Law...... Creator number 3
+
+Qwill AKA Android 12 AKA End of Chaos...... Creator number 4
